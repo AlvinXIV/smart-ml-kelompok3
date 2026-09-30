@@ -85,19 +85,23 @@ tailwind.config = {
 </div>
 <!-- Navigation -->
 <nav class="flex flex-col gap-1.5">
-<a aria-current="page" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-sky-50 border border-sky-200 text-sky-700 font-semibold text-sm transition-all shadow-sm" data-path="dashboard" href="#">
+<a aria-current="page" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-sky-50 border border-sky-200 text-sky-700 font-semibold text-sm transition-all shadow-sm" data-path="dashboard" href="{{ url_for('main.dashboard') }}">
 <span class="material-symbols-outlined text-[20px] text-sky-600">grid_view</span>
 <span class="">Dashboard</span>
 </a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" data-path="machine-analysis" href="#">
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" data-path="machine-analysis" href="{{ url_for('analysis.analysis') }}">
 <span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-sky-600 transition-colors">developer_board</span>
 <span class="">Machine Analysis</span>
 </a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" data-path="analysis-history" href="#">
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" data-path="analysis-history" href="{{ url_for('analysis.history') }}">
 <span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-sky-600 transition-colors">schedule</span>
 <span class="">Analysis History</span>
 </a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" data-path="about" href="#">
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" data-path="models" href="{{ url_for('main.models') }}">
+<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-sky-600 transition-colors">neurology</span>
+<span class="">AI Models</span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" data-path="about" href="{{ url_for('main.about') }}">
 <span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-sky-600 transition-colors">info</span>
 <span class="">About</span>
 </a>
@@ -120,7 +124,7 @@ tailwind.config = {
 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
 <span class="text-[11px] font-medium text-slate-600">Online</span>
 </div>
-<a class="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-slate-300 text-[11px] font-medium text-slate-600 hover:text-slate-900 hover:bg-white hover:border-slate-400 transition-colors shadow-2xs" data-path="logout" href="#" title="Sign out">
+<a class="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-slate-300 text-[11px] font-medium text-slate-600 hover:text-slate-900 hover:bg-white hover:border-slate-400 transition-colors shadow-2xs" data-path="logout" href="{{ url_for('auth.logout') }}" title="Sign out">
 <span class="material-symbols-outlined text-[14px]">logout</span>
 <span class="">Sign out</span>
 </a>
@@ -170,7 +174,7 @@ tailwind.config = {
 <p class="text-xs text-slate-600 mt-0.5">Pemantauan kondisi multi-sensor secara berkelanjutan, indikator risiko kegagalan, dan telemetri klaster tanpa pengawasan.</p>
 </div>
 <div class="flex items-center gap-space-sm shrink-0">
-<a class="flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-primary hover:bg-sky-700 text-white font-semibold shadow-sm transition-all active:scale-[0.98]" data-path="machine-analysis" href="#">
+<a class="flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-primary hover:bg-sky-700 text-white font-semibold shadow-sm transition-all active:scale-[0.98]" data-path="machine-analysis" href="{{ url_for('analysis.analysis') }}">
 <span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>
 <span class="">Analyze a Machine</span>
 </a>
@@ -270,7 +274,7 @@ tailwind.config = {
 <p class="text-xs text-slate-600 mt-0.5">Pemindaian waktu nyata secara berkelanjutan terhadap batas toleransi kegagalan mesin</p>
 </div>
 </div>
-<a class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-sky-700 text-white text-xs font-semibold shadow-xs transition-colors shrink-0" data-path="machine-analysis" href="#">
+<a class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-sky-700 text-white text-xs font-semibold shadow-xs transition-colors shrink-0" data-path="machine-analysis" href="{{ url_for('analysis.analysis') }}">
 <span class="">Mulai Diagnostik Baru</span>
 <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
 </a>
@@ -582,7 +586,7 @@ tailwind.config = {
 </h3>
 <p class="text-xs text-slate-500 mt-0.5">Pemindaian waktu nyata secara berkelanjutan terhadap batas toleransi kegagalan mesin</p>
 </div>
-<a class="inline-flex items-center gap-1 text-xs text-sky-600 hover:text-sky-700 transition-colors font-semibold" data-path="analysis-history" href="#">
+<a class="inline-flex items-center gap-1 text-xs text-sky-600 hover:text-sky-700 transition-colors font-semibold" data-path="analysis-history" href="{{ url_for('analysis.history') }}">
 <span class="">Lihat semua log</span>
 <span class="material-symbols-outlined text-[15px]">east</span>
 </a>

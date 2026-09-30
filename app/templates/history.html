@@ -98,19 +98,23 @@
 </button>
 </div>
 <nav class="px-3 flex flex-col gap-1.5">
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors group" data-path="dashboard" href="#" title="Dashboard">
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors group" data-path="dashboard" href="{{ url_for('main.dashboard') }}" title="Dashboard">
 <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-900 transition-colors shrink-0">grid_view</span>
 <span class="sidebar-label whitespace-nowrap transition-opacity duration-200">Dashboard</span>
 </a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors group" data-path="machine-analysis" href="#" title="Machine Analysis">
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors group" data-path="machine-analysis" href="{{ url_for('analysis.analysis') }}" title="Machine Analysis">
 <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-900 transition-colors shrink-0">memory</span>
 <span class="sidebar-label whitespace-nowrap transition-opacity duration-200">Machine Analysis</span>
 </a>
-<a aria-current="page" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-sky-50 text-sky-700 text-sm font-semibold border border-sky-200 transition-colors shadow-sm" data-path="analysis-history" href="#" title="Analysis History">
+<a aria-current="page" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-sky-50 text-sky-700 text-sm font-semibold border border-sky-200 transition-colors shadow-sm" data-path="analysis-history" href="{{ url_for('analysis.history') }}" title="Analysis History">
 <span class="material-symbols-outlined text-[20px] text-sky-600 shrink-0">schedule</span>
 <span class="sidebar-label whitespace-nowrap transition-opacity duration-200">Analysis History</span>
 </a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors group" data-path="about" href="#" title="About">
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors group" data-path="models" href="{{ url_for('main.models') }}" title="AI Models">
+<span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-900 transition-colors shrink-0">neurology</span>
+<span class="sidebar-label whitespace-nowrap transition-opacity duration-200">AI Models</span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors group" data-path="about" href="{{ url_for('main.about') }}" title="About">
 <span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-900 transition-colors shrink-0">info</span>
 <span class="sidebar-label whitespace-nowrap transition-opacity duration-200">About</span>
 </a>
@@ -133,7 +137,7 @@
 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
 <span class="text-xs text-slate-600 font-medium">Online</span>
 </div>
-<a class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-200 text-xs text-slate-700 bg-white hover:bg-slate-100 hover:text-slate-900 transition-colors shadow-2xs" data-path="login" href="#">
+<a class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-200 text-xs text-slate-700 bg-white hover:bg-slate-100 hover:text-slate-900 transition-colors shadow-2xs" data-path="login" href="{{ url_for('auth.logout') }}">
 <span class="material-symbols-outlined text-[15px]">logout</span>
 <span class="font-medium">Sign out</span>
 </a>
@@ -157,7 +161,7 @@
 <p class="text-label-md text-slate-600 leading-normal">Review previous machine diagnostic records, cluster assignments, and prescriptive actions.</p>
 </div>
 <!-- Export & Filter Actions -->
-<div class="flex flex-wrap items-center gap-3 shrink-0"><button class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-label-md font-label-md font-semibold transition-all shadow-sm cursor-pointer" type="button"><span class="material-symbols-outlined text-[18px]">tune</span><span class="">Filter Records</span></button></div>
+<div class="flex flex-wrap items-center gap-3 shrink-0"><a href="{{ url_for('analysis.analysis') }}" class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-label-md font-semibold transition-all shadow-sm"><span class="material-symbols-outlined text-[18px]">add_circle</span><span>Mulai Analisis Baru</span></a><button class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-label-md font-semibold transition-all shadow-xs cursor-pointer" type="button"><span class="material-symbols-outlined text-[18px]">tune</span><span class="">Filter Records</span></button></div>
 </div>
 <!-- Summary KPI Cards -->
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">

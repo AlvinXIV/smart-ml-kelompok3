@@ -73,20 +73,24 @@
 </div>
 <!-- Navigation -->
 <nav class="px-3 flex flex-col gap-1.5" data-active-classes="bg-cyan-50 text-cyan-700 font-semibold border border-cyan-200 shadow-xs">
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors nav-item" data-path="dashboard" href="#" title="Dashboard">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors nav-item" data-path="dashboard" href="{{ url_for('main.dashboard') }}" title="Dashboard">
 <span class="material-symbols-outlined text-[20px] shrink-0 text-slate-500">grid_view</span>
 <span class="sidebar-text-item truncate text-sm">Dashboard</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors nav-item" data-path="machine-analysis" href="#" title="Machine Analysis">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors nav-item" data-path="machine-analysis" href="{{ url_for('analysis.analysis') }}" title="Machine Analysis">
 <span class="material-symbols-outlined text-[20px] shrink-0 text-slate-500">memory</span>
 <span class="sidebar-text-item truncate text-sm">Machine Analysis</span>
 </a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors nav-item" data-path="analysis-history" href="#" title="Analysis History">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors nav-item" data-path="analysis-history" href="{{ url_for('analysis.history') }}" title="Analysis History">
 <span class="material-symbols-outlined text-[20px] shrink-0 text-slate-500">schedule</span>
 <span class="sidebar-text-item truncate text-sm">Analysis History</span>
 </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors nav-item" data-path="models" href="{{ url_for('main.models') }}" title="AI Models">
+<span class="material-symbols-outlined text-[20px] shrink-0 text-slate-500">neurology</span>
+<span class="sidebar-text-item truncate text-sm">AI Models</span>
+</a>
 <!-- Active About Tab -->
-<a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-cyan-50 text-cyan-700 font-semibold border border-cyan-200/80 transition-colors nav-item shadow-xs" data-path="about" href="#" title="About">
+<a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-cyan-50 text-cyan-700 font-semibold border border-cyan-200/80 transition-colors nav-item shadow-xs" data-path="about" href="{{ url_for('main.about') }}" title="About">
 <span class="material-symbols-outlined text-[20px] shrink-0 text-cyan-600">info</span>
 <span class="sidebar-text-item truncate text-sm">About</span>
 </a>
@@ -112,7 +116,7 @@
 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
 <span class="text-[11px] font-medium text-slate-500">Online</span>
 </div>
-<a class="flex items-center gap-1 px-2 py-0.5 rounded-lg border border-slate-200 bg-white text-[11px] text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" data-path="login" href="#">
+<a class="flex items-center gap-1 px-2 py-0.5 rounded-lg border border-slate-200 bg-white text-[11px] text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors" data-path="login" href="{{ url_for('auth.logout') }}">
 <span class="material-symbols-outlined text-[13px]">logout</span>
 <span>Sign out</span>
 </a>

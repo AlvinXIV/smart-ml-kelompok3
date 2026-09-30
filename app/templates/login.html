@@ -63,10 +63,12 @@
 <!-- Minimal Header -->
 <header class="w-full h-16 px-6 lg:px-12 flex items-center justify-between border-b border-slate-200/80 bg-white/80 backdrop-blur-md z-20">
 <div class="flex items-center gap-3">
+<a href="{{ url_for('main.dashboard') }}" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
 <div class="w-8 h-8 rounded-lg bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-700 shadow-sm">
 <span class="material-symbols-outlined text-[20px]">hub</span>
 </div>
 <span class="text-base font-bold text-slate-900 tracking-tight">APM Core</span>
+</a>
 <span class="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[11px] font-medium text-emerald-700">
 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
         Sistem Operasional
@@ -74,8 +76,8 @@
 </div>
 <div class="flex items-center gap-3 text-xs sm:text-sm">
 <span class="text-slate-500 hidden sm:inline text-xs">Belum punya akun operator?</span>
-<a class="px-3 py-1.5 rounded-lg border border-slate-300 hover:border-cyan-600 text-slate-700 hover:text-cyan-700 hover:bg-cyan-50/50 transition-all text-xs font-semibold" data-path="register" href="#">
-        Daftar
+<a class="px-3 py-1.5 rounded-lg border border-slate-300 hover:border-cyan-600 text-slate-700 hover:text-cyan-700 hover:bg-cyan-50/50 transition-all text-xs font-semibold" data-path="register" href="{{ url_for('main.dashboard') }}">
+        Masuk Demo
       </a>
 </div>
 </header>
@@ -183,8 +185,8 @@
 </div>
 <!-- Registration Link -->
 <div class="text-center mt-4 text-xs text-slate-500">
-<span>Belum punya akun?</span>
-<a class="ml-1 text-cyan-700 hover:text-cyan-800 font-semibold hover:underline" data-path="register" href="#">Buat akun</a>
+<span>Langsung coba konsol?</span>
+<a class="ml-1 text-cyan-700 hover:text-cyan-800 font-semibold hover:underline" data-path="dashboard" href="{{ url_for('main.dashboard') }}">Buka Dashboard Langsung</a>
 </div>
 </div>
 </div>
@@ -243,6 +245,9 @@
         `;
         submitBtn.classList.remove('bg-cyan-600', 'hover:bg-cyan-700');
         submitBtn.classList.add('bg-emerald-600', 'text-white');
+        setTimeout(() => {
+          window.location.href = "{{ url_for('main.dashboard') }}";
+        }, 500);
       }, 750);
     }
   </script>

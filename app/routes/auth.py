@@ -10,7 +10,7 @@ def login():
         if email and password:
             return redirect(url_for('main.dashboard'))
         flash('Invalid email or password.', 'danger')
-    return render_template('auth/login.html')
+    return render_template('login.html')
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -21,7 +21,7 @@ def register():
         if username and email and password:
             return redirect(url_for('auth.login'))
         flash('Please fill in all required fields.', 'warning')
-    return render_template('auth/register.html')
+    return render_template('login.html')
 
 @auth_bp.route('/logout')
 def logout():

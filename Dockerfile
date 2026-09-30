@@ -22,7 +22,8 @@ COPY . .
 # Buat folder data jika belum ada
 RUN mkdir -p /app/data
 
+# Buka akses port 5000
 EXPOSE 5000
 
-# Jalankan server
-CMD ["python", "run.py"]
+# Jalankan server menggunakan Gunicorn dan arahkan ke 0.0.0.0
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "run:app"]
