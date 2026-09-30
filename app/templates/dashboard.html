@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Predictive Maintenance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>AI Predictive</h2>
+        <nav>
+            <a href="#" class="active">Dashboard</a>
+            <a href="#">Machine Analysis</a>
+            <a href="#">Analysis History</a>
+            <a href="#">ML Models</a>
+            <a href="#">About</a>
+        </nav>
+    </div>
+
+    <main class="main-content">
+        <header>
+            <h1>Dashboard</h1>
+            <p>Monitor machine health and predictive maintenance insights.</p>
+        </header>
+
+        <section class="kpi-grid">
+            <div class="card">
+                <span class="label">TOTAL MACHINES</span>
+                <span class="value">10,000</span>
+                <span class="subtext">Machines analyzed</span>
+            </div>
+            <div class="card">
+                <span class="label">NORMAL MACHINES</span>
+                <span class="value success">9,661</span>
+                <span class="subtext">96.61% of machines</span>
+            </div>
+            <div class="card">
+                <span class="label">MACHINE FAILURES</span>
+                <span class="value danger">339</span>
+                <span class="subtext">3.39% failure rate</span>
+            </div>
+            <div class="card">
+                <span class="label">CONDITION CLUSTERS</span>
+                <span class="value accent">3</span>
+                <span class="subtext">K-Means groups</span>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: ai_predictive_maintenance
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=your_secret_key_here
+      - DATABASE_URL=sqlite:////app/data/app.db
+    restart: always
