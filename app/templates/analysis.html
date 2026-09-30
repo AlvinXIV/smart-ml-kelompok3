@@ -1,195 +1,262 @@
-{% extends "base.html" %}
-
-{% block title %}Machine Analysis{% endblock %}
-
-{% block content %}
-<div class="page-header">
-  <h1 class="page-title">Machine Analysis</h1>
-  <p class="page-subtitle">Analyze machine telemetry and operating health through our multi-paradigm AI pipeline.</p>
+<!DOCTYPE html><html class="light" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"background":"#f8fafc","secondary-fixed":"#e2e8f0","surface-variant":"#e2e8f0","surface-container-high":"#e2e8f0","primary-container":"#0284c7","surface-container-highest":"#cbd5e1","on-background":"#0f172a","tertiary-fixed-dim":"#059669","inverse-primary":"#38bdf8","secondary":"#475569","inverse-on-surface":"#f8fafc","surface-bright":"#f1f5f9","on-primary-container":"#ffffff","outline":"#94a3b8","on-tertiary-fixed":"#064e3b","on-secondary-fixed-variant":"#334155","tertiary-fixed":"#d1fae5","surface-dim":"#e2e8f0","tertiary-container":"#059669","on-secondary-container":"#1e293b","on-surface":"#0f172a","outline-variant":"#e2e8f0","primary-fixed":"#e0f2fe","surface-container-lowest":"#ffffff","surface-container":"#f1f5f9","on-tertiary":"#ffffff","on-surface-variant":"#64748b","error":"#dc2626","primary-fixed-dim":"#bae6fd","on-tertiary-container":"#ffffff","secondary-container":"#f1f5f9","error-container":"#fee2e2","on-secondary":"#ffffff","on-error":"#ffffff","on-primary-fixed":"#0369a1","secondary-fixed-dim":"#cbd5e1","on-primary-fixed-variant":"#075985","surface-tint":"#0284c7","inverse-surface":"#0f172a","surface-container-low":"#ffffff","on-secondary-fixed":"#0f172a","on-error-container":"#991b1b","tertiary":"#059669","surface":"#ffffff","on-tertiary-fixed-variant":"#047857","primary":"#0284c7","on-primary":"#ffffff"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"gutter-mobile":"1rem","space-md":"1rem","margin-mobile":"1rem","space-lg":"1.5rem","margin":"2rem","gutter":"1.5rem","space-sm":"0.5rem","space-xs":"0.25rem","space-xl":"2rem"},fontFamily:{"headline-md":["Plus Jakarta Sans"],"display-lg-mobile":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"display-lg":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"kpi-metric":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"title-sm":["Plus Jakarta Sans"]},fontSize:{"headline-md":["20px",{lineHeight:"28px",letterSpacing:"-0.005em",fontWeight:"600"}],"display-lg-mobile":["32px",{lineHeight:"40px",letterSpacing:"-0.015em",fontWeight:"700"}],"body-sm":["13px",{lineHeight:"18px",fontWeight:"400"}],"display-lg":["40px",{lineHeight:"48px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-md":["12px",{lineHeight:"16px",letterSpacing:"0.02em",fontWeight:"500"}],"body-lg":["16px",{lineHeight:"26px",fontWeight:"400"}],"headline-xl":["30px",{lineHeight:"38px",letterSpacing:"-0.015em",fontWeight:"600"}],"headline-lg":["24px",{lineHeight:"32px",letterSpacing:"-0.01em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"22px",fontWeight:"400"}],"kpi-metric":["36px",{lineHeight:"40px",letterSpacing:"-0.02em",fontWeight:"700"}],"label-sm":["11px",{lineHeight:"14px",letterSpacing:"0.04em",fontWeight:"600"}],"title-sm":["16px",{lineHeight:"24px",fontWeight:"600"}]}}}};</script></head><body class="bg-[#f8fafc] font-body-md text-slate-800 antialiased selection:bg-cyan-500 selection:text-white"><aside class="fixed left-0 top-0 h-screen w-72 bg-white border-r border-slate-200 z-50 flex flex-col justify-between p-space-lg shadow-[0_1px_4px_rgba(0,0,0,0.03)]"><div class="flex flex-col gap-6"><div class="flex items-center gap-3 px-1"><div class="w-9 h-9 rounded-xl bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-600 shrink-0 shadow-sm"><svg class="w-5 h-5 text-cyan-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg></div><span class="text-[14px] font-bold text-slate-900 tracking-tight leading-none whitespace-nowrap">AI Predictive Maintenance</span></div><nav class="flex flex-col gap-2" data-active-classes="bg-cyan-50 text-cyan-700 font-title-sm"><a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14px] font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all group" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-slate-700 transition-all shrink-0">grid_view</span><span class="">Dashboard</span></a><a aria-current="page" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition-all bg-cyan-50/80 border border-cyan-200/80 text-cyan-700 text-[14px] font-semibold shadow-xs" data-path="machine-analysis" href="#"><span class="material-symbols-outlined text-[20px] text-cyan-600 shrink-0">memory</span><span class="">Machine Analysis</span></a><a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14px] font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all group" data-path="analysis-history" href="#"><span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-slate-700 transition-all shrink-0">schedule</span><span class="">Analysis History</span></a><a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[14px] font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 transition-all group" data-path="about" href="#"><span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-slate-700 transition-all shrink-0">info</span><span class="">About</span></a></nav></div><div class="mt-auto flex flex-col gap-3.5 p-3.5 rounded-xl bg-slate-50 border border-slate-200/80"><div class="flex items-center gap-3"><div class="relative"><div class="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-cyan-700 shrink-0 border border-slate-300 shadow-sm"><span class="material-symbols-outlined text-[20px] text-cyan-700">person</span></div><span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white"></span></div><div class="flex flex-col min-w-0"><span class="text-sm font-semibold text-slate-900 leading-tight truncate">Dr. Elena Chen</span><span class="text-xs text-slate-500 truncate">Lead Diagnostician</span></div></div><div class="flex items-center justify-between pt-2 border-t border-slate-200"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span class="text-xs font-medium text-slate-600">Online</span></div><a class="px-2.5 py-1 rounded-lg border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-xs font-medium text-slate-600 hover:text-slate-900 transition-colors flex items-center gap-1.5 shadow-2xs" data-path="logout" href="#"><span class="material-symbols-outlined text-[15px] text-slate-500">logout</span><span class="">Sign out</span></a></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-white/90 backdrop-blur-md border-b border-slate-200 z-40 flex items-center justify-between px-margin shadow-[0_1px_3px_rgba(0,0,0,0.02)]"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span><span class="text-xs text-emerald-700 font-semibold tracking-wide">All Systems Normal</span></div></div><div class="flex items-center gap-space-md"><button class="relative p-space-sm rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors flex items-center justify-center border border-slate-200 shadow-2xs" title="Notifications"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-cyan-600 ring-2 ring-white"></span></button></div></header><main class="w-full pt-16 px-margin min-h-screen bg-[#f8fafc]"><div class="flex flex-col w-full pb-space-xl">
+<!-- Top Banner / Header -->
+<section class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg mb-space-xl mt-6">
+<div class="flex flex-col gap-space-xs">
+<h1 class="text-2xl font-bold text-slate-900 tracking-tight">Machine Analysis</h1>
+<p class="text-xs text-slate-500 max-w-2xl leading-relaxed">Masukkan parameter sensor di bawah ini untuk mengevaluasi kesehatan mesin dengan model AI 3 langkah kami. Dapatkan skor kesehatan instan, pengelompokan keausan, dan rekomendasi tindakan.</p>
 </div>
-
-<!-- 2-Column Responsive Layout -->
-<div class="analysis-layout">
-  <!-- Left Column: Input Form -->
-  <div class="card-base">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-      <h2 style="font-size: 1.15rem;">Sensor Telemetry Input</h2>
-      <span class="badge badge-info">AI4I Parameters</span>
-    </div>
-
-    <!-- Quick Preset Buttons for University Demo -->
-    <div class="preset-buttons">
-      <span style="font-size: 0.76rem; color: var(--text-muted); align-self: center; font-weight: 600;">DEMO PRESETS:</span>
-      <button type="button" class="btn-preset" id="presetNormal">Normal Operation (Type L)</button>
-      <button type="button" class="btn-preset" id="presetHighRisk">High Risk Warning (Type M)</button>
-    </div>
-
-    <form id="machineAnalysisForm" action="{{ url_for('analysis.analysis') }}" method="POST">
-      <!-- Machine Type -->
-      <div class="form-group">
-        <label for="machine_type" class="form-label">Machine Type</label>
-        <select name="machine_type" id="machine_type" class="input-control" required>
-          <option value="L" selected>L (Low Quality variant - 50% of units)</option>
-          <option value="M">M (Medium Quality variant - 30% of units)</option>
-          <option value="H">H (High Quality variant - 20% of units)</option>
-        </select>
-      </div>
-
-      <!-- Air Temperature & Process Temperature -->
-      <div class="form-row">
-        <div class="form-group">
-          <label for="air_temp" class="form-label">Air Temperature</label>
-          <div class="input-with-unit">
-            <input type="number" step="0.1" name="air_temp" id="air_temp" class="input-control mono" value="298.1" required>
-            <span class="input-unit-badge">K</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="process_temp" class="form-label">Process Temperature</label>
-          <div class="input-with-unit">
-            <input type="number" step="0.1" name="process_temp" id="process_temp" class="input-control mono" value="308.6" required>
-            <span class="input-unit-badge">K</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Rotational Speed & Torque -->
-      <div class="form-row">
-        <div class="form-group">
-          <label for="rotational_speed" class="form-label">Rotational Speed</label>
-          <div class="input-with-unit">
-            <input type="number" step="1" name="rotational_speed" id="rotational_speed" class="input-control mono" value="1551" required>
-            <span class="input-unit-badge">rpm</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="torque" class="form-label">Torque</label>
-          <div class="input-with-unit">
-            <input type="number" step="0.1" name="torque" id="torque" class="input-control mono" value="42.8" required>
-            <span class="input-unit-badge">Nm</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tool Wear -->
-      <div class="form-group">
-        <label for="tool_wear" class="form-label">Tool Wear Duration</label>
-        <div class="input-with-unit">
-          <input type="number" step="1" name="tool_wear" id="tool_wear" class="input-control mono" value="120" required>
-          <span class="input-unit-badge">min</span>
-        </div>
-        <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; display: block;">
-          Cumulative cutting tool friction life indicator.
-        </span>
-      </div>
-
-      <!-- Submit CTA Button -->
-      <button type="submit" id="submitAnalysisBtn" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 0.95rem; margin-top: 10px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <polygon points="10 8 16 12 10 16 10 8"></polygon>
-        </svg>
-        Execute AI Pipeline Analysis
-      </button>
-    </form>
-  </div>
-
-  <!-- Right Column: AI Pipeline Flow Explanation -->
-  <div class="pipeline-panel">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-      <h2 style="font-size: 1.15rem;">AI Analysis Pipeline</h2>
-      <span class="badge badge-success">3 Models</span>
-    </div>
-    <p style="font-size: 0.82rem; color: var(--text-muted);">
-      How multiple machine learning paradigms collaborate to yield reliable maintenance strategies:
-    </p>
-
-    <div class="pipeline-steps-container">
-      <!-- Step 1: Input -->
-      <div class="pipeline-step-node">
-        <div class="step-number-badge">1</div>
-        <div class="step-content">
-          <div class="step-title">
-            <span>Machine Sensor Telemetry</span>
-            <span class="tag-label">Input</span>
-          </div>
-          <p class="step-subtitle">Raw physical measurements: Temperature, Rotational Speed, Torque & Wear.</p>
-        </div>
-      </div>
-
-      <div class="pipeline-arrow-down">&darr;</div>
-
-      <!-- Step 2: Random Forest -->
-      <div class="pipeline-step-node active-stage">
-        <div class="step-number-badge" style="background-color: var(--primary-subtle); color: var(--primary);">2</div>
-        <div class="step-content">
-          <div class="step-title">
-            <span>Random Forest Classifier</span>
-            <span class="badge badge-info">Supervised</span>
-          </div>
-          <p class="step-subtitle">Predicts failure risk and calculates precise failure probability based on known training patterns.</p>
-        </div>
-      </div>
-
-      <div class="pipeline-arrow-down">&darr;</div>
-
-      <!-- Step 3: K-Means -->
-      <div class="pipeline-step-node">
-        <div class="step-number-badge" style="background-color: var(--warning-subtle); color: var(--warning-dark);">3</div>
-        <div class="step-content">
-          <div class="step-title">
-            <span>K-Means Clustering</span>
-            <span class="badge badge-warning">Unsupervised</span>
-          </div>
-          <p class="step-subtitle">Maps multidimensional stress into condition clusters (Optimal, Medium, High Load).</p>
-        </div>
-      </div>
-
-      <div class="pipeline-arrow-down">&darr;</div>
-
-      <!-- Step 4: Q-Learning -->
-      <div class="pipeline-step-node">
-        <div class="step-number-badge" style="background-color: var(--success-subtle); color: var(--success-dark);">4</div>
-        <div class="step-content">
-          <div class="step-title">
-            <span>Q-Learning Decision Policy</span>
-            <span class="badge badge-success">Reinforcement</span>
-          </div>
-          <p class="step-subtitle">Selects optimal maintenance action (CONTINUE, INSPECT, or MAINTENANCE) to maximize machine lifetime.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- Presets Selector -->
+<div class="flex flex-wrap items-center gap-space-sm bg-white p-1.5 rounded-xl border border-slate-200 shadow-xs"><span class="text-[11px] font-bold text-slate-400 px-space-xs uppercase tracking-wider">Presets:</span><button class="flex items-center gap-space-xs px-3.5 py-2 rounded-lg bg-cyan-600 text-white hover:bg-cyan-700 transition-all text-xs font-semibold tracking-wide shadow-xs" id="btn-preset-nominal" onclick="applyPreset('nominal')" type="button"><span class="w-2 h-2 rounded-full bg-emerald-300 ring-2 ring-white/30"></span><span class="">Normal Machine</span></button><button class="flex items-center gap-space-xs px-3.5 py-2 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 border border-slate-200/80 transition-all text-xs font-semibold tracking-wide shadow-2xs" id="btn-preset-critical" onclick="applyPreset('critical')" type="button"><span class="w-2 h-2 rounded-full bg-red-500 ring-2 ring-white/50"></span><span class="">High Risk Machine</span></button></div>
+</section>
+<!-- Main Layout Split -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+<!-- Left Column: Guided Analysis Form (7 Cols) -->
+<section class="lg:col-span-7 flex flex-col gap-space-lg bg-white p-space-lg rounded-2xl border border-slate-200 shadow-sm p-space-xl">
+<div class="flex items-center justify-between pb-space-xs border-b border-slate-100 pb-3"><div class="flex items-center gap-space-sm"><div class="w-8 h-8 rounded-lg bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-600"><span class="material-symbols-outlined text-[18px]">tune</span></div><div><h2 class="text-sm font-bold text-slate-900">Input Parameter Sensor</h2><p class="text-xs text-slate-500">Kalibrasi variabel telemetri untuk menguji inferensi model.</p></div></div><span class="px-2.5 py-0.5 rounded-full bg-cyan-50 border border-cyan-200 text-[11px] text-cyan-700 font-semibold">Live Input</span></div>
+<form class="flex flex-col gap-space-lg" id="machine-form" onsubmit="event.preventDefault(); triggerSimulation();">
+<!-- 1. Machine Type (3-pill toggle) -->
+<div class="flex flex-col gap-space-xs"><label class="text-xs font-semibold text-slate-700 flex items-center justify-between"><span class="">Machine Class / Duty Cycle</span><span class="text-[11px] text-slate-500 font-normal">Menentukan batas dasar tegangan beban</span></label><div class="grid grid-cols-3 gap-space-sm p-1 rounded-xl bg-slate-100/90 border border-slate-200"><button class="type-pill py-2.5 px-4 rounded-lg text-xs font-semibold tracking-wide transition-all flex flex-col items-center justify-center bg-cyan-600 text-white shadow-xs cursor-pointer" id="type-pill-L" onclick="setMachineType('L')" type="button"><span class="font-bold text-white">L - Light Duty</span><span class="text-[10px] text-cyan-50 opacity-90">50% load rating</span></button><button class="type-pill py-2.5 px-4 rounded-lg text-xs font-semibold tracking-wide text-slate-700 hover:text-slate-900 hover:bg-white/90 transition-all flex flex-col items-center justify-center cursor-pointer" id="type-pill-M" onclick="setMachineType('M')" type="button"><span class="font-bold">M - Medium Duty</span><span class="text-[10px] text-slate-500 opacity-80">75% load rating</span></button><button class="type-pill py-2.5 px-4 rounded-lg text-xs font-semibold tracking-wide text-slate-700 hover:text-slate-900 hover:bg-white/90 transition-all flex flex-col items-center justify-center cursor-pointer" id="type-pill-H" onclick="setMachineType('H')" type="button"><span class="font-bold">H - Heavy Duty</span><span class="text-[10px] text-slate-500 opacity-80">100% continuous</span></button></div><input id="input-type" type="hidden" value="L"></div>
+<!-- 2. Dual Temperatures (Air + Process) Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md"><div class="flex flex-col gap-space-xs p-space-md rounded-xl bg-slate-50 border border-slate-200/80"><div class="flex items-center justify-between"><label class="text-xs font-semibold text-slate-700" for="input-air-temp">Air Temperature <span class="text-[11px] text-slate-500 font-normal">[K]</span></label><span class="text-[11px] text-cyan-700 font-semibold" id="label-air-celsius">~25.0 °C</span></div><div class="flex items-center gap-space-sm"><input class="w-24 px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm text-right font-medium focus:outline-none focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600" id="input-air-temp" max="320" min="280" oninput="syncAirTemp(this.value)" step="0.1" type="number" value="298.1"><input class="w-full accent-cyan-600 cursor-pointer" id="slider-air-temp" max="315" min="285" oninput="syncAirTemp(this.value)" step="0.1" type="range" value="298.1"></div><div class="flex items-center justify-between text-[11px] text-slate-500"><span class="">Range: 285 – 315 K</span><span class="text-emerald-700 font-medium">Optimal: 298 K</span></div></div><div class="flex flex-col gap-space-xs p-space-md rounded-xl bg-slate-50 border border-slate-200/80"><div class="flex items-center justify-between"><label class="text-xs font-semibold text-slate-700" for="input-proc-temp">Process Temperature <span class="text-[11px] text-slate-500 font-normal">[K]</span></label><span class="text-[11px] text-cyan-700 font-semibold" id="label-proc-celsius">~35.5 °C</span></div><div class="flex items-center gap-space-sm"><input class="w-24 px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm text-right font-medium focus:outline-none focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600" id="input-proc-temp" max="330" min="290" oninput="syncProcTemp(this.value)" step="0.1" type="number" value="308.6"><input class="w-full accent-cyan-600 cursor-pointer" id="slider-proc-temp" max="325" min="295" oninput="syncProcTemp(this.value)" step="0.1" type="range" value="308.6"></div><div class="flex items-center justify-between text-[11px] text-slate-500"><span class="">Range: 295 – 325 K</span><span class="text-emerald-700 font-medium">Optimal: 308 K</span></div></div></div>
+<!-- 3. Dynamic Mechanical Inputs (Speed & Torque) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md"><div class="flex flex-col gap-space-xs p-space-md rounded-xl bg-slate-50 border border-slate-200/80"><div class="flex items-center justify-between"><label class="text-xs font-semibold text-slate-700" for="input-speed">Rotational Speed <span class="text-[11px] text-slate-500 font-normal">[rpm]</span></label><span class="text-[11px] text-emerald-700 font-semibold" id="label-speed-status">Nominal Velocity</span></div><div class="flex items-center gap-space-sm"><input class="w-24 px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm text-right font-medium focus:outline-none focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600" id="input-speed" max="3000" min="1000" oninput="syncSpeed(this.value)" type="number" value="1551"><input class="w-full accent-cyan-600 cursor-pointer" id="slider-speed" max="2600" min="1100" oninput="syncSpeed(this.value)" step="5" type="range" value="1551"></div><div class="flex items-center justify-between text-[11px] text-slate-500"><span class="">Range: 1,100 – 2,600 rpm</span><span class="text-emerald-700 font-medium">Safe: 1,400 – 1,800 rpm</span></div></div><div class="flex flex-col gap-space-xs p-space-md rounded-xl bg-slate-50 border border-slate-200/80"><div class="flex items-center justify-between"><label class="text-xs font-semibold text-slate-700" for="input-torque">Torque Load <span class="text-[11px] text-slate-500 font-normal">[Nm]</span></label><span class="text-[11px] text-emerald-700 font-semibold" id="label-torque-status">Within Safety Spec</span></div><div class="flex items-center gap-space-sm"><input class="w-24 px-3 py-2 rounded-lg bg-white border border-slate-300 text-slate-900 text-sm text-right font-medium focus:outline-none focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600" id="input-torque" max="100" min="0" oninput="syncTorque(this.value)" step="0.1" type="number" value="42.8"><input class="w-full accent-cyan-600 cursor-pointer" id="slider-torque" max="85" min="5" oninput="syncTorque(this.value)" step="0.2" type="range" value="42.8"></div><div class="flex items-center justify-between text-[11px] text-slate-500"><span class="">Range: 5 – 85 Nm</span><span class="text-emerald-700 font-medium">Limit: &lt; 60.0 Nm</span></div></div></div>
+<!-- 4. Tool Wear Time with Continuous Progress Track -->
+<div class="flex flex-col gap-space-sm p-space-md rounded-xl bg-slate-50 border border-slate-200/80"><div class="flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-cyan-600">hourglass_bottom</span><label class="text-xs font-semibold text-slate-700" for="input-tool-wear">Cumulative Tool Wear Time</label></div><div class="flex items-center gap-space-sm"><span class="text-sm font-bold text-slate-900" id="label-tool-wear">120 <span class="text-xs text-slate-500 font-normal">min</span></span><span class="px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-semibold border border-emerald-200" id="badge-tool-wear">60% Lifecycle</span></div></div><div class="relative w-full"><input class="w-full accent-cyan-600 cursor-pointer h-2 bg-slate-200 rounded-lg" id="slider-tool-wear" max="260" min="0" oninput="syncToolWear(this.value)" type="range" value="120"><div class="flex items-center justify-between mt-space-xs text-[11px] text-slate-500"><span class="">0 min (Fresh Tool)</span><span class="text-slate-600 font-medium">Recommended Service: 180 min</span><span class="text-red-600 font-semibold">Threshold: 200 min</span></div></div></div>
+<!-- Form Submission / Trigger Bar -->
+<div class="flex items-center justify-between pt-space-xs">
+<button class="flex items-center gap-space-sm px-5 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-semibold tracking-wide active:scale-[0.99] transition-all shadow-sm hover:shadow-md hover:shadow-cyan-600/20 w-full justify-center cursor-pointer" id="btn-run-analysis" type="submit"><span class="material-symbols-outlined text-[18px]">neurology</span><span class="">Jalankan Analisis AI</span></button>
 </div>
-
-<!-- Animated Scanning Overlay for Execution Feedback -->
-<div class="analysis-overlay" id="analysisScanningOverlay">
-  <div class="analysis-modal">
-    <div class="spinner-industrial"></div>
-    <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Running AI Maintenance Pipeline</h3>
-    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">Evaluating sensor data through multi-paradigm models...</p>
-
-    <div class="scan-step-list">
-      <div class="scan-step-item" id="scanStep1">
-        <span class="step-status-icon">&bull;</span> Preprocessing & feature normalization
-      </div>
-      <div class="scan-step-item" id="scanStep2">
-        <span class="step-status-icon">&bull;</span> Executing Random Forest failure predictor
-      </div>
-      <div class="scan-step-item" id="scanStep3">
-        <span class="step-status-icon">&bull;</span> Mapping operating condition via K-Means
-      </div>
-      <div class="scan-step-item" id="scanStep4">
-        <span class="step-status-icon">&bull;</span> Calculating Q-Learning policy & action value
-      </div>
-      <div class="scan-step-item" id="scanStep5">
-        <span class="step-status-icon">&bull;</span> Compiling maintenance decision synthesis
-      </div>
-    </div>
-  </div>
+</form>
+</section>
+<!-- Right Column: Explanatory 3-Step AI Card + Live Machine Verdict (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-gutter">
+<!-- Friendly "How AI Analyzes This" Guide Card -->
+<section class="bg-white p-space-lg rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-space-lg">
+<div class="flex items-center gap-space-sm border-b border-slate-100 pb-3"><div class="w-8 h-8 rounded-lg bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-600"><span class="material-symbols-outlined text-[18px]">hub</span></div><div><h3 class="text-sm font-bold text-slate-900">Cara AI Menganalisis Data Ini</h3><p class="text-xs text-slate-500">Pipeline konsensus tiga model kecerdasan buatan</p></div></div>
+<!-- 3-Step Timeline without jargon -->
+<div class="flex flex-col relative pl-space-md"><div class="absolute left-[23px] top-4 bottom-6 w-0.5 bg-slate-200"></div><div class="flex items-start gap-space-md relative mb-space-lg"><div class="w-7 h-7 rounded-xl bg-cyan-600 text-white flex items-center justify-center text-xs font-bold z-10 shrink-0 shadow-xs"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div><div class="flex flex-col gap-0.5"><div class="flex items-center gap-space-xs"><span class="text-xs font-bold text-slate-800">1. Risk Detection</span><span class="px-2 py-0.5 rounded bg-cyan-50 border border-cyan-200 text-cyan-700 text-[10px] font-semibold">Random Forest</span></div><p class="text-[11px] text-slate-500 leading-relaxed">Random Forest memeriksa apakah mesin berisiko mengalami kegagalan dengan menghitung korelasi multi-sensor.</p></div></div><div class="flex items-start gap-space-md relative mb-space-lg"><div class="w-7 h-7 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 flex items-center justify-center text-xs font-bold z-10 shrink-0 shadow-xs"><svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><circle cx="19" cy="5" r="2"></circle><circle cx="5" cy="19" r="2"></circle><path d="m10.5 10.5-4 7m7.5-7 4.5-4.5"></path></svg></div><div class="flex flex-col gap-0.5"><div class="flex items-center gap-space-xs"><span class="text-xs font-bold text-slate-800">2. Condition Grouping</span><span class="px-2 py-0.5 rounded bg-indigo-50 border border-indigo-200 text-indigo-700 text-[10px] font-semibold">K-Means</span></div><p class="text-[11px] text-slate-500 leading-relaxed">K-Means mengelompokkan kondisi operasi ke dalam profil keausan ringan, sedang, atau berat.</p></div></div><div class="flex items-start gap-space-md relative"><div class="w-7 h-7 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs font-bold z-10 shrink-0 shadow-xs"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></div><div class="flex flex-col gap-0.5"><div class="flex items-center gap-space-xs"><span class="text-xs font-bold text-slate-800">3. Optimal Recommendation</span><span class="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-semibold">Q-Learning</span></div><p class="text-[11px] text-slate-500 leading-relaxed">Q-Learning menentukan apakah perlu Melanjutkan operasi, Memeriksa komponen, atau melakukan Pemeliharaan segera.</p></div></div></div>
+<!-- Reassuring info box -->
+</section>
+<!-- Live Diagnosis Preview Card (Interactive Output) -->
+<section class="bg-white p-space-lg rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-space-md transition-all" id="verdict-card">
+<div class="flex items-center justify-between border-b border-slate-100 pb-2"><span class="text-xs font-bold text-slate-700 tracking-wide uppercase">Pipeline Verdict</span><span class="text-xs text-slate-500" id="verdict-timestamp">Siap untuk dievaluasi</span></div>
+<div class="flex items-start justify-between gap-space-md pt-1"><div class="flex flex-col"><div class="flex items-center gap-space-sm mb-1"><div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" id="verdict-dot"></div><span class="text-base font-bold text-slate-900" id="verdict-title">Skor Kesehatan: 94.2%</span></div><p class="text-xs text-slate-500 leading-relaxed" id="verdict-desc">Sistem beroperasi dalam kondisi termomekanis nominal. Tidak ada anomali terdeteksi.</p></div><div class="relative w-14 h-14 shrink-0 flex items-center justify-center"><svg class="w-14 h-14 transform -rotate-90" viewBox="0 0 36 36"><path class="text-slate-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path><path class="text-emerald-500 transition-all duration-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" id="verdict-svg-circle" stroke="currentColor" stroke-dasharray="94, 100" stroke-linecap="round" stroke-width="3.5"></path></svg><span class="absolute text-xs font-bold text-slate-900" id="verdict-donut-val">94%</span></div></div>
+<!-- 3 Output Badges -->
+<div class="grid grid-cols-3 gap-space-sm pt-space-xs">
+<div class="flex flex-col p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
+<span class="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Failure Prob.</span>
+<span class="text-sm font-bold text-emerald-600 mt-0.5" id="out-rf">3.8%</span>
 </div>
-{% endblock %}
+<div class="flex flex-col p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
+<span class="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Wear Cluster</span>
+<span class="text-sm font-bold text-cyan-700 mt-0.5" id="out-kmeans">Light Wear</span>
+</div>
+<div class="flex flex-col p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-center">
+<span class="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Q-Action</span>
+<span class="text-sm font-bold text-emerald-600 mt-0.5" id="out-action">CONTINUE</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 text-slate-700 text-xs" id="verdict-callout"><span class="material-symbols-outlined text-[18px] text-emerald-600 shrink-0">check_circle</span><span class="font-medium text-slate-700" id="verdict-callout-text">Parameter berada dalam batas operasional historis yang aman.</span></div>
+</section>
+<!-- Industrial Context / Visual Anchor -->
+</div>
+</div>
+</div>
+<script>
+  // Simple interactive state synchronizers
+  function kelvinToCelsius(k) {
+    return (parseFloat(k) - 273.15).toFixed(1);
+  }
 
-{% block scripts %}
-<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
-{% endblock %}
+  function setMachineType(type) {
+    document.getElementById('input-type').value = type;
+    const pills = ['L', 'M', 'H'];
+    pills.forEach(p => {
+      const el = document.getElementById(`type-pill-${p}`);
+      if (p === type) {
+        el.className = "type-pill py-2.5 px-4 rounded-lg text-xs font-semibold tracking-wide transition-all flex flex-col items-center justify-center bg-cyan-600 text-white shadow-xs";
+      } else {
+        el.className = "type-pill py-2.5 px-4 rounded-lg text-xs font-semibold tracking-wide text-slate-600 hover:text-slate-900 hover:bg-white/80 transition-all flex flex-col items-center justify-center";
+      }
+    });
+  }
+
+  function syncAirTemp(val) {
+    document.getElementById('input-air-temp').value = val;
+    document.getElementById('slider-air-temp').value = val;
+    document.getElementById('label-air-celsius').innerText = `~${kelvinToCelsius(val)} °C`;
+  }
+
+  function syncProcTemp(val) {
+    document.getElementById('input-proc-temp').value = val;
+    document.getElementById('slider-proc-temp').value = val;
+    document.getElementById('label-proc-celsius').innerText = `~${kelvinToCelsius(val)} °C`;
+  }
+
+  function syncSpeed(val) {
+    document.getElementById('input-speed').value = val;
+    document.getElementById('slider-speed').value = val;
+    const num = parseInt(val);
+    const label = document.getElementById('label-speed-status');
+    if (num < 1400) {
+      label.innerText = 'Under-speed';
+      label.className = 'text-[11px] text-red-600 font-semibold';
+    } else if (num > 1800) {
+      label.innerText = 'High Rotation';
+      label.className = 'text-[11px] text-red-600 font-semibold';
+    } else {
+      label.innerText = 'Nominal Velocity';
+      label.className = 'text-[11px] text-emerald-700 font-semibold';
+    }
+  }
+
+  function syncTorque(val) {
+    document.getElementById('input-torque').value = val;
+    document.getElementById('slider-torque').value = val;
+    const num = parseFloat(val);
+    const label = document.getElementById('label-torque-status');
+    if (num > 60) {
+      label.innerText = 'Torque Overload';
+      label.className = 'text-[11px] text-red-600 font-semibold';
+    } else {
+      label.innerText = 'Within Safety Spec';
+      label.className = 'text-[11px] text-emerald-700 font-semibold';
+    }
+  }
+
+  function syncToolWear(val) {
+    document.getElementById('slider-tool-wear').value = val;
+    document.getElementById('label-tool-wear').innerHTML = `${val} <span class="text-xs text-slate-500 font-normal">min</span>`;
+    const num = parseInt(val);
+    const badge = document.getElementById('badge-tool-wear');
+    const percent = Math.round((num / 200) * 100);
+
+    if (num >= 200) {
+      badge.className = 'px-2.5 py-0.5 rounded-full bg-red-100 text-red-800 border border-red-200 text-[11px] font-semibold';
+      badge.innerText = `${percent}% Wear (Critical)`;
+    } else if (num >= 150) {
+      badge.className = 'px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 text-[11px] font-semibold';
+      badge.innerText = `${percent}% Lifecycle`;
+    } else {
+      badge.className = 'px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 text-[11px] font-semibold';
+      badge.innerText = `${percent}% Lifecycle`;
+    }
+  }
+
+  function applyPreset(mode) {
+    const btnNominal = document.getElementById('btn-preset-nominal');
+    const btnCritical = document.getElementById('btn-preset-critical');
+
+    if (mode === 'nominal') {
+      btnNominal.className = "flex items-center gap-space-xs px-3.5 py-2 rounded-lg bg-cyan-600 text-white hover:bg-cyan-700 transition-all text-xs font-semibold tracking-wide shadow-xs";
+      btnCritical.className = "flex items-center gap-space-xs px-3.5 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 transition-all text-xs font-semibold tracking-wide";
+      
+      setMachineType('L');
+      syncAirTemp(298.1);
+      syncProcTemp(308.6);
+      syncSpeed(1551);
+      syncTorque(42.8);
+      syncToolWear(120);
+    } else {
+      btnCritical.className = "flex items-center gap-space-xs px-3.5 py-2 rounded-lg bg-cyan-600 text-white hover:bg-cyan-700 transition-all text-xs font-semibold tracking-wide shadow-xs";
+      btnNominal.className = "flex items-center gap-space-xs px-3.5 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900 transition-all text-xs font-semibold tracking-wide";
+      
+      setMachineType('H');
+      syncAirTemp(303.8);
+      syncProcTemp(312.4);
+      syncSpeed(1280);
+      syncTorque(68.5);
+      syncToolWear(214);
+    }
+    triggerSimulation();
+  }
+
+  function resetFormDefault() {
+    applyPreset('nominal');
+  }
+
+  function triggerSimulation() {
+    const air = parseFloat(document.getElementById('input-air-temp').value) || 298.1;
+    const proc = parseFloat(document.getElementById('input-proc-temp').value) || 308.6;
+    const torque = parseFloat(document.getElementById('input-torque').value) || 42.8;
+    const wear = parseInt(document.getElementById('slider-tool-wear').value) || 120;
+    const speed = parseInt(document.getElementById('input-speed').value) || 1551;
+
+    const btn = document.getElementById('btn-run-analysis');
+    btn.innerHTML = `<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Computing...</span>`;
+
+    setTimeout(() => {
+      btn.innerHTML = `<span class="material-symbols-outlined text-[18px]">neurology</span><span>Jalankan Analisis AI</span>`;
+      
+      // Calculate realistic simulated outputs based on simple heuristics
+      let failScore = 2.5;
+      if (torque > 60) failScore += (torque - 60) * 1.8;
+      if (wear > 180) failScore += (wear - 180) * 0.45;
+      if (speed < 1350 || speed > 1900) failScore += 18;
+      if ((proc - air) < 8.0) failScore += 15; // Heat dissipation strain
+
+      failScore = Math.min(Math.max(failScore, 1.2), 96.5);
+      const health = (100 - failScore).toFixed(1);
+
+      const circle = document.getElementById('verdict-svg-circle');
+      const donutVal = document.getElementById('verdict-donut-val');
+      const verdictDot = document.getElementById('verdict-dot');
+      const verdictTitle = document.getElementById('verdict-title');
+      const verdictDesc = document.getElementById('verdict-desc');
+      const outRf = document.getElementById('out-rf');
+      const outKmeans = document.getElementById('out-kmeans');
+      const outAction = document.getElementById('out-action');
+      const calloutText = document.getElementById('verdict-callout-text');
+
+      donutVal.innerText = `${Math.round(health)}%`;
+      circle.setAttribute('stroke-dasharray', `${Math.round(health)}, 100`);
+      document.getElementById('verdict-timestamp').innerText = 'Evaluated just now';
+
+      if (health > 80) {
+        circle.setAttribute('class', 'text-emerald-500 transition-all duration-700');
+        verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
+        verdictTitle.innerText = `Skor Kesehatan: ${health}%`;
+        verdictTitle.className = 'text-base font-bold text-slate-900';
+        verdictDesc.innerText = 'Sistem beroperasi dalam kondisi termomekanis nominal. Tidak ada anomali terdeteksi.';
+        outRf.innerText = `${failScore.toFixed(1)}%`;
+        outRf.className = 'text-sm font-bold text-emerald-600 mt-0.5';
+        outKmeans.innerText = wear > 130 ? 'Medium Wear' : 'Light Wear';
+        outKmeans.className = 'text-sm font-bold text-cyan-700 mt-0.5';
+        outAction.innerText = 'CONTINUE';
+        outAction.className = 'text-sm font-bold text-emerald-600 mt-0.5';
+        calloutText.innerText = 'Parameter berada dalam batas operasional historis yang aman.';
+      } else if (health > 50) {
+        circle.setAttribute('class', 'text-amber-500 transition-all duration-700');
+        verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse';
+        verdictTitle.innerText = `Skor Kesehatan: ${health}%`;
+        verdictTitle.className = 'text-base font-bold text-slate-900';
+        verdictDesc.innerText = 'Profil keausan meningkat terdeteksi. Jadwalkan inspeksi visual dalam 48 jam operasi.';
+        outRf.innerText = `${failScore.toFixed(1)}%`;
+        outRf.className = 'text-sm font-bold text-amber-600 mt-0.5';
+        outKmeans.innerText = 'Moderate Strain';
+        outKmeans.className = 'text-sm font-bold text-amber-600 mt-0.5';
+        outAction.innerText = 'INSPECT';
+        outAction.className = 'text-sm font-bold text-amber-600 mt-0.5';
+        calloutText.innerText = 'Degradasi alat yang kentara atau ketidakseimbangan beban termodinamika.';
+      } else {
+        circle.setAttribute('class', 'text-red-500 transition-all duration-700');
+        verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500 animate-ping';
+        verdictTitle.innerText = `Skor Kesehatan: ${health}% (Risk)`;
+        verdictTitle.className = 'text-base font-bold text-red-600';
+        verdictDesc.innerText = 'Probabilitas kegagalan terdeteksi oleh Random Forest. Risiko kelebihan beban keausan tinggi.';
+        outRf.innerText = `${failScore.toFixed(1)}%`;
+        outRf.className = 'text-sm font-bold text-red-600 mt-0.5';
+        outKmeans.innerText = 'Heavy Wear';
+        outKmeans.className = 'text-sm font-bold text-red-600 mt-0.5';
+        outAction.innerText = 'MAINTAIN';
+        outAction.className = 'text-sm font-bold text-red-600 mt-0.5';
+        calloutText.innerText = 'Agen Q-Learning menyarankan penghentian produksi untuk mengganti komponen aus.';
+      }
+    }, 450);
+  }
+</script></main></div>
+
+
+
+</body></html>
