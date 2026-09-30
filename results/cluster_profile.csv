@@ -1,0 +1,4 @@
+Cluster,Air temperature [K],Process temperature [K],Rotational speed [rpm],Torque [Nm],Tool wear [min]
+0,301.72,311.25,1469.81,43.64,110.36
+1,298.26,308.74,1474.14,43.26,104.62
+2,300.12,310.1,1797.26,26.57,109.85
