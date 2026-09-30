@@ -1,15 +1,35 @@
 version: '3.8'
 
 services:
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: ai_maintenance
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+
   web:
     build: .
     container_name: ai_predictive_maintenance
     ports:
       - "5000:5000"
     volumes:
+      # Volume ini tetap dipertahankan untuk menyimpan dataset csv atau file model ML Anda
       - ./data:/app/data
     environment:
       - FLASK_ENV=production
       - SECRET_KEY=your_secret_key_here
-      - DATABASE_URL=sqlite:////app/data/app.db
+      # Ubah URL dari SQLite menjadi PostgreSQL
+      - DATABASE_URL=postgresql://admin:secretpassword@db:5432/ai_maintenance
+    depends_on:
+      - db
     restart: always
+
+volumes:
+  pgdata:

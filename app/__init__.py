@@ -1,17 +1,24 @@
-from flask import Flask
+from flask import Flask, render_template
 from app.config import Config
+from app.models import db
 
 def create_app():
     app = Flask(__name__)
+    
+    # Load konfigurasi dari config.py
     app.config.from_object(Config)
 
-    # Register Blueprints
-    from app.routes.auth import auth_bp
-    from app.routes.main import main_bp
-    from app.routes.analysis import analysis_bp
+    # Inisialisasi database ke aplikasi Flask
+    db.init_app(app)
 
-    app.register_blueprint(main_bp)
-    app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(analysis_bp)
+    # Context ini wajib untuk membuat tabel otomatis di PostgreSQL
+    with app.app_context():
+        db.create_all()
+
+    # Rute sementara untuk testing
+    @app.route('/')
+    @app.route('/dashboard')
+    def dashboard():
+        return render_template('dashboard.html')
 
     return app
