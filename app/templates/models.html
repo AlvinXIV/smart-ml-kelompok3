@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}AI Models{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">AI Models Architecture</h1>
+  <p class="page-subtitle">Three distinct machine learning paradigms harmonized into an end-to-end predictive intelligence engine.</p>
+</div>
+
+<!-- 3 ML Paradigm Cards -->
+<section class="model-cards-grid">
+  <!-- Card 1: Random Forest -->
+  <div class="card-base" style="display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+      <div class="kpi-icon-wrap blue">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2v20"></path>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+      </div>
+      <span class="badge badge-info">Supervised Learning</span>
+    </div>
+
+    <h2 style="font-size: 1.25rem;">Random Forest</h2>
+    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px; line-height: 1.5;">
+      Ensemble of decision trees trained on labeled historical failures. Identifies complex non-linear failure indicators such as heat dissipation (HDF) and power failure (PWF).
+    </p>
+
+    <div style="margin-top: 20px; padding: 14px; background-color: var(--bg-card-alt); border-radius: var(--radius-md);">
+      <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Key Input Features</div>
+      <div style="font-size: 0.82rem; color: var(--text-main); margin-top: 4px;">
+        Type, Air Temp, Process Temp, Speed, Torque, Wear
+      </div>
+      <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-top: 10px;">Primary Output</div>
+      <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-top: 2px;">
+        Failure Risk &amp; Probability (0 - 100%)
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2: K-Means -->
+  <div class="card-base" style="display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+      <div class="kpi-icon-wrap indigo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+      </div>
+      <span class="badge badge-warning">Unsupervised Learning</span>
+    </div>
+
+    <h2 style="font-size: 1.25rem;">K-Means Clustering</h2>
+    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px; line-height: 1.5;">
+      Partitions machines into 3 distinct geometric clusters representing operating severity. Does not require labels and flags anomalous mechanical wear regimes.
+    </p>
+
+    <div style="margin-top: 20px; padding: 14px; background-color: var(--bg-card-alt); border-radius: var(--radius-md);">
+      <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Condition Mapping</div>
+      <div style="font-size: 0.82rem; color: var(--text-main); margin-top: 4px;">
+        Cluster 0: Optimal &bull; Cluster 1: Medium &bull; Cluster 2: High Load
+      </div>
+      <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-top: 10px;">Primary Output</div>
+      <div style="font-size: 0.85rem; font-weight: 700; color: var(--warning-dark); margin-top: 2px;">
+        Operating Regime Cluster
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3: Q-Learning -->
+  <div class="card-base" style="display: flex; flex-direction: column;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+      <div class="kpi-icon-wrap green">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </div>
+      <span class="badge badge-success">Reinforcement Learning</span>
+    </div>
+
+    <h2 style="font-size: 1.25rem;">Q-Learning Agent</h2>
+    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px; line-height: 1.5;">
+      A discrete Markov Decision Process policy that balances downtime inspection penalties against catastrophic equipment loss rewards.
+    </p>
+
+    <div style="margin-top: 20px; padding: 14px; background-color: var(--bg-card-alt); border-radius: var(--radius-md);">
+      <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Action Space</div>
+      <div style="font-size: 0.82rem; color: var(--text-main); margin-top: 4px;">
+        CONTINUE &bull; INSPECT &bull; MAINTENANCE
+      </div>
+      <div style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-top: 10px;">Primary Output</div>
+      <div style="font-size: 0.85rem; font-weight: 700; color: var(--success-dark); margin-top: 2px;">
+        Prescriptive Maintenance Action &amp; Q-Score
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Visual Pipeline Architecture Flow Section -->
+<section class="architecture-diagram-card">
+  <div style="margin-bottom: 24px;">
+    <h2 style="font-size: 1.25rem;">Multi-Paradigm Execution Flow</h2>
+    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">
+      How state representation and outputs cascade across models to produce unified decisions.
+    </p>
+  </div>
+
+  <div class="diagram-flow-container">
+    <!-- Node 1: Input -->
+    <div class="flow-node" style="min-width: 260px;">
+      1. Machine Telemetry (AI4I Sensor Inputs)
+    </div>
+
+    <div style="color: var(--text-dim); font-size: 1.2rem;">&darr;</div>
+
+    <!-- Node 2: Preprocessing -->
+    <div class="flow-node highlight" style="min-width: 260px;">
+      2. Feature Scaling &amp; Normalization
+    </div>
+
+    <div style="color: var(--text-dim); font-size: 1.2rem;">&darr;</div>
+
+    <!-- Branch: RF and KMeans -->
+    <div class="flow-branch-row">
+      <div style="flex: 1; max-width: 320px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <div class="flow-node" style="width: 100%; border-color: var(--primary-border); background-color: var(--primary-subtle);">
+          <strong>Random Forest</strong>
+          <div style="font-size: 0.75rem; color: var(--primary);">Predicts Failure Probability</div>
+        </div>
+        <div style="color: var(--text-dim); font-size: 1.1rem;">&darr;</div>
+        <div class="flow-node" style="width: 100%;">
+          Failure Risk State
+        </div>
+      </div>
+
+      <div style="flex: 1; max-width: 320px; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <div class="flow-node" style="width: 100%; border-color: var(--warning-border); background-color: var(--warning-subtle);">
+          <strong>K-Means Clustering</strong>
+          <div style="font-size: 0.75rem; color: var(--warning-dark);">Segments Operating Regime</div>
+        </div>
+        <div style="color: var(--text-dim); font-size: 1.1rem;">&darr;</div>
+        <div class="flow-node" style="width: 100%;">
+          Condition Cluster ID
+        </div>
+      </div>
+    </div>
+
+    <div style="color: var(--text-dim); font-size: 1.2rem;">&darr;</div>
+
+    <!-- Node 3: State Construction & Q-Learning -->
+    <div class="flow-node" style="min-width: 340px; border-color: var(--success-border); background-color: var(--success-subtle);">
+      <strong>Q-Learning State Formulator &amp; Decision Policy</strong>
+      <div style="font-size: 0.75rem; color: var(--success-dark);">Calculates Max Expected Reward Over Action Matrix</div>
+    </div>
+
+    <div style="color: var(--text-dim); font-size: 1.2rem;">&darr;</div>
+
+    <!-- Node 4: Synthesis -->
+    <div class="flow-node highlight" style="min-width: 340px; background: linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 100%);">
+      <strong>Final Action: CONTINUE &bull; INSPECT &bull; MAINTENANCE</strong>
+      <div style="font-size: 0.75rem; color: var(--text-muted);">Stored to Audit Log &bull; Live Telemetry Feed</div>
+    </div>
+  </div>
+</section>
+{% endblock %}

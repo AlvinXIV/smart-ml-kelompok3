@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Dashboard{% endblock %} — AI Predictive Maintenance</title>
+  
+  <!-- Modern Industrial Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js for Industrial Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Clean Light Industrial Theme Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Persistent Sidebar Navigation (Desktop) / Collapsible Drawer (Mobile) -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="6" width="20" height="8" rx="1"></rect>
+            <path d="M17 14v7"></path>
+            <path d="M7 14v7"></path>
+            <path d="M17 3v3"></path>
+            <path d="M7 3v3"></path>
+            <path d="M10 14v3"></path>
+            <path d="M14 14v3"></path>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-title">AI Predictive</span>
+          <span class="brand-subtitle">Maintenance System</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <span class="nav-section-label">Core Operations</span>
+        <a href="{{ url_for('main.dashboard') }}" class="nav-link {% if request.path == '/' or request.path == '/dashboard' %}active{% endif %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="7" height="9" rx="1"></rect>
+            <rect x="14" y="3" width="7" height="5" rx="1"></rect>
+            <rect x="14" y="12" width="7" height="9" rx="1"></rect>
+            <rect x="3" y="16" width="7" height="5" rx="1"></rect>
+          </svg>
+          Dashboard
+        </a>
+
+        <a href="{{ url_for('analysis.analysis') }}" class="nav-link {% if request.path == '/analysis' or request.path == '/result' %}active{% endif %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+          </svg>
+          Machine Analysis
+        </a>
+
+        <a href="{{ url_for('analysis.history') }}" class="nav-link {% if request.path == '/history' %}active{% endif %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Analysis History
+        </a>
+
+        <span class="nav-section-label" style="margin-top: 14px;">Intelligence</span>
+        <a href="{{ url_for('main.models') }}" class="nav-link {% if request.path == '/models' %}active{% endif %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+          AI Models
+        </a>
+
+        <a href="{{ url_for('main.about') }}" class="nav-link {% if request.path == '/about' %}active{% endif %}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          About Project
+        </a>
+      </nav>
+
+      <!-- Sidebar Bottom User Profile -->
+      <div class="sidebar-footer">
+        <div class="user-profile-badge">
+          <div class="user-avatar">AL</div>
+          <div class="user-details">
+            <span class="user-name">Alvin Engineer</span>
+            <span class="user-role">Lead Analyst</span>
+          </div>
+        </div>
+        <a href="{{ url_for('auth.logout') }}" class="logout-btn" title="Sign out" aria-label="Sign out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper">
+      <!-- Clean Light Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle navigation drawer">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <span class="breadcrumb-label">AI Predictive Maintenance &bull; Industrial Edge v2.4</span>
+        </div>
+
+        <div class="topbar-right">
+          <div class="badge-system-live">
+            <span class="pulse-dot"></span>
+            <span>Online &bull; 3 AI Models Ready</span>
+          </div>
+
+          <button class="notification-bell" title="System Notifications" aria-label="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+            <span class="notification-indicator"></span>
+          </button>
+
+          <a href="{{ url_for('auth.login') }}" class="btn btn-secondary" style="padding: 6px 12px; font-size: 0.78rem;">
+            Switch Account
+          </a>
+        </div>
+      </header>
+
+      <!-- Page Body Area -->
+      <main class="page-body">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div style="margin-bottom: 20px;">
+              {% for category, message in messages %}
+                <div class="badge badge-{{ category }}" style="display: flex; width: 100%; padding: 12px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-transform: none;">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+      </main>
+
+      <!-- Standard Light Footer -->
+      <footer style="padding: 20px 32px; border-top: 1px solid var(--border-card); background-color: #ffffff; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-muted); flex-wrap: wrap; gap: 10px;">
+        <div>
+          <strong style="color: var(--text-main);">AI Predictive Maintenance</strong> &bull; Machine Learning for Predictive Maintenance
+        </div>
+        <div>
+          Technology: <span class="mono" style="color: var(--primary);">Python &bull; Flask &bull; Scikit-learn &bull; Docker</span>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Shared Scripts -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

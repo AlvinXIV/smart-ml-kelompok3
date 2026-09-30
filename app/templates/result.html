@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis Result{% endblock %}
+
+{% block content %}
+<div class="page-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 14px;">
+  <div>
+    <h1 class="page-title">Machine Analysis Result</h1>
+    <p class="page-subtitle">AI-powered multi-paradigm assessment of the evaluated machine.</p>
+  </div>
+  <div style="display: flex; gap: 10px;">
+    <a href="{{ url_for('analysis.result', status='normal') }}" class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 12px;">
+      Demo Normal State
+    </a>
+    <a href="{{ url_for('analysis.result', status='high_risk') }}" class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 12px;">
+      Demo High Risk State
+    </a>
+    <a href="{{ url_for('analysis.analysis') }}" class="btn btn-primary" style="font-size: 0.8rem; padding: 6px 12px;">
+      &larr; New Analysis
+    </a>
+  </div>
+</div>
+
+<!-- Compact Parameters Summary Card -->
+<section class="results-header-banner">
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+    <div>
+      <span class="tag-label">EVALUATED TELEMETRY</span>
+      <h3 style="font-size: 1.1rem; margin-top: 2px;">Machine Unit {{ params.machine_type }}-{{ params.rotational_speed }}</h3>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span class="badge badge-info">AI4I Compliant</span>
+      <span class="badge badge-success">Diagnostics Verified</span>
+    </div>
+  </div>
+
+  <div class="input-params-grid">
+    <div class="param-item">
+      <span class="param-label">Machine Type</span>
+      <span class="param-value">Type {{ params.machine_type }}</span>
+    </div>
+    <div class="param-item">
+      <span class="param-label">Air Temperature</span>
+      <span class="param-value">{{ params.air_temp }} K</span>
+    </div>
+    <div class="param-item">
+      <span class="param-label">Process Temp</span>
+      <span class="param-value">{{ params.process_temp }} K</span>
+    </div>
+    <div class="param-item">
+      <span class="param-label">Rotational Speed</span>
+      <span class="param-value">{{ params.rotational_speed }} rpm</span>
+    </div>
+    <div class="param-item">
+      <span class="param-label">Torque</span>
+      <span class="param-value">{{ params.torque }} Nm</span>
+    </div>
+    <div class="param-item">
+      <span class="param-label">Tool Wear</span>
+      <span class="param-value">{{ params.tool_wear }} min</span>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ML Paradigm Results Grid -->
+<section class="results-grid">
+  <!-- 1. Supervised Learning (Random Forest) -->
+  <div class="result-model-card {% if result.failure_prediction == 'FAILURE RISK' %}risk-high{% else %}risk-normal{% endif %}">
+    <div class="model-top-badge">
+      <span class="tag-label">SUPERVISED LEARNING</span>
+      <span class="badge badge-info">Random Forest</span>
+    </div>
+    <h3 class="model-title">Machine Failure Prediction</h3>
+
+    <div style="margin-top: 14px;">
+      {% if result.failure_prediction == 'FAILURE RISK' %}
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span style="font-size: 1.6rem; font-weight: 800; color: var(--danger);">FAILURE RISK</span>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--danger-dark); margin-top: 4px;">
+          High predicted failure probability detected. Machine exhibits high thermal or mechanical fatigue.
+        </p>
+      {% else %}
+        <div style="display: flex; align-items: baseline; gap: 8px;">
+          <span style="font-size: 1.6rem; font-weight: 800; color: var(--success-dark);">NORMAL</span>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">
+          Low predicted failure probability. Machine operates within expected parameter thresholds.
+        </p>
+      {% endif %}
+    </div>
+
+    <!-- Probability Gauge -->
+    <div class="gauge-container">
+      <div style="display: flex; justify-content: space-between; width: 100%; font-size: 0.82rem; font-weight: 700;">
+        <span style="color: var(--text-muted);">Failure Probability</span>
+        <span class="mono" style="color: {% if result.failure_probability > 50 %}var(--danger){% else %}var(--primary){% endif %}; font-size: 1.1rem;">
+          {{ result.failure_probability }}%
+        </span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill {% if result.failure_probability > 50 %}red{% else %}green{% endif %}" style="width: {{ result.failure_probability }}%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Unsupervised Learning (K-Means) -->
+  <div class="result-model-card">
+    <div class="model-top-badge">
+      <span class="tag-label">UNSUPERVISED LEARNING</span>
+      <span class="badge badge-warning">K-Means</span>
+    </div>
+    <h3 class="model-title">Machine Condition Cluster</h3>
+
+    <div style="margin-top: 14px;">
+      <div style="display: flex; align-items: baseline; gap: 8px;">
+        <span style="font-size: 1.6rem; font-weight: 800; color: var(--primary);">Cluster {{ result.cluster }}</span>
+      </div>
+      <div style="margin-top: 6px;">
+        <span class="badge badge-neutral" style="font-size: 0.8rem; padding: 4px 10px;">
+          {{ result.cluster_condition }}
+        </span>
+      </div>
+      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 12px; line-height: 1.4;">
+        Multivariate segmentation groups this machine with units exhibiting similar torque-to-wear ratios and stress profiles.
+      </p>
+    </div>
+
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border-card);">
+      <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">SEGMENTATION CONTEXT</span>
+      <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;">
+        Cluster centroid distance: <span class="mono" style="font-weight: 600;">0.284</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- 3. Reinforcement Learning (Q-Learning) -->
+  <div class="result-model-card">
+    <div class="model-top-badge">
+      <span class="tag-label">REINFORCEMENT LEARNING</span>
+      <span class="badge badge-success">Q-Learning Policy</span>
+    </div>
+    <h3 class="model-title">Recommended Action</h3>
+
+    <div style="margin-top: 14px;">
+      <div style="margin-bottom: 8px;">
+        {% if result.recommended_action == 'MAINTENANCE' %}
+          <span class="badge badge-danger" style="font-size: 1.1rem; padding: 6px 14px; font-weight: 800;">
+            MAINTENANCE
+          </span>
+        {% elif result.recommended_action == 'INSPECT' %}
+          <span class="badge badge-warning" style="font-size: 1.1rem; padding: 6px 14px; font-weight: 800;">
+            INSPECT
+          </span>
+        {% else %}
+          <span class="badge badge-success" style="font-size: 1.1rem; padding: 6px 14px; font-weight: 800;">
+            CONTINUE
+          </span>
+        {% endif %}
+      </div>
+
+      <div style="margin-top: 8px;">
+        <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-main);">
+          Calculated Q-Value: <span class="mono" style="color: var(--primary);">{{ result.q_value }}</span>
+        </span>
+      </div>
+
+      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 8px; line-height: 1.4;">
+        Based on state-action reward optimization, the policy recommends {{ result.recommended_action | lower }} to avoid unexpected line failure.
+      </p>
+    </div>
+
+    <div style="margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border-card);">
+      <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">ACTION POLICY</span>
+      <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px;">
+        Reward expected: <span class="mono" style="font-weight: 600;">+{{ result.q_value }} pts</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Combined AI Maintenance Summary Card -->
+<section class="summary-card">
+  <div style="display: flex; flex-direction: column; gap: 6px;">
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <span class="tag-label">COMPREHENSIVE DECISION</span>
+      <span class="badge badge-success" style="font-size: 0.7rem;">Analysis saved to history</span>
+    </div>
+    <h3 style="font-size: 1.25rem; font-weight: 800;">AI Maintenance Summary</h3>
+  </div>
+
+  <div class="summary-indicators">
+    <div class="indicator-block">
+      <span class="indicator-title">Failure Risk</span>
+      <span class="indicator-val {% if result.failure_prediction == 'FAILURE RISK' %}danger{% else %}green{% endif %}">
+        {% if result.failure_prediction == 'FAILURE RISK' %}High Risk{% else %}Low Risk{% endif %}
+      </span>
+    </div>
+
+    <div class="indicator-block">
+      <span class="indicator-title">Machine Condition</span>
+      <span class="indicator-val" style="color: var(--primary);">
+        {{ result.cluster_condition }}
+      </span>
+    </div>
+
+    <div class="indicator-block">
+      <span class="indicator-title">Optimal Action</span>
+      <span class="indicator-val" style="color: {% if result.recommended_action == 'MAINTENANCE' %}var(--danger){% elif result.recommended_action == 'INSPECT' %}var(--warning-dark){% else %}var(--success-dark){% endif %};">
+        {{ result.recommended_action }}
+      </span>
+    </div>
+  </div>
+
+  <div style="display: flex; gap: 10px;">
+    <a href="{{ url_for('analysis.history') }}" class="btn btn-secondary">
+      View in History
+    </a>
+    <a href="{{ url_for('analysis.analysis') }}" class="btn btn-primary">
+      Run Another &rarr;
+    </a>
+  </div>
+</section>
+{% endblock %}

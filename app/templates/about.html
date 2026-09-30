@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}About Project{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">About the Project</h1>
+  <p class="page-subtitle">Demonstrating how multi-paradigm Artificial Intelligence transforms modern predictive maintenance.</p>
+</div>
+
+<div class="card-base" style="margin-bottom: 24px;">
+  <h2 style="font-size: 1.25rem; margin-bottom: 12px;">Executive Overview</h2>
+  <p style="font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary);">
+    <strong>AI Predictive Maintenance</strong> is an intelligent industrial operations platform engineered to forecast machine breakdowns prior to catastrophic operational downtime. Rather than relying on a single estimator, the system orchestrates <strong>Supervised Learning</strong> (failure prediction), <strong>Unsupervised Learning</strong> (condition grouping), and <strong>Reinforcement Learning</strong> (prescriptive decision dispatch).
+  </p>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+  <!-- Dataset Section -->
+  <div class="card-base">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+      <h3 style="font-size: 1.1rem;">AI4I 2020 Dataset</h3>
+      <span class="badge badge-info">10,000 Records</span>
+    </div>
+    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
+      Synthetic milling machine telemetry reflecting real industrial conditions:
+    </p>
+
+    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 14px; font-size: 0.84rem;">
+      <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid var(--border-card);">
+        <span style="color: var(--text-muted);">Record Volume:</span>
+        <span style="font-weight: 700;">10,000 entries</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid var(--border-card);">
+        <span style="color: var(--text-muted);">Attribute Dimensions:</span>
+        <span style="font-weight: 700;">14 columns</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid var(--border-card);">
+        <span style="color: var(--text-muted);">Core Features:</span>
+        <span>Air Temp, Process Temp, Speed, Torque, Wear</span>
+      </div>
+      <div style="display: flex; justify-content: space-between;">
+        <span style="color: var(--text-muted);">Failure Modes:</span>
+        <span>TWF, HDF, PWF, OSF, RNF</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Machine Learning Paradigms -->
+  <div class="card-base">
+    <h3 style="font-size: 1.1rem; margin-bottom: 14px;">Triple AI Architecture</h3>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+      <div style="padding: 10px 14px; background-color: var(--bg-card-alt); border-radius: 8px;">
+        <div style="display: flex; justify-content: space-between;">
+          <strong style="font-size: 0.88rem; color: var(--primary);">1. Supervised Learning</strong>
+          <span class="badge badge-info" style="font-size: 0.68rem;">Random Forest</span>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">
+          Calibrated ensemble classifier estimating binary failure risk and probability metrics.
+        </p>
+      </div>
+
+      <div style="padding: 10px 14px; background-color: var(--bg-card-alt); border-radius: 8px;">
+        <div style="display: flex; justify-content: space-between;">
+          <strong style="font-size: 0.88rem; color: var(--warning-dark);">2. Unsupervised Learning</strong>
+          <span class="badge badge-warning" style="font-size: 0.68rem;">K-Means</span>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">
+          Clusters operating regimes into Optimal, Medium, and High-Load mechanical stress states.
+        </p>
+      </div>
+
+      <div style="padding: 10px 14px; background-color: var(--bg-card-alt); border-radius: 8px;">
+        <div style="display: flex; justify-content: space-between;">
+          <strong style="font-size: 0.88rem; color: var(--success-dark);">3. Reinforcement Learning</strong>
+          <span class="badge badge-success" style="font-size: 0.68rem;">Q-Learning</span>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 4px;">
+          Determines cost-optimal policy actions (CONTINUE, INSPECT, MAINTENANCE).
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Technology Stack Badges -->
+<div class="card-base">
+  <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Technology Stack</h3>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+    <span class="badge badge-neutral" style="padding: 8px 16px; font-size: 0.85rem; border-color: var(--primary-border);">Python 3.11</span>
+    <span class="badge badge-neutral" style="padding: 8px 16px; font-size: 0.85rem; border-color: var(--primary-border);">Flask Framework</span>
+    <span class="badge badge-neutral" style="padding: 8px 16px; font-size: 0.85rem; border-color: var(--primary-border);">Scikit-learn</span>
+    <span class="badge badge-neutral" style="padding: 8px 16px; font-size: 0.85rem; border-color: var(--primary-border);">SQLite</span>
+    <span class="badge badge-neutral" style="padding: 8px 16px; font-size: 0.85rem; border-color: var(--primary-border);">Docker &amp; Compose</span>
+    <span class="badge badge-neutral" style="padding: 8px 16px; font-size: 0.85rem; border-color: var(--primary-border);">HTML5 Semantic</span>
+    <span class="badge badge-neutral" style="padding: 8px 16px; font-size: 0.85rem; border-color: var(--primary-border);">Vanilla CSS3 Industrial</span>
+    <span class="badge badge-neutral" style="padding: 8px 16px; font-size: 0.85rem; border-color: var(--primary-border);">Chart.js 4</span>
+  </div>
+</div>
+{% endblock %}

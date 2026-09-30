@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Machine Analysis{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Machine Analysis</h1>
+  <p class="page-subtitle">Analyze machine telemetry and operating health through our multi-paradigm AI pipeline.</p>
+</div>
+
+<!-- 2-Column Responsive Layout -->
+<div class="analysis-layout">
+  <!-- Left Column: Input Form -->
+  <div class="card-base">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h2 style="font-size: 1.15rem;">Sensor Telemetry Input</h2>
+      <span class="badge badge-info">AI4I Parameters</span>
+    </div>
+
+    <!-- Quick Preset Buttons for University Demo -->
+    <div class="preset-buttons">
+      <span style="font-size: 0.76rem; color: var(--text-muted); align-self: center; font-weight: 600;">DEMO PRESETS:</span>
+      <button type="button" class="btn-preset" id="presetNormal">Normal Operation (Type L)</button>
+      <button type="button" class="btn-preset" id="presetHighRisk">High Risk Warning (Type M)</button>
+    </div>
+
+    <form id="machineAnalysisForm" action="{{ url_for('analysis.analysis') }}" method="POST">
+      <!-- Machine Type -->
+      <div class="form-group">
+        <label for="machine_type" class="form-label">Machine Type</label>
+        <select name="machine_type" id="machine_type" class="input-control" required>
+          <option value="L" selected>L (Low Quality variant - 50% of units)</option>
+          <option value="M">M (Medium Quality variant - 30% of units)</option>
+          <option value="H">H (High Quality variant - 20% of units)</option>
+        </select>
+      </div>
+
+      <!-- Air Temperature & Process Temperature -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="air_temp" class="form-label">Air Temperature</label>
+          <div class="input-with-unit">
+            <input type="number" step="0.1" name="air_temp" id="air_temp" class="input-control mono" value="298.1" required>
+            <span class="input-unit-badge">K</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="process_temp" class="form-label">Process Temperature</label>
+          <div class="input-with-unit">
+            <input type="number" step="0.1" name="process_temp" id="process_temp" class="input-control mono" value="308.6" required>
+            <span class="input-unit-badge">K</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rotational Speed & Torque -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="rotational_speed" class="form-label">Rotational Speed</label>
+          <div class="input-with-unit">
+            <input type="number" step="1" name="rotational_speed" id="rotational_speed" class="input-control mono" value="1551" required>
+            <span class="input-unit-badge">rpm</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="torque" class="form-label">Torque</label>
+          <div class="input-with-unit">
+            <input type="number" step="0.1" name="torque" id="torque" class="input-control mono" value="42.8" required>
+            <span class="input-unit-badge">Nm</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tool Wear -->
+      <div class="form-group">
+        <label for="tool_wear" class="form-label">Tool Wear Duration</label>
+        <div class="input-with-unit">
+          <input type="number" step="1" name="tool_wear" id="tool_wear" class="input-control mono" value="120" required>
+          <span class="input-unit-badge">min</span>
+        </div>
+        <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; display: block;">
+          Cumulative cutting tool friction life indicator.
+        </span>
+      </div>
+
+      <!-- Submit CTA Button -->
+      <button type="submit" id="submitAnalysisBtn" class="btn btn-primary" style="width: 100%; padding: 14px; font-size: 0.95rem; margin-top: 10px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon points="10 8 16 12 10 16 10 8"></polygon>
+        </svg>
+        Execute AI Pipeline Analysis
+      </button>
+    </form>
+  </div>
+
+  <!-- Right Column: AI Pipeline Flow Explanation -->
+  <div class="pipeline-panel">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <h2 style="font-size: 1.15rem;">AI Analysis Pipeline</h2>
+      <span class="badge badge-success">3 Models</span>
+    </div>
+    <p style="font-size: 0.82rem; color: var(--text-muted);">
+      How multiple machine learning paradigms collaborate to yield reliable maintenance strategies:
+    </p>
+
+    <div class="pipeline-steps-container">
+      <!-- Step 1: Input -->
+      <div class="pipeline-step-node">
+        <div class="step-number-badge">1</div>
+        <div class="step-content">
+          <div class="step-title">
+            <span>Machine Sensor Telemetry</span>
+            <span class="tag-label">Input</span>
+          </div>
+          <p class="step-subtitle">Raw physical measurements: Temperature, Rotational Speed, Torque & Wear.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-arrow-down">&darr;</div>
+
+      <!-- Step 2: Random Forest -->
+      <div class="pipeline-step-node active-stage">
+        <div class="step-number-badge" style="background-color: var(--primary-subtle); color: var(--primary);">2</div>
+        <div class="step-content">
+          <div class="step-title">
+            <span>Random Forest Classifier</span>
+            <span class="badge badge-info">Supervised</span>
+          </div>
+          <p class="step-subtitle">Predicts failure risk and calculates precise failure probability based on known training patterns.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-arrow-down">&darr;</div>
+
+      <!-- Step 3: K-Means -->
+      <div class="pipeline-step-node">
+        <div class="step-number-badge" style="background-color: var(--warning-subtle); color: var(--warning-dark);">3</div>
+        <div class="step-content">
+          <div class="step-title">
+            <span>K-Means Clustering</span>
+            <span class="badge badge-warning">Unsupervised</span>
+          </div>
+          <p class="step-subtitle">Maps multidimensional stress into condition clusters (Optimal, Medium, High Load).</p>
+        </div>
+      </div>
+
+      <div class="pipeline-arrow-down">&darr;</div>
+
+      <!-- Step 4: Q-Learning -->
+      <div class="pipeline-step-node">
+        <div class="step-number-badge" style="background-color: var(--success-subtle); color: var(--success-dark);">4</div>
+        <div class="step-content">
+          <div class="step-title">
+            <span>Q-Learning Decision Policy</span>
+            <span class="badge badge-success">Reinforcement</span>
+          </div>
+          <p class="step-subtitle">Selects optimal maintenance action (CONTINUE, INSPECT, or MAINTENANCE) to maximize machine lifetime.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Animated Scanning Overlay for Execution Feedback -->
+<div class="analysis-overlay" id="analysisScanningOverlay">
+  <div class="analysis-modal">
+    <div class="spinner-industrial"></div>
+    <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main);">Running AI Maintenance Pipeline</h3>
+    <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">Evaluating sensor data through multi-paradigm models...</p>
+
+    <div class="scan-step-list">
+      <div class="scan-step-item" id="scanStep1">
+        <span class="step-status-icon">&bull;</span> Preprocessing & feature normalization
+      </div>
+      <div class="scan-step-item" id="scanStep2">
+        <span class="step-status-icon">&bull;</span> Executing Random Forest failure predictor
+      </div>
+      <div class="scan-step-item" id="scanStep3">
+        <span class="step-status-icon">&bull;</span> Mapping operating condition via K-Means
+      </div>
+      <div class="scan-step-item" id="scanStep4">
+        <span class="step-status-icon">&bull;</span> Calculating Q-Learning policy & action value
+      </div>
+      <div class="scan-step-item" id="scanStep5">
+        <span class="step-status-icon">&bull;</span> Compiling maintenance decision synthesis
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
+{% endblock %}

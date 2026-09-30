@@ -1,51 +1,211 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Predictive Maintenance</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <div class="sidebar">
-        <h2>AI Predictive</h2>
-        <nav>
-            <a href="#" class="active">Dashboard</a>
-            <a href="#">Machine Analysis</a>
-            <a href="#">Analysis History</a>
-            <a href="#">ML Models</a>
-            <a href="#">About</a>
-        </nav>
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Dashboard</h1>
+  <p class="page-subtitle">Monitor machine health and predictive maintenance insights across the fleet.</p>
+</div>
+
+<!-- 4 KPI Cards -->
+<section class="kpi-grid">
+  <!-- Card 1: Total Machines -->
+  <div class="kpi-card">
+    <div class="kpi-top">
+      <span class="kpi-label">TOTAL MACHINES</span>
+      <div class="kpi-icon-wrap blue">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+        </svg>
+      </div>
     </div>
+    <div class="kpi-value blue">10,000</div>
+    <div class="kpi-subtext">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      AI4I 2020 dataset analyzed
+    </div>
+  </div>
 
-    <main class="main-content">
-        <header>
-            <h1>Dashboard</h1>
-            <p>Monitor machine health and predictive maintenance insights.</p>
-        </header>
+  <!-- Card 2: Normal Machines -->
+  <div class="kpi-card">
+    <div class="kpi-top">
+      <span class="kpi-label">NORMAL MACHINES</span>
+      <div class="kpi-icon-wrap green">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+    </div>
+    <div class="kpi-value green">9,661</div>
+    <div class="kpi-subtext">
+      <span class="badge badge-success" style="padding: 1px 6px; font-size: 0.7rem;">96.61%</span>
+      Operating safely
+    </div>
+  </div>
 
-        <section class="kpi-grid">
-            <div class="card">
-                <span class="label">TOTAL MACHINES</span>
-                <span class="value">10,000</span>
-                <span class="subtext">Machines analyzed</span>
-            </div>
-            <div class="card">
-                <span class="label">NORMAL MACHINES</span>
-                <span class="value success">9,661</span>
-                <span class="subtext">96.61% of machines</span>
-            </div>
-            <div class="card">
-                <span class="label">MACHINE FAILURES</span>
-                <span class="value danger">339</span>
-                <span class="subtext">3.39% failure rate</span>
-            </div>
-            <div class="card">
-                <span class="label">CONDITION CLUSTERS</span>
-                <span class="value accent">3</span>
-                <span class="subtext">K-Means groups</span>
-            </div>
-        </section>
-    </main>
-</body>
-</html>
+  <!-- Card 3: Machine Failures -->
+  <div class="kpi-card">
+    <div class="kpi-top">
+      <span class="kpi-label">MACHINE FAILURES</span>
+      <div class="kpi-icon-wrap red">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </div>
+    </div>
+    <div class="kpi-value red">339</div>
+    <div class="kpi-subtext">
+      <span class="badge badge-danger" style="padding: 1px 6px; font-size: 0.7rem;">3.39%</span>
+      Failure incidence
+    </div>
+  </div>
+
+  <!-- Card 4: Condition Clusters -->
+  <div class="kpi-card">
+    <div class="kpi-top">
+      <span class="kpi-label">CONDITION CLUSTERS</span>
+      <div class="kpi-icon-wrap indigo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+      </div>
+    </div>
+    <div class="kpi-value indigo">3</div>
+    <div class="kpi-subtext">
+      <span class="badge badge-info" style="padding: 1px 6px; font-size: 0.7rem;">K-Means</span>
+      Unsupervised groups
+    </div>
+  </div>
+</section>
+
+<!-- Prominent Quick Action Card -->
+<section class="quick-action-card">
+  <div class="quick-action-text">
+    <h3>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+      </svg>
+      Analyze a Machine
+    </h3>
+    <p>
+      Enter machine operating parameters to predict failure risk with Random Forest, identify machine condition with K-Means, and receive an automated maintenance recommendation using Q-Learning.
+    </p>
+  </div>
+  <a href="{{ url_for('analysis.analysis') }}" class="btn btn-primary" style="padding: 12px 24px; white-space: nowrap;">
+    Start Machine Analysis &rarr;
+  </a>
+</section>
+
+<!-- Dashboard Analytics Visualizations -->
+<section class="charts-grid">
+  <!-- Card 1: Machine Failure Distribution -->
+  <div class="chart-card">
+    <div class="chart-card-header">
+      <div>
+        <h2 class="chart-card-title">Machine Failure Distribution</h2>
+        <p class="chart-card-subtitle">Overview of normal vs. failed units in AI4I 2020 dataset.</p>
+      </div>
+      <span class="badge badge-neutral">10,000 Records</span>
+    </div>
+    <div class="chart-container" style="height: 300px;">
+      <canvas id="failureDistributionChart"></canvas>
+    </div>
+  </div>
+
+  <!-- Card 2: Machine Condition Clusters -->
+  <div class="chart-card">
+    <div class="chart-card-header">
+      <div>
+        <h2 class="chart-card-title">Machine Condition Clusters</h2>
+        <p class="chart-card-subtitle">K-Means segmentation mapping Torque vs. Tool Wear.</p>
+      </div>
+      <span class="badge badge-info">3 Segments</span>
+    </div>
+    <div class="chart-container" style="height: 300px;">
+      <canvas id="conditionClustersChart"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- Recent Analyses Quick Overview -->
+<section class="card-base" style="padding: 24px;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+    <div>
+      <h3 style="font-size: 1.05rem;">Recent Machine Diagnostics</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Latest evaluations processed across the 3 AI models.</p>
+    </div>
+    <a href="{{ url_for('analysis.history') }}" class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 12px;">
+      View Full History &rarr;
+    </a>
+  </div>
+
+  <table class="data-table" style="width: 100%;">
+    <thead>
+      <tr>
+        <th>Record ID</th>
+        <th>Machine Type</th>
+        <th>Failure Risk</th>
+        <th>Failure Probability</th>
+        <th>Condition Cluster</th>
+        <th>Action</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="mono" style="font-weight: 600; color: var(--text-main);">AN-9024</td>
+        <td><span class="badge badge-neutral">Type L</span></td>
+        <td><span class="badge badge-success">Normal</span></td>
+        <td class="mono">12.4%</td>
+        <td>Cluster 1 (Medium)</td>
+        <td><span class="badge badge-warning">Inspect</span></td>
+        <td>
+          <a href="{{ url_for('analysis.result', status='normal') }}" class="btn btn-outline" style="padding: 4px 8px; font-size: 0.75rem;">
+            Inspect AI
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td class="mono" style="font-weight: 600; color: var(--text-main);">AN-9023</td>
+        <td><span class="badge badge-neutral">Type M</span></td>
+        <td><span class="badge badge-danger">High Risk</span></td>
+        <td class="mono">78.2%</td>
+        <td>Cluster 2 (High Load)</td>
+        <td><span class="badge badge-danger">Maintenance</span></td>
+        <td>
+          <a href="{{ url_for('analysis.result', status='high_risk') }}" class="btn btn-outline" style="padding: 4px 8px; font-size: 0.75rem;">
+            Inspect AI
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td class="mono" style="font-weight: 600; color: var(--text-main);">AN-9022</td>
+        <td><span class="badge badge-neutral">Type H</span></td>
+        <td><span class="badge badge-success">Normal</span></td>
+        <td class="mono">8.7%</td>
+        <td>Cluster 0 (Optimal)</td>
+        <td><span class="badge badge-success">Continue</span></td>
+        <td>
+          <a href="{{ url_for('analysis.result', status='normal') }}" class="btn btn-outline" style="padding: 4px 8px; font-size: 0.75rem;">
+            Inspect AI
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
