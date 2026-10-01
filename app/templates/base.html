@@ -52,7 +52,7 @@
           Dashboard
         </a>
 
-        <a href="{{ url_for('analysis.analysis') }}" class="nav-link {% if request.path == '/analysis' or request.path == '/result' %}active{% endif %}">
+        <a href="{{ url_for('analysis.analysis') }}" class="nav-link {% if request.path == '/analysis' %}active{% endif %}">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
           </svg>

@@ -105,7 +105,7 @@
 </div>
 </div>
 <div class="flex items-center gap-space-sm p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 text-slate-700 text-xs" id="verdict-callout"><span class="material-symbols-outlined text-[18px] text-emerald-600 shrink-0">check_circle</span><span class="font-medium text-slate-700" id="verdict-callout-text">Parameter berada dalam batas operasional historis yang aman.</span></div>
-<a id="btn-view-detailed-report" href="{{ url_for('analysis.result') }}?status=normal" class="flex items-center justify-center gap-2 mt-2 px-4 py-2.5 rounded-xl border border-cyan-200 bg-cyan-50/80 hover:bg-cyan-100 text-cyan-800 text-xs font-semibold transition-all shadow-xs"><span class="material-symbols-outlined text-[16px]">assignment</span><span>Lihat Detail Laporan Diagnostik</span><span class="material-symbols-outlined text-[14px]">arrow_forward</span></a>
+<a id="btn-view-detailed-report" href="{{ url_for('analysis.history') }}" class="flex items-center justify-center gap-2 mt-2 px-4 py-2.5 rounded-xl border border-cyan-200 bg-cyan-50/80 hover:bg-cyan-100 text-cyan-800 text-xs font-semibold transition-all shadow-xs"><span class="material-symbols-outlined text-[16px]">history</span><span>Buka Riwayat Analisis</span><span class="material-symbols-outlined text-[14px]">arrow_forward</span></a>
 </section>
 <!-- Industrial Context / Visual Anchor -->
 </div>
@@ -309,14 +309,7 @@
           calloutText.innerText = 'Sistem menyarankan penghentian produksi untuk mengganti komponen yang telah aus.';
         }
 
-        const rptLink = document.getElementById('btn-view-detailed-report');
-        if (rptLink) {
-          if (data.record_id) {
-            rptLink.href = `{{ url_for('analysis.result') }}?id=${data.record_id}`;
-          } else {
-            rptLink.href = `{{ url_for('analysis.result') }}?status=${isRisk ? 'high_risk' : 'normal'}`;
-          }
-        }
+
       }
     } catch (err) {
       console.error("Error executing analysis:", err);

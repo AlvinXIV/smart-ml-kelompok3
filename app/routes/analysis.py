@@ -94,82 +94,9 @@ def analysis():
                 }
             })
         
-        return render_template('result.html',
-                               params={
-                                   'machine_type': machine_type,
-                                   'air_temp': air_temp,
-                                   'process_temp': process_temp,
-                                   'rotational_speed': rotational_speed,
-                                   'torque': torque,
-                                   'tool_wear': tool_wear
-                               },
-                               result=result,
-                               record_id=record_id)
+        return redirect(url_for('analysis.history'))
 
     return render_template('analysis.html')
-
-@analysis_bp.route('/result')
-def result():
-    # Cek jika ada ID record dari database
-    record_id = request.args.get('id')
-    if record_id:
-        try:
-            r = MachineAnalysis.query.get(int(record_id))
-            if r:
-                params = {
-                    'machine_type': r.machine_type,
-                    'air_temp': r.air_temp,
-                    'process_temp': r.process_temp,
-                    'rotational_speed': r.rotational_speed,
-                    'torque': r.torque,
-                    'tool_wear': r.tool_wear
-                }
-                res = {
-                    'failure_prediction': r.failure_pred,
-                    'failure_probability': r.failure_prob,
-                    'cluster': r.cluster,
-                    'cluster_condition': r.condition,
-                    'health_score': round(max(0.0, min(100.0, 100.0 - r.failure_prob)), 1)
-                }
-                return render_template('result.html', params=params, result=res, record_id=r.id)
-        except Exception as e:
-            print(f"Error fetching record {record_id}: {e}")
-
-    # Support query parameter status (normal vs high_risk) for easy UI preview
-    status = request.args.get('status', 'normal')
-    if status == 'high_risk':
-        params = {
-            'machine_type': 'M',
-            'air_temp': 301.2,
-            'process_temp': 310.8,
-            'rotational_speed': 1320,
-            'torque': 68.5,
-            'tool_wear': 210
-        }
-        res = {
-            'failure_prediction': 'FAILURE RISK',
-            'failure_probability': 78.2,
-            'cluster': 2,
-            'cluster_condition': 'Putaran Tinggi, Torsi Rendah',
-            'health_score': 21.8
-        }
-    else:
-        params = {
-            'machine_type': 'L',
-            'air_temp': 298.1,
-            'process_temp': 308.6,
-            'rotational_speed': 1551,
-            'torque': 42.8,
-            'tool_wear': 120
-        }
-        res = {
-            'failure_prediction': 'NORMAL',
-            'failure_probability': 12.4,
-            'cluster': 1,
-            'cluster_condition': 'Kondisi Operasi Optimal',
-            'health_score': 87.6
-        }
-    return render_template('result.html', params=params, result=res, record_id=None)
 
 @analysis_bp.route('/history')
 def history():

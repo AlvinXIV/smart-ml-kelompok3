@@ -229,15 +229,14 @@
   <th class="py-2 px-3 text-[10px] text-slate-500 uppercase tracking-wider font-semibold" scope="col">Telemetri</th>
   <th class="py-2 px-3 text-[10px] text-slate-500 uppercase tracking-wider font-semibold" scope="col">Risiko</th>
   <th class="py-2 px-3 text-[10px] text-slate-500 uppercase tracking-wider font-semibold" scope="col">Cluster</th>
-  <th class="py-2 px-3 text-[10px] text-slate-500 uppercase tracking-wider font-semibold" scope="col">Status</th>
-  <th class="py-2 pl-3 pr-4 text-right text-[10px] text-slate-500 uppercase tracking-wider font-semibold" scope="col">Aksi</th>
+  <th class="py-2 pr-4 text-[10px] text-slate-500 uppercase tracking-wider font-semibold" scope="col">Status</th>
 </tr>
 </thead>
 <tbody class="divide-y divide-slate-100" id="history-table-body">
   {% if records and records|length > 0 %}
     {% for r in records %}
     {% set is_risk = (r.failure_pred in ['FAILURE RISK', 'High Risk', 'Failure Risk'] or r.failure_prob >= 50.0) %}
-    <tr class="hover:bg-slate-50 transition-colors cursor-pointer group" onclick="window.location='{{ url_for('analysis.result') }}?id={{ r.raw_id }}'">
+    <tr class="hover:bg-slate-50/70 transition-colors">
       <td class="py-2.5 pl-4 pr-3 whitespace-nowrap">
         <span class="text-slate-800 font-semibold text-xs">{{ r.date }}</span>
         <span class="block text-[10px] text-slate-400">ID: {{ r.id }}</span>
@@ -266,7 +265,7 @@
         <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-medium">Cluster {{ r.cluster }}</span>
         <span class="block text-[10px] text-slate-400 truncate max-w-[130px]" title="{{ r.cluster_condition }}">{{ r.cluster_condition }}</span>
       </td>
-      <td class="py-2.5 px-3 whitespace-nowrap">
+      <td class="py-2.5 pr-4 whitespace-nowrap">
         {% if is_risk %}
         <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold tracking-wide uppercase border border-rose-200">
           <span class="material-symbols-outlined text-[11px]">build</span>Maintenance
@@ -277,14 +276,11 @@
         </span>
         {% endif %}
       </td>
-      <td class="py-2.5 pl-3 pr-4 text-right">
-        <a href="{{ url_for('analysis.result') }}?id={{ r.raw_id }}" class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sky-700 bg-sky-50 hover:bg-sky-100 text-[10px] font-semibold transition-colors border border-sky-200" onclick="event.stopPropagation();">Detail <span class="material-symbols-outlined text-[12px]">arrow_forward</span></a>
-      </td>
     </tr>
     {% endfor %}
   {% else %}
     <tr>
-      <td colspan="7" class="py-12 text-center text-slate-500">
+      <td colspan="6" class="py-12 text-center text-slate-500">
         <div class="flex flex-col items-center justify-center gap-2">
           <span class="material-symbols-outlined text-[40px] text-slate-300">hourglass_empty</span>
           <span class="text-sm font-semibold text-slate-700">Belum ada riwayat analisis telemetri</span>
