@@ -1,361 +1,1450 @@
-<!DOCTYPE html><html class="light" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      "colors": {
-        "tertiary": "#006194",
-        "primary-fixed": "#b7eaff",
-        "secondary-container": "#dae2fd",
-        "on-primary-container": "#fafdff",
-        "surface-container-low": "#eff4ff",
-        "surface-dim": "#cbdbf5",
-        "tertiary-fixed-dim": "#93ccff",
-        "tertiary-fixed": "#cce5ff",
-        "surface-container": "#e5eeff",
-        "surface-container-lowest": "#ffffff",
-        "outline-variant": "#cbd5e1",
-        "surface-tint": "#006780",
-        "on-secondary-fixed-variant": "#3f465c",
-        "primary-fixed-dim": "#6cd3f7",
-        "surface-bright": "#f8f9ff",
-        "inverse-on-surface": "#eaf1ff",
-        "on-secondary-container": "#5c647a",
-        "surface-container-high": "#dce9ff",
-        "on-secondary": "#ffffff",
-        "surface-variant": "#d3e4fe",
-        "secondary-fixed": "#dae2fd",
-        "on-error": "#ffffff",
-        "outline": "#64748b",
-        "on-primary-fixed-variant": "#004e61",
-        "tertiary-container": "#007bb9",
-        "on-tertiary-container": "#fdfcff",
-        "on-primary": "#ffffff",
-        "on-tertiary-fixed-variant": "#004b73",
-        "secondary-fixed-dim": "#bec6e0",
-        "inverse-primary": "#6cd3f7",
-        "inverse-surface": "#213145",
-        "surface-container-highest": "#d3e4fe",
-        "on-background": "#0b1c30",
-        "on-surface-variant": "#475569",
-        "background": "#f8fafc",
-        "primary-container": "#007f9d",
-        "error": "#dc2626",
-        "secondary": "#565e74",
-        "on-tertiary": "#ffffff",
-        "on-secondary-fixed": "#131b2e",
-        "surface": "#ffffff",
-        "on-error-container": "#93000a",
-        "on-surface": "#0f172a",
-        "primary": "#0284c7",
-        "error-container": "#fee2e2",
-        "on-tertiary-fixed": "#001d31",
-        "on-primary-fixed": "#001f28"
-      },
-      "borderRadius": {
-        "DEFAULT": "0.25rem",
-        "lg": "0.5rem",
-        "xl": "0.75rem",
-        "full": "9999px"
-      },
-      "fontFamily": {
-        "headline-xl": ["Plus Jakarta Sans"],
-        "label-md": ["Inter"],
-        "display-lg-mobile": ["Plus Jakarta Sans"],
-        "title-sm": ["Inter"],
-        "body-md": ["Inter"],
-        "headline-lg": ["Plus Jakarta Sans"],
-        "headline-xl-mobile": ["Plus Jakarta Sans"],
-        "display-lg": ["Plus Jakarta Sans"],
-        "body-lg": ["Inter"],
-        "metric-numeral": ["Inter"],
-        "body-sm": ["Inter"],
-        "headline-md": ["Plus Jakarta Sans"],
-        "label-sm": ["Inter"],
-        "kpi-metric": ["Plus Jakarta Sans"]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Analysis History — AI Predictive Maintenance</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ["Plus Jakarta Sans", "sans-serif"],
+            body: ["Inter", "sans-serif"]
+          },
+          colors: {
+            primary: "#0284c7",
+            background: "#f8fafc"
+          }
+        }
       }
     }
-  }
-};</script></head><body class="bg-slate-50 font-body-md text-slate-800 antialiased selection:bg-sky-100 selection:text-sky-900"><aside class="fixed left-0 top-0 h-full w-[240px] bg-white border-r border-slate-200 shadow-sm z-50 flex flex-col justify-between pt-5 pb-5 transition-all duration-300" id="main-sidebar">
-<div class="flex flex-col gap-6">
-<!-- Sidebar Brand & Minimize Toggle Button -->
-<div class="px-3 flex items-center justify-between gap-2">
-<div class="flex items-center gap-3 min-w-0 overflow-hidden">
-<div class="w-10 h-10 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600 shrink-0 shadow-sm">
-<svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
-<path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-<path d="M2 17l10 5 10-5"></path>
-<path d="M2 12l10 5 10-5"></path>
-</svg>
-</div>
-<div class="sidebar-label flex flex-col min-w-0 justify-center transition-opacity duration-200">
-<span class="text-[14px] font-bold text-slate-900 leading-tight tracking-tight whitespace-nowrap truncate">AI Predictive</span>
-<span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Maintenance</span>
-</div>
-</div>
-<!-- Collapse / Expand Toggle Button -->
-<button aria-label="Collapse sidebar" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-all shrink-0 cursor-pointer" id="sidebar-toggle-btn" title="Collapse sidebar" type="button">
-<span class="material-symbols-outlined text-[18px] transition-transform duration-300" id="sidebar-toggle-icon">chevron_left</span>
-</button>
-</div>
-<nav class="px-3 flex flex-col gap-1.5">
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors group" data-path="dashboard" href="{{ url_for('main.dashboard') }}" title="Dashboard">
-<span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-900 transition-colors shrink-0">grid_view</span>
-<span class="sidebar-label whitespace-nowrap transition-opacity duration-200">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors group" data-path="machine-analysis" href="{{ url_for('analysis.analysis') }}" title="Machine Analysis">
-<span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-900 transition-colors shrink-0">memory</span>
-<span class="sidebar-label whitespace-nowrap transition-opacity duration-200">Machine Analysis</span>
-</a>
-<a aria-current="page" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-sky-50 text-sky-700 text-sm font-semibold border border-sky-200 transition-colors shadow-sm" data-path="analysis-history" href="{{ url_for('analysis.history') }}" title="Analysis History">
-<span class="material-symbols-outlined text-[20px] text-sky-600 shrink-0">schedule</span>
-<span class="sidebar-label whitespace-nowrap transition-opacity duration-200">Analysis History</span>
-</a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors group" data-path="models" href="{{ url_for('main.models') }}" title="AI Models">
-<span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-900 transition-colors shrink-0">neurology</span>
-<span class="sidebar-label whitespace-nowrap transition-opacity duration-200">AI Models</span>
-</a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors group" data-path="about" href="{{ url_for('main.about') }}" title="About">
-<span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-slate-900 transition-colors shrink-0">info</span>
-<span class="sidebar-label whitespace-nowrap transition-opacity duration-200">About</span>
-</a>
-</nav>
-</div>
-<div class="px-3 mt-auto">
-<div class="rounded-xl bg-slate-50 border border-slate-200 p-3.5 flex flex-col gap-3 shadow-sm overflow-hidden transition-all duration-300">
-<div class="flex items-center gap-3">
-<div class="relative w-9 h-9 rounded-full overflow-hidden shrink-0 border border-slate-300 shadow-inner">
-<img alt="Dr. Elena Chen" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfcQZH3pEX8UY1t7GxEcVq7gGFn60j93JKod28_BRGIv2fWoZ_OH0Q3zuWx7ZQmQi8ZSFX7cRJLg2JRz8natHliR0chAQWrrBAhZZ_P4pg58IINa46hbxZJyiK4vgA-p1rilZ_8Dyt_5Hdt6bMD7BJQ4GEEUkn16dXw9jbfJcdZ_DUnpjJjurrO1wqxbuz23jbm0cAhpAfPz3XkEaNa5fe8boNzpVB5uz-Fy0IwbySn_RE-1BnPpdn">
-<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white"></span>
-</div>
-<div class="sidebar-label flex flex-col min-w-0 flex-1 transition-opacity duration-200">
-<span class="text-sm font-semibold text-slate-900 truncate leading-tight">Dr. Elena Chen</span>
-<span class="text-xs text-slate-500 truncate leading-tight mt-0.5">Lead Diagnostician</span>
-</div>
-</div>
-<div class="sidebar-label pt-2.5 border-t border-slate-200 flex items-center justify-between transition-opacity duration-200">
-<div class="flex items-center gap-1.5">
-<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-<span class="text-xs text-slate-600 font-medium">Online</span>
-</div>
-<a class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-200 text-xs text-slate-700 bg-white hover:bg-slate-100 hover:text-slate-900 transition-colors shadow-2xs" data-path="login" href="{{ url_for('auth.logout') }}">
-<span class="material-symbols-outlined text-[15px]">logout</span>
-<span class="font-medium">Sign out</span>
-</a>
-</div>
-</div>
-</div>
-</aside><div class="pl-[240px]" id="main-layout-container"><header class="fixed top-0 left-[240px] right-0 h-16 bg-white/90 backdrop-blur-xl border-b border-slate-200 shadow-2xs z-40 flex items-center justify-between px-gutter" id="top-header"><div class="flex items-center gap-4"><div class="flex items-center gap-2.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/80"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span></span><span class="font-label-sm text-label-sm text-emerald-800 font-semibold tracking-wide">ALL SYSTEMS NORMAL</span></div><div class="hidden lg:flex items-center gap-2 font-label-sm text-label-sm text-slate-500"><span class="material-symbols-outlined text-[16px] text-slate-400">sensors</span><span class="">Cluster: 14 Nodes Synced</span></div></div><div class="flex items-center gap-4"><button aria-label="Notifications" class="relative p-2 rounded-lg bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition-colors border border-slate-200" type="button"><svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span class="absolute top-1.5 right-1.5 flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-sky-600"></span></span></button><div class="flex items-center gap-3 pl-2 border-l border-slate-200"><div class="hidden sm:flex flex-col text-right"><span class="font-label-md text-label-md text-slate-900 font-semibold leading-tight">Dr. Elena Chen</span><span class="font-label-sm text-label-sm text-slate-500 leading-tight">Lead Diagnostician</span></div><div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-slate-50 px-gutter min-h-screen"><div class="flex flex-col w-full pb-16">
-<!-- Top Subtle Accent Header Bar -->
-<div class="relative w-full overflow-hidden pointer-events-none mb-2">
-<div class="absolute -top-32 -left-20 w-96 h-96 bg-sky-200/30 rounded-full blur-[100px]"></div>
-<div class="absolute -top-24 right-1/4 w-80 h-80 bg-blue-100/40 rounded-full blur-[90px]"></div>
-</div>
-<!-- Page Header & Action Controls -->
-<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 pt-4">
-<div class="flex flex-col gap-1.5 max-w-2xl">
-<div class="flex items-center gap-2 text-sky-700 font-label-sm text-label-sm uppercase tracking-widest font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-sky-600 animate-pulse"></span>
-        Audit &amp; Diagnostics Ledger
-      </div>
-<h1 class="text-[26px] font-bold text-slate-900 tracking-tight">Analysis History</h1>
-<p class="text-label-md text-slate-600 leading-normal">Review previous machine diagnostic records, cluster assignments, and prescriptive actions.</p>
-</div>
-<!-- Export & Filter Actions -->
-<div class="flex flex-wrap items-center gap-3 shrink-0"><a href="{{ url_for('analysis.analysis') }}" class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-label-md font-semibold transition-all shadow-sm"><span class="material-symbols-outlined text-[18px]">add_circle</span><span>Mulai Analisis Baru</span></a><button class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-label-md font-semibold transition-all shadow-xs cursor-pointer" type="button"><span class="material-symbols-outlined text-[18px]">tune</span><span class="">Filter Records</span></button></div>
-</div>
-<!-- Summary KPI Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
-<!-- KPI 1 -->
-<div class="p-5 rounded-xl bg-white border border-slate-200/90 flex flex-col justify-between shadow-xs relative overflow-hidden group hover:border-slate-300 transition-all">
-<div class="flex items-center justify-between">
-<span class="font-label-md text-label-md text-slate-500 uppercase tracking-wider font-semibold">Total Analyzed</span>
-<div class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-700">
-<span class="material-symbols-outlined text-[18px]">precision_manufacturing</span>
-</div>
-</div>
-<div class="mt-4 flex flex-col gap-1">
-<div class="flex items-baseline gap-2">
-<span class="font-kpi-metric text-kpi-metric text-slate-900 font-bold tracking-tight">1,428</span>
-<span class="font-label-sm text-label-sm text-emerald-700 font-semibold flex items-center gap-0.5">
-<span class="material-symbols-outlined text-[14px]">trending_up</span> +4.2%
-          </span>
-</div>
-<span class="font-body-sm text-body-sm text-slate-500">Rolling 30-day telemetry pool</span>
-</div>
-<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-500 opacity-60"></div>
-</div>
-<!-- KPI 2 -->
-<div class="p-5 rounded-xl bg-white border border-slate-200/90 flex flex-col justify-between shadow-xs relative overflow-hidden group hover:border-slate-300 transition-all">
-<div class="flex items-center justify-between">
-<span class="font-label-md text-label-md text-slate-500 uppercase tracking-wider font-semibold">Normal / Low Risk</span>
-<div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700">
-<span class="material-symbols-outlined text-[18px]">verified</span>
-</div>
-</div>
-<div class="mt-4 flex flex-col gap-1">
-<div class="flex items-baseline gap-2">
-<span class="font-kpi-metric text-kpi-metric text-slate-900 font-bold tracking-tight">1,379</span>
-<span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-label-sm text-label-sm font-semibold">96.5%</span>
-</div>
-<span class="font-body-sm text-body-sm text-slate-500">Operating in steady vibration states</span>
-</div>
-<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 opacity-60"></div>
-</div>
-<!-- KPI 3 -->
-<div class="p-5 rounded-xl bg-white border border-slate-200/90 flex flex-col justify-between shadow-xs relative overflow-hidden group hover:border-slate-300 transition-all">
-<div class="flex items-center justify-between">
-<span class="font-label-md text-label-md text-slate-500 uppercase tracking-wider font-semibold">High Risk Flagged</span>
-<div class="w-8 h-8 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600">
-<span class="material-symbols-outlined text-[18px]">warning</span>
-</div>
-</div>
-<div class="mt-4 flex flex-col gap-1">
-<div class="flex items-baseline gap-2">
-<span class="font-kpi-metric text-kpi-metric text-rose-600 font-bold tracking-tight">49</span>
-<span class="px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 font-label-sm text-label-sm font-semibold">3.5%</span>
-</div>
-<span class="font-body-sm text-body-sm text-slate-500">Crossed thermal or torque threshold</span>
-</div>
-<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-rose-500 opacity-60"></div>
-</div>
-<!-- KPI 4 -->
-<div class="p-5 rounded-xl bg-white border border-slate-200/90 flex flex-col justify-between shadow-xs relative overflow-hidden group hover:border-slate-300 transition-all">
-<div class="flex items-center justify-between">
-<span class="font-label-md text-label-md text-slate-500 uppercase tracking-wider font-semibold">Action Rate</span>
-<div class="w-8 h-8 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
-<span class="material-symbols-outlined text-[18px]">build_circle</span>
-</div>
-</div>
-<div class="mt-4 flex flex-col gap-1">
-<div class="flex items-baseline gap-2">
-<span class="font-kpi-metric text-kpi-metric text-slate-900 font-bold tracking-tight">49 total</span>
-</div>
-<span class="font-body-sm text-body-sm text-slate-600 flex items-center gap-2">
-<span class="text-amber-700 font-medium">38 Inspections</span>
-<span class="w-1 h-1 rounded-full bg-slate-300"></span>
-<span class="text-rose-700 font-medium">11 Maintenance</span>
-</span>
-</div>
-<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-400 opacity-60"></div>
-</div>
-</div>
-<!-- Search & Filter Bar Component -->
-<div class="p-3 rounded-xl bg-white border border-slate-200 shadow-xs mb-6 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3"><div class="relative flex-1 min-w-[280px]"><svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg><input class="w-full h-9 pl-9 pr-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 placeholder:text-slate-400 text-label-md font-normal focus:outline-none focus:border-sky-500 focus:bg-white transition-colors" placeholder="Search by Machine ID, model, or operator..." type="text"></div><div class="flex flex-wrap items-center gap-2"><div class="relative"><button class="h-9 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-label-md font-normal flex items-center gap-2 transition-colors" type="button"><svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg><span class="">Last 30 Days</span><svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button></div><div class="relative"><button class="h-9 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-label-md font-normal flex items-center gap-2 transition-colors" type="button"><span class="text-slate-400">Type:</span><span class="text-slate-800 font-medium">All (H, L, M)</span><svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button></div><div class="relative"><button class="h-9 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-label-md font-normal flex items-center gap-2 transition-colors" type="button"><span class="text-slate-400">Risk:</span><span class="text-slate-800 font-medium">All Status</span><svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button></div><div class="relative"><button class="h-9 px-3 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-700 text-label-md font-normal flex items-center gap-2 transition-colors" type="button"><span class="text-slate-400">Prescription:</span><span class="text-slate-800 font-medium">All</span><svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></button></div><button class="h-9 px-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600 hover:text-slate-900 transition-colors flex items-center justify-center" title="Reset Filters" type="button"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg></button></div></div>
-<!-- Primary Workspace: Split Grid with Diagnostic Ledger & Detail Drawer Preview -->
-<div class="grid grid-cols-1 2xl:grid-cols-12 gap-6 items-start">
-<!-- Data Table Container (8 Columns on 2xl) -->
-<div class="2xl:col-span-8 flex flex-col rounded-xl bg-white border border-slate-200 shadow-xs overflow-hidden">
-<div class="overflow-x-auto">
-<table class="w-full text-left border-collapse">
-<thead>
-<tr class="bg-slate-100/90 text-slate-700 text-[11px] uppercase tracking-wider font-semibold border-b border-slate-200"><th class="py-3 pl-6 pr-4 font-semibold" scope="col">Date &amp; Time (UTC)</th><th class="py-3 px-4 font-semibold" scope="col">Machine / Type</th><th class="py-3 px-4 font-semibold" scope="col">Telemetry Snapshot</th><th class="py-3 px-4 font-semibold" scope="col">Risk &amp; Prob</th><th class="py-3 px-4 font-semibold" scope="col">Condition Cluster</th><th class="py-3 px-4 font-semibold" scope="col">Q-Learning Action</th><th class="py-3 pl-4 pr-6 text-right font-semibold" scope="col">Actions</th></tr>
-</thead>
-<tbody class="divide-y divide-slate-100 text-slate-800 font-body-md text-body-md"><tr class="bg-sky-50/50 hover:bg-sky-50/80 transition-colors cursor-pointer group text-label-md font-normal"><td class="py-3.5 pl-6 pr-4 whitespace-nowrap"><div class="flex flex-col"><span class="text-slate-900 font-semibold">Oct 24, 14:32</span><span class="text-[11px] text-slate-500">12 mins ago</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div><div class="flex flex-col"><span class="text-sky-700 font-bold text-label-md">#M-9104</span><span class="text-[11px] text-slate-500">Medium Duty</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 text-label-md"><span class="text-rose-600 font-semibold">304.2 K</span><span class="text-slate-300">/</span><span class="text-slate-700 font-medium">1,480 RPM</span></div><div class="flex items-center gap-1.5 text-[11px] text-slate-500"><span class="">54.2 Nm</span><span class="">•</span><span class="text-rose-600 font-medium">218 min wear</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500"></span><span class="text-rose-700 font-bold text-label-md">High Risk</span><span class="text-[11px] text-slate-500">• 78.2%</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">Cluster 2 (Heavy Wear)</span></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-[11px] font-bold tracking-wide uppercase border border-rose-200"><span class="material-symbols-outlined text-[13px]">build</span>Maintenance</span></td><td class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap"><button class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md text-sky-700 bg-sky-100/80 hover:bg-sky-200/80 text-label-md font-semibold transition-colors border border-sky-300 shadow-2xs cursor-pointer" type="button"><span class="">Details</span><span class="material-symbols-outlined text-[15px]">arrow_forward</span></button></td></tr><tr class="hover:bg-slate-50 transition-colors text-label-md font-normal"><td class="py-3.5 pl-6 pr-4 whitespace-nowrap"><div class="flex flex-col"><span class="text-slate-900 font-semibold">Oct 24, 13:48</span><span class="text-[11px] text-slate-500">56 mins ago</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><div class="flex flex-col"><span class="text-slate-800 font-semibold text-label-md">#M-4281</span><span class="text-[11px] text-slate-500">Medium Duty</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 text-label-md"><span class="text-slate-800 font-medium">298.1 K</span><span class="text-slate-300">/</span><span class="text-slate-700">1,504 RPM</span></div><div class="flex items-center gap-1.5 text-[11px] text-slate-500"><span class="">42.8 Nm</span><span class="">•</span><span class="">94 min wear</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span class="text-emerald-700 font-bold text-label-md">Normal</span><span class="text-[11px] text-slate-500">• 12.4%</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">Cluster 1 (Medium)</span></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold tracking-wide uppercase border border-emerald-200"><span class="material-symbols-outlined text-[13px]">check_circle</span>Continue</span></td><td class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap"><button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-sky-700 hover:bg-sky-50 text-label-md font-semibold transition-colors" type="button"><span class="">Details</span><span class="material-symbols-outlined text-[15px]">arrow_forward</span></button></td></tr><tr class="hover:bg-slate-50 transition-colors text-label-md font-normal"><td class="py-3.5 pl-6 pr-4 whitespace-nowrap"><div class="flex flex-col"><span class="text-slate-900 font-semibold">Oct 24, 11:15</span><span class="text-[11px] text-slate-500">3h 20m ago</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-amber-500"></div><div class="flex flex-col"><span class="text-slate-800 font-semibold text-label-md">#H-1029</span><span class="text-[11px] text-slate-500">Heavy Duty</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 text-label-md"><span class="text-amber-700 font-semibold">302.8 K</span><span class="text-slate-300">/</span><span class="text-slate-700">1,390 RPM</span></div><div class="flex items-center gap-1.5 text-[11px] text-slate-500"><span class="">58.4 Nm</span><span class="">•</span><span class="text-amber-700 font-medium">172 min wear</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-amber-500"></span><span class="text-amber-700 font-bold text-label-md">Watch</span><span class="text-[11px] text-slate-500">• 34.6%</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">Cluster 2 (Heavy Wear)</span></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[11px] font-bold tracking-wide uppercase border border-amber-200"><span class="material-symbols-outlined text-[13px]">search</span>Inspect</span></td><td class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap"><button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-sky-700 hover:bg-sky-50 text-label-md font-semibold transition-colors" type="button"><span class="">Details</span><span class="material-symbols-outlined text-[15px]">arrow_forward</span></button></td></tr><tr class="hover:bg-slate-50 transition-colors text-label-md font-normal"><td class="py-3.5 pl-6 pr-4 whitespace-nowrap"><div class="flex flex-col"><span class="text-slate-900 font-semibold">Oct 24, 09:22</span><span class="text-[11px] text-slate-500">5h 10m ago</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><div class="flex flex-col"><span class="text-slate-800 font-semibold text-label-md">#L-5532</span><span class="text-[11px] text-slate-500">Light Duty</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 text-label-md"><span class="text-slate-800 font-medium">297.4 K</span><span class="text-slate-300">/</span><span class="text-slate-700">1,620 RPM</span></div><div class="flex items-center gap-1.5 text-[11px] text-slate-500"><span class="">32.1 Nm</span><span class="">•</span><span class="">34 min wear</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span class="text-emerald-700 font-bold text-label-md">Normal</span><span class="text-[11px] text-slate-500">• 8.7%</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">Cluster 0 (Light Wear)</span></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold tracking-wide uppercase border border-emerald-200"><span class="material-symbols-outlined text-[13px]">check_circle</span>Continue</span></td><td class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap"><button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-sky-700 hover:bg-sky-50 text-label-md font-semibold transition-colors" type="button"><span class="">Details</span><span class="material-symbols-outlined text-[15px]">arrow_forward</span></button></td></tr><tr class="hover:bg-slate-50 transition-colors text-label-md font-normal"><td class="py-3.5 pl-6 pr-4 whitespace-nowrap"><div class="flex flex-col"><span class="text-slate-900 font-semibold">Oct 23, 22:40</span><span class="text-[11px] text-slate-500">16h ago</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-rose-500"></div><div class="flex flex-col"><span class="text-slate-800 font-semibold text-label-md">#M-3320</span><span class="text-[11px] text-slate-500">Medium Duty</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 text-label-md"><span class="text-rose-600 font-semibold">305.6 K</span><span class="text-slate-300">/</span><span class="text-slate-700">1,310 RPM</span></div><div class="flex items-center gap-1.5 text-[11px] text-slate-500"><span class="">62.7 Nm</span><span class="">•</span><span class="text-rose-600 font-medium">245 min wear</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500"></span><span class="text-rose-700 font-bold text-label-md">High Risk</span><span class="text-[11px] text-slate-500">• 84.1%</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">Cluster 2 (Heavy Wear)</span></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-rose-100 text-rose-800 text-[11px] font-bold tracking-wide uppercase border border-rose-200"><span class="material-symbols-outlined text-[13px]">build</span>Maintenance</span></td><td class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap"><button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-sky-700 hover:bg-sky-50 text-label-md font-semibold transition-colors" type="button"><span class="">Details</span><span class="material-symbols-outlined text-[15px]">arrow_forward</span></button></td></tr><tr class="hover:bg-slate-50 transition-colors text-label-md font-normal"><td class="py-3.5 pl-6 pr-4 whitespace-nowrap"><div class="flex flex-col"><span class="text-slate-900 font-semibold">Oct 23, 19:14</span><span class="text-[11px] text-slate-500">19h ago</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><div class="flex flex-col"><span class="text-slate-800 font-semibold text-label-md">#L-7741</span><span class="text-[11px] text-slate-500">Light Duty</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex flex-col gap-0.5"><div class="flex items-center gap-1.5 text-label-md"><span class="text-slate-800 font-medium">296.8 K</span><span class="text-slate-300">/</span><span class="text-slate-700">1,580 RPM</span></div><div class="flex items-center gap-1.5 text-[11px] text-slate-500"><span class="">30.2 Nm</span><span class="">•</span><span class="">18 min wear</span></div></div></td><td class="py-3.5 px-4 whitespace-nowrap"><div class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span class="text-emerald-700 font-bold text-label-md">Normal</span><span class="text-[11px] text-slate-500">• 5.2%</span></div></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">Cluster 0 (Light Wear)</span></td><td class="py-3.5 px-4 whitespace-nowrap"><span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold tracking-wide uppercase border border-emerald-200"><span class="material-symbols-outlined text-[13px]">check_circle</span>Continue</span></td><td class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap"><button class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-sky-700 hover:bg-sky-50 text-label-md font-semibold transition-colors" type="button"><span class="">Details</span><span class="material-symbols-outlined text-[15px]">arrow_forward</span></button></td></tr></tbody>
-</table>
-</div>
-<!-- Clean Pagination Component -->
-<div class="p-3 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 mt-auto"><span class="text-label-md text-slate-500">Showing <span class="font-semibold text-slate-800">1 - 6</span> of <span class="font-semibold text-slate-800">1,428</span> records</span><div class="flex items-center gap-1.5"><button class="w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-400 opacity-50 flex items-center justify-center cursor-not-allowed" disabled="" type="button"><span class="material-symbols-outlined text-[16px]">chevron_left</span></button><button class="w-7 h-7 rounded-lg bg-sky-600 text-white text-label-md font-semibold flex items-center justify-center shadow-xs" type="button">1</button><button class="w-7 h-7 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-label-md flex items-center justify-center transition-colors" type="button">2</button><button class="w-7 h-7 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-label-md flex items-center justify-center transition-colors" type="button">3</button><span class="text-slate-400 px-1 text-label-md">...</span><button class="w-7 h-7 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-label-md flex items-center justify-center transition-colors" type="button">238</button><button class="w-7 h-7 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">chevron_right</span></button></div></div>
-</div>
-<!-- Right-Side Selected Machine Detail Drawer / Preview (4 Columns on 2xl) -->
-<div class="2xl:col-span-4 flex flex-col gap-5">
-<!-- Mini Diagnostic Summary Card -->
-<div class="p-6 rounded-xl bg-white border border-slate-200 shadow-xs flex flex-col gap-5 relative overflow-hidden">
-<!-- Accent Glow & Top Header -->
-<div class="flex items-start justify-between">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2">
-<span class="px-2 py-0.5 rounded bg-rose-100 text-rose-700 border border-rose-200 font-label-sm text-label-sm font-bold tracking-wider uppercase">Active Selection</span>
-<span class="text-slate-500 text-label-sm font-label-sm">Run #940-B</span>
-</div>
-<h2 class="font-headline-lg text-headline-lg text-slate-900 font-bold mt-1">Machine #M-9104</h2>
-<span class="font-body-sm text-body-sm text-slate-500">Centrifuge Tugas Sedang Industri</span>
-</div>
-<span class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center border border-rose-200">
-<span class="material-symbols-outlined text-[22px]">error</span>
-</span>
-</div>
-<!-- Telemetry Spec Snapshot -->
-<div class="grid grid-cols-2 gap-3 p-3.5 rounded-lg bg-slate-50 border border-slate-200">
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-slate-500">Failure Probability</span>
-<span class="font-headline-md text-headline-md text-rose-600 font-bold">78.2%</span>
-</div>
-<div class="flex flex-col">
-<span class="font-label-sm text-label-sm text-slate-500">Assigned Cluster</span>
-<span class="font-title-sm text-title-sm text-slate-900 font-semibold">Cluster 2 (Heavy)</span>
-</div>
-<div class="flex flex-col pt-2 border-t border-slate-200/70">
-<span class="font-label-sm text-label-sm text-slate-500">Torque Strain</span>
-<span class="font-title-sm text-title-sm text-slate-900 font-semibold">54.2 Nm <span class="text-rose-600 text-body-sm font-medium">(+18%)</span></span>
-</div>
-<div class="flex flex-col pt-2 border-t border-slate-200/70">
-<span class="font-label-sm text-label-sm text-slate-500">Tool Wear Total</span>
-<span class="font-title-sm text-title-sm text-rose-600 font-semibold">218 min</span>
-</div>
-</div>
-<!-- Anomaly Signature & Waveform Visual -->
-<div class="flex flex-col gap-3 rounded-xl bg-slate-50 p-4 border border-slate-200"><div class="flex items-center justify-between font-label-md text-label-md"><span class="text-slate-900 font-semibold flex items-center gap-2"><span class="material-symbols-outlined text-[18px] text-sky-600">graphic_eq</span>FFT Vibration Spectrum Analysis</span><span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 border border-rose-200 font-mono font-semibold text-xs tracking-wide flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-rose-600 animate-ping"></span>Peak: 3.82 kHz @ 9.4g</span></div><div class="relative w-full rounded-lg bg-white border border-slate-200 p-3 overflow-hidden shadow-2xs"><svg class="w-full h-48" fill="none" preserveAspectRatio="none" viewBox="0 0 800 200"><defs><linearGradient id="baselineGradLight" x1="0%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#0284c7" stop-opacity="0.25"></stop><stop offset="100%" stop-color="#0284c7" stop-opacity="0.01"></stop></linearGradient><linearGradient id="spikeGradLight" x1="0%" x2="0%" y1="0%" y2="100%"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.35"></stop><stop offset="100%" stop-color="#ef4444" stop-opacity="0.02"></stop></linearGradient></defs><line stroke="#cbd5e1" stroke-dasharray="4 4" stroke-opacity="0.6" x1="40" x2="760" y1="30" y2="30"></line><line stroke="#cbd5e1" stroke-dasharray="4 4" stroke-opacity="0.6" x1="40" x2="760" y1="75" y2="75"></line><line stroke="#cbd5e1" stroke-dasharray="4 4" stroke-opacity="0.6" x1="40" x2="760" y1="120" y2="120"></line><line stroke="#cbd5e1" stroke-dasharray="4 4" stroke-opacity="0.6" x1="40" x2="760" y1="165" y2="165"></line><line stroke="#cbd5e1" stroke-dasharray="4 4" stroke-opacity="0.4" x1="184" x2="184" y1="20" y2="165"></line><line stroke="#cbd5e1" stroke-dasharray="4 4" stroke-opacity="0.4" x1="328" x2="328" y1="20" y2="165"></line><line stroke="#cbd5e1" stroke-dasharray="4 4" stroke-opacity="0.4" x1="472" x2="472" y1="20" y2="165"></line><line stroke="#cbd5e1" stroke-dasharray="4 4" stroke-opacity="0.4" x1="616" x2="616" y1="20" y2="165"></line><line stroke="#cbd5e1" stroke-dasharray="4 4" stroke-opacity="0.4" x1="760" x2="760" y1="20" y2="165"></line><path d="M 40,160 Q 60,158 80,156 T 120,158 T 160,152 T 200,156 T 240,154 T 270,155 T 285,150 T 295,130 T 305,45 T 315,22 T 325,85 T 335,145 T 350,155 T 390,157 T 440,153 T 500,156 T 560,154 T 620,157 T 680,155 T 720,157 L 760,158 L 760,165 L 40,165 Z" fill="url(#baselineGradLight)"></path><path d="M 285,150 Q 295,120 305,45 T 315,22 T 325,85 T 335,145 L 345,165 L 285,165 Z" fill="url(#spikeGradLight)"></path><path d="M 40,160 Q 60,158 80,156 T 120,158 T 160,152 T 200,156 T 240,154 T 270,155 T 285,150 L 290,140" stroke="#0284c7" stroke-linecap="round" stroke-width="2"></path><path d="M 290,140 Q 298,70 305,45 T 315,22 T 325,85 T 335,145 L 342,153" stroke="#e11d48" stroke-linecap="round" stroke-width="2.5"></path><path d="M 342,153 Q 350,155 370,156 T 430,154 T 490,156 T 550,154 T 610,157 T 670,155 T 730,157 L 760,158" stroke="#0284c7" stroke-linecap="round" stroke-width="2"></path><line stroke="#dc2626" stroke-dasharray="3 3" stroke-opacity="0.7" x1="315" x2="315" y1="22" y2="165"></line><circle cx="315" cy="22" fill="#dc2626" r="5"></circle><circle class="animate-ping" cx="315" cy="22" r="9" stroke="#dc2626" stroke-opacity="0.6" stroke-width="1.5"></circle><g transform="translate(245, 12)"><rect class="shadow-xs" fill="#ffffff" height="22" rx="4" stroke="#ef4444" stroke-width="1" width="140"></rect><text fill="#b91c1c" font-family="Plus Jakarta Sans" font-size="10" font-weight="700" text-anchor="middle" x="70" y="15">3.82 kHz @ 9.4g Anomaly</text></g><text fill="#64748b" font-family="Plus Jakarta Sans" font-size="10" font-weight="500" text-anchor="end" x="35" y="34">10g</text><text fill="#64748b" font-family="Plus Jakarta Sans" font-size="10" font-weight="500" text-anchor="end" x="35" y="79">6g</text><text fill="#64748b" font-family="Plus Jakarta Sans" font-size="10" font-weight="500" text-anchor="end" x="35" y="124">2g</text><text fill="#64748b" font-family="Plus Jakarta Sans" font-size="10" font-weight="500" text-anchor="end" x="35" y="169">0g</text></svg><div class="flex items-center justify-between text-slate-500 font-label-sm text-[11px] px-2 pt-1 border-t border-slate-200 font-medium"><span class="">0 Hz</span><span class="">2 kHz</span><span class="text-rose-700 font-bold">4 kHz (Peak @ 3.82)</span><span class="">6 kHz</span><span class="">8 kHz</span><span class="">10 kHz</span></div></div><div class="flex items-center justify-between text-slate-600 font-label-sm text-xs px-1"><span class="">Baseline: steady 0.8g vibration</span><span class="text-rose-700 font-semibold flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">warning</span>Harmonic Discrepancy Identified</span></div></div>
-<!-- Diagnostic Narrative Panel -->
-<div class="p-4 rounded-lg bg-rose-50/60 border border-rose-200 flex flex-col gap-3 relative overflow-hidden">
-<div class="absolute left-0 top-0 bottom-0 w-1 bg-rose-500"></div>
-<div class="flex items-center gap-2 pl-1">
-<span class="material-symbols-outlined text-[18px] text-rose-600">assignment_late</span>
-<span class="font-title-sm text-title-sm text-slate-900 font-bold">Petunjuk Preskriptif</span>
-</div>
-<p class="font-body-sm text-body-sm text-slate-700 leading-relaxed pl-1">Terdeteksi spalling pada cincin dalam bearing sekunder selama siklus beban torsi tinggi. Model Q-Learning merekomendasikan <strong class="text-slate-900 font-semibold">pemeliharaan fisik segera dalam waktu 48 jam</strong> untuk menghindari kegagalan poros spindle yang katastropik.</p>
-<div class="pt-2 flex items-center justify-between font-label-sm text-label-sm text-slate-600 pl-1 border-t border-rose-200/60 font-medium"><span class="">Tingkat Keyakinan Model: 94.6%</span><span class="">Kebijakan: Perlambatan Aman</span></div>
-</div>
-</div>
-<!-- Quick Maintenance Note Pill -->
-<div class="p-4 rounded-xl bg-white border border-slate-200 shadow-xs flex items-center gap-3">
-<div class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-700 shrink-0">
-<span class="material-symbols-outlined text-[18px]">info</span>
-</div>
-<div class="flex flex-col min-w-0"><span class="font-title-sm text-title-sm text-slate-900 font-semibold truncate">Kalibrasi Node Sensor</span><span class="font-body-sm text-body-sm text-slate-500 truncate">Pemeriksaan telemetri terjadwal berikutnya dalam 14 jam.</span></div>
-</div>
-</div>
-</div>
-</div></main></div>
-<script>
-(function() {
-  const sidebar = document.getElementById('main-sidebar');
-  const toggleBtn = document.getElementById('sidebar-toggle-btn');
-  const toggleIcon = document.getElementById('sidebar-toggle-icon');
-  const layoutContainer = document.getElementById('main-layout-container');
-  const topHeader = document.getElementById('top-header');
-  const labels = document.querySelectorAll('.sidebar-label');
+  </script>
 
-  if (!sidebar || !toggleBtn) return;
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-  let collapsed = false;
+  <style>
+    * { box-sizing: border-box; }
 
-  toggleBtn.addEventListener('click', function() {
-    collapsed = !collapsed;
-    if (collapsed) {
-      sidebar.style.width = '76px';
-      if (layoutContainer) layoutContainer.style.paddingLeft = '76px';
-      if (topHeader) topHeader.style.left = '76px';
-      toggleBtn.title = 'Expand sidebar';
-      toggleBtn.setAttribute('aria-label', 'Expand sidebar');
-      if (toggleIcon) toggleIcon.textContent = 'chevron_right';
-      labels.forEach(el => {
-        el.style.display = 'none';
-      });
-    } else {
-      sidebar.style.width = '240px';
-      if (layoutContainer) layoutContainer.style.paddingLeft = '240px';
-      if (topHeader) topHeader.style.left = '240px';
-      toggleBtn.title = 'Collapse sidebar';
-      toggleBtn.setAttribute('aria-label', 'Collapse sidebar');
-      if (toggleIcon) toggleIcon.textContent = 'chevron_left';
-      labels.forEach(el => {
-        el.style.display = '';
-      });
+    html, body {
+      margin: 0;
+      padding: 0;
     }
-  });
-})();
-</script>
+
+    body {
+      background: #f8fafc;
+      color: #0f172a;
+      font-family: "Inter", sans-serif;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
+
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f8fafc;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 999px;
+    }
+
+    .history-sidebar {
+      width: 240px;
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 50;
+      background: #fff;
+      border-right: 1px solid #e2e8f0;
+      box-shadow: 0 1px 5px rgba(15,23,42,.04);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 12px;
+      transition: width .25s ease, transform .25s ease;
+    }
+
+    .history-main {
+      margin-left: 240px;
+      min-height: 100vh;
+      transition: margin-left .25s ease;
+    }
+
+    .history-header {
+      position: fixed;
+      top: 0;
+      left: 240px;
+      right: 0;
+      height: 64px;
+      z-index: 40;
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      transition: left .25s ease;
+    }
+
+    .history-content {
+      padding: 64px 32px 40px;
+      min-height: 100vh;
+      background: #f8fafc;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 42px;
+      padding: 10px 13px;
+      border-radius: 11px;
+      color: #64748b;
+      font-size: 13px;
+      font-weight: 500;
+      transition: .18s ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-item:hover {
+      color: #0f172a;
+      background: #f8fafc;
+    }
+
+    .nav-item.active {
+      color: #0369a1;
+      background: #eff6ff;
+      border-color: #bae6fd;
+      font-weight: 600;
+      box-shadow: 0 1px 3px rgba(2,132,199,.06);
+    }
+
+    .nav-item .material-symbols-outlined {
+      font-size: 20px;
+      color: #94a3b8;
+    }
+
+    .nav-item.active .material-symbols-outlined {
+      color: #0284c7;
+    }
+
+    .kpi-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 148px;
+      background: #fff;
+      border: 1px solid rgba(226,232,240,.95);
+      border-radius: 13px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(15,23,42,.035);
+      transition: .18s ease;
+    }
+
+    .kpi-card:hover {
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+
+    .table-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 13px;
+      box-shadow: 0 1px 3px rgba(15,23,42,.035);
+      overflow: hidden;
+    }
+
+    .table-row:hover {
+      background: #f8fafc;
+    }
+
+    .selected-row {
+      background: rgba(239,246,255,.7);
+    }
+
+    .filter-button {
+      height: 38px;
+      padding: 0 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 9px;
+      color: #475569;
+      font-size: 12px;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .filter-button:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+
+    .status-high {
+      color: #be123c;
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+    }
+
+    .status-normal {
+      color: #047857;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+    }
+
+    .status-watch {
+      color: #b45309;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+    }
+
+    .action-maintenance {
+      color: #be123c;
+      background: #ffe4e6;
+      border: 1px solid #fecdd3;
+    }
+
+    .action-continue {
+      color: #047857;
+      background: #d1fae5;
+      border: 1px solid #a7f3d0;
+    }
+
+    .action-inspect {
+      color: #b45309;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+    }
+
+    .detail-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 13px;
+      padding: 22px;
+      box-shadow: 0 1px 3px rgba(15,23,42,.035);
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 1100px) {
+      .history-sidebar { width: 220px; }
+      .history-main { margin-left: 220px; }
+      .history-header { left: 220px; }
+    }
+
+    @media (max-width: 900px) {
+      .history-sidebar {
+        transform: translateX(-100%);
+        width: 260px;
+      }
+
+      .history-sidebar.open {
+        transform: translateX(0);
+      }
+
+      .history-main {
+        margin-left: 0;
+      }
+
+      .history-header {
+        left: 0;
+        padding: 0 18px;
+      }
+
+      .history-content {
+        padding: 78px 18px 28px;
+      }
+
+      .mobile-menu {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e2e8f0;
+        background: #fff;
+        border-radius: 9px;
+        color: #475569;
+        cursor: pointer;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .history-content {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .history-header {
+        height: 60px;
+      }
+
+      .system-cluster {
+        display: none;
+      }
+
+      .user-label {
+        display: none;
+      }
+
+      .kpi-card {
+        min-height: 132px;
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =====================================================
+       SIDEBAR
+       ===================================================== -->
+  <aside class="history-sidebar" id="historySidebar">
+
+    <div>
+      <div class="flex items-center gap-3 px-1 mb-7">
+        <div class="w-10 h-10 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600 shadow-sm shrink-0">
+          <span class="material-symbols-outlined">layers</span>
+        </div>
+
+        <div class="min-w-0">
+          <div class="text-[14px] font-bold text-slate-900 leading-tight">
+            AI Predictive
+          </div>
+          <div class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+            Maintenance
+          </div>
+        </div>
+      </div>
+
+      <nav class="flex flex-col gap-1.5">
+
+        <a href="{{ url_for('main.dashboard') }}" class="nav-item">
+          <span class="material-symbols-outlined">grid_view</span>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="{{ url_for('analysis.analysis') }}" class="nav-item">
+          <span class="material-symbols-outlined">memory</span>
+          <span>Machine Analysis</span>
+        </a>
+
+        <a href="{{ url_for('analysis.history') }}" class="nav-item active" aria-current="page">
+          <span class="material-symbols-outlined">schedule</span>
+          <span>Analysis History</span>
+        </a>
+
+        <a href="{{ url_for('main.models') }}" class="nav-item">
+          <span class="material-symbols-outlined">hub</span>
+          <span>AI Models</span>
+        </a>
+
+        <a href="{{ url_for('main.about') }}" class="nav-item">
+          <span class="material-symbols-outlined">info</span>
+          <span>About</span>
+        </a>
+
+      </nav>
+    </div>
 
 
+    <div class="rounded-xl bg-slate-50 border border-slate-200 p-3.5 shadow-sm">
 
-</body></html>
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-sky-100 border border-sky-200 flex items-center justify-center text-sky-700 font-bold text-xs">
+          AL
+        </div>
+
+        <div class="min-w-0">
+          <div class="text-sm font-semibold text-slate-900 truncate">
+            Alvin Engineer
+          </div>
+
+          <div class="text-xs text-slate-500 truncate">
+            Lead Analyst
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3 pt-3 border-t border-slate-200 flex items-center justify-between">
+        <div class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="text-xs text-slate-600 font-medium">
+            Online
+          </span>
+        </div>
+
+        <a
+          href="{{ url_for('auth.logout') }}"
+          class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-200 text-xs text-slate-700 bg-white hover:bg-slate-100 transition-colors"
+        >
+          <span class="material-symbols-outlined text-[15px]">logout</span>
+          <span>Sign out</span>
+        </a>
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =====================================================
+       MAIN
+       ===================================================== -->
+  <div class="history-main">
+
+    <!-- TOPBAR -->
+    <header class="history-header">
+
+      <div class="flex items-center gap-4">
+
+        <button
+          class="mobile-menu"
+          id="mobileMenu"
+          type="button"
+          aria-label="Open navigation"
+        >
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+
+        <div class="flex items-center gap-2.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/80">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span>
+          </span>
+
+          <span class="text-[11px] text-emerald-800 font-semibold tracking-wide">
+            ALL SYSTEMS NORMAL
+          </span>
+        </div>
+
+        <div class="system-cluster hidden lg:flex items-center gap-2 text-[11px] text-slate-500">
+          <span class="material-symbols-outlined text-[16px] text-slate-400">
+            sensors
+          </span>
+          Cluster: 14 Nodes Synced
+        </div>
+
+      </div>
+
+
+      <div class="flex items-center gap-4">
+
+        <button
+          aria-label="Notifications"
+          class="relative p-2 rounded-lg bg-slate-100 text-slate-600 hover:text-slate-900 hover:bg-slate-200 transition-colors border border-slate-200"
+          type="button"
+        >
+          <span class="material-symbols-outlined text-[20px]">
+            notifications
+          </span>
+
+          <span class="absolute top-1.5 right-1.5 flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-600"></span>
+          </span>
+        </button>
+
+
+        <div class="flex items-center gap-3 pl-2 border-l border-slate-200">
+
+          <div class="user-label hidden sm:flex flex-col text-right">
+            <span class="text-[12px] text-slate-900 font-semibold leading-tight">
+              Alvin Engineer
+            </span>
+
+            <span class="text-[11px] text-slate-500 leading-tight">
+              Lead Analyst
+            </span>
+          </div>
+
+          <div class="w-8 h-8 rounded-full bg-sky-600 text-white flex items-center justify-center shadow-sm">
+            <span class="material-symbols-outlined text-[18px]">
+              person
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+    <main class="history-content">
+
+      <div class="max-w-[1800px] mx-auto">
+
+        <!-- HEADER -->
+        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-5 pb-6 pt-3">
+
+          <div class="flex flex-col gap-1.5 max-w-2xl">
+
+            <div class="flex items-center gap-2 text-sky-700 text-[11px] uppercase tracking-[0.18em] font-semibold">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-600 animate-pulse"></span>
+              Audit &amp; Diagnostics Ledger
+            </div>
+
+            <h1 class="text-[28px] font-bold text-slate-900 tracking-tight">
+              Analysis History
+            </h1>
+
+            <p class="text-[13px] text-slate-600 leading-relaxed">
+              Review previous machine diagnostic records, cluster assignments, and prescriptive actions.
+            </p>
+
+          </div>
+
+
+          <div class="flex flex-wrap items-center gap-3 shrink-0">
+
+            <button
+              id="filterRecords"
+              class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-[12px] font-semibold transition-all shadow-sm"
+              type="button"
+            >
+              <span class="material-symbols-outlined text-[18px]">
+                tune
+              </span>
+              Filter Records
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- KPI -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+
+          <div class="kpi-card">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                Total Analyzed
+              </span>
+
+              <div class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-700">
+                <span class="material-symbols-outlined text-[18px]">
+                  precision_manufacturing
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <div class="flex items-baseline gap-2">
+                <span class="text-[27px] text-slate-900 font-bold tracking-tight">
+                  1,428
+                </span>
+
+                <span class="text-[11px] text-emerald-700 font-semibold">
+                  ↑ 4.2%
+                </span>
+              </div>
+
+              <span class="text-[11px] text-slate-500">
+                Rolling 30-day telemetry pool
+              </span>
+            </div>
+
+            <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-sky-500 opacity-60"></div>
+          </div>
+
+
+          <div class="kpi-card">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                Normal / Low Risk
+              </span>
+
+              <div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700">
+                <span class="material-symbols-outlined text-[18px]">
+                  verified
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <div class="flex items-baseline gap-2">
+                <span class="text-[27px] text-slate-900 font-bold tracking-tight">
+                  1,379
+                </span>
+
+                <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-semibold">
+                  96.5%
+                </span>
+              </div>
+
+              <span class="text-[11px] text-slate-500">
+                Operating in steady vibration states
+              </span>
+            </div>
+
+            <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-500 opacity-60"></div>
+          </div>
+
+
+          <div class="kpi-card">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                High Risk Flagged
+              </span>
+
+              <div class="w-8 h-8 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600">
+                <span class="material-symbols-outlined text-[18px]">
+                  warning
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <div class="flex items-baseline gap-2">
+                <span class="text-[27px] text-rose-600 font-bold tracking-tight">
+                  49
+                </span>
+
+                <span class="px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 text-[11px] font-semibold">
+                  3.5%
+                </span>
+              </div>
+
+              <span class="text-[11px] text-slate-500">
+                Crossed thermal or torque threshold
+              </span>
+            </div>
+
+            <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-rose-500 opacity-60"></div>
+          </div>
+
+
+          <div class="kpi-card">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-slate-500 uppercase tracking-wider font-semibold">
+                Action Rate
+              </span>
+
+              <div class="w-8 h-8 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700">
+                <span class="material-symbols-outlined text-[18px]">
+                  build_circle
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <span class="text-[27px] text-slate-900 font-bold tracking-tight">
+                49 total
+              </span>
+
+              <div class="mt-1 flex items-center gap-2 text-[11px]">
+                <span class="text-amber-700 font-medium">38 Inspections</span>
+                <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+                <span class="text-rose-700 font-medium">11 Maintenance</span>
+              </div>
+            </div>
+
+            <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-400 opacity-60"></div>
+          </div>
+
+        </div>
+
+
+        <!-- SEARCH / FILTER -->
+        <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-sm mb-6 flex flex-col xl:flex-row items-stretch xl:items-center justify-between gap-3">
+
+          <div class="relative flex-1 min-w-[260px]">
+
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px] pointer-events-none">
+              search
+            </span>
+
+            <input
+              id="historySearch"
+              class="w-full h-10 pl-10 pr-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 placeholder:text-slate-400 text-[12px] focus:outline-none focus:border-sky-500 focus:bg-white transition-colors"
+              placeholder="Search by Machine ID, model, or operator..."
+              type="text"
+            >
+
+          </div>
+
+
+          <div class="flex flex-wrap items-center gap-2">
+
+            <button class="filter-button" type="button" data-filter="date">
+              <span class="material-symbols-outlined text-[15px]">schedule</span>
+              Last 30 Days
+              <span class="material-symbols-outlined text-[15px] text-slate-400">expand_more</span>
+            </button>
+
+            <button class="filter-button" type="button" data-filter="type">
+              <span class="text-slate-400">Type:</span>
+              <span class="text-slate-800 font-medium">All</span>
+              <span class="material-symbols-outlined text-[15px] text-slate-400">expand_more</span>
+            </button>
+
+            <button class="filter-button" type="button" data-filter="risk">
+              <span class="text-slate-400">Risk:</span>
+              <span class="text-slate-800 font-medium">All Status</span>
+              <span class="material-symbols-outlined text-[15px] text-slate-400">expand_more</span>
+            </button>
+
+            <button class="filter-button" id="resetFilters" title="Reset Filters" type="button">
+              <span class="material-symbols-outlined text-[18px]">
+                restart_alt
+              </span>
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- WORKSPACE -->
+        <div class="grid grid-cols-1 2xl:grid-cols-12 gap-6 items-start">
+
+          <!-- TABLE -->
+          <div class="2xl:col-span-8 table-card">
+
+            <div class="overflow-x-auto">
+
+              <table class="w-full text-left border-collapse" id="historyTable">
+
+                <thead>
+                  <tr class="bg-slate-100/90 text-slate-700 text-[10px] uppercase tracking-wider font-semibold border-b border-slate-200">
+
+                    <th class="py-3.5 pl-6 pr-4 whitespace-nowrap">Date &amp; Time</th>
+                    <th class="py-3.5 px-4 whitespace-nowrap">Machine / Type</th>
+                    <th class="py-3.5 px-4 whitespace-nowrap">Telemetry Snapshot</th>
+                    <th class="py-3.5 px-4 whitespace-nowrap">Risk &amp; Prob</th>
+                    <th class="py-3.5 px-4 whitespace-nowrap">Condition Cluster</th>
+                    <th class="py-3.5 px-4 whitespace-nowrap">Q-Learning Action</th>
+                    <th class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap">Actions</th>
+
+                  </tr>
+                </thead>
+
+
+                <tbody class="divide-y divide-slate-100 text-[12px]">
+
+                  <tr class="table-row selected-row cursor-pointer" data-machine="#M-9104" data-risk="high">
+
+                    <td class="py-3.5 pl-6 pr-4 whitespace-nowrap">
+                      <div class="flex flex-col">
+                        <span class="text-slate-900 font-semibold">Oct 24, 14:32</span>
+                        <span class="text-[11px] text-slate-500">12 mins ago</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                        <div class="flex flex-col">
+                          <span class="text-sky-700 font-bold">#M-9104</span>
+                          <span class="text-[11px] text-slate-500">Medium Duty</span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex flex-col gap-0.5">
+                        <div class="flex items-center gap-1.5">
+                          <span class="text-rose-600 font-semibold">304.2 K</span>
+                          <span class="text-slate-300">/</span>
+                          <span class="text-slate-700 font-medium">1,480 RPM</span>
+                        </div>
+                        <div class="flex items-center gap-1.5 text-[11px] text-slate-500">
+                          <span>54.2 Nm</span>
+                          <span>•</span>
+                          <span class="text-rose-600 font-medium">218 min wear</span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                        <span class="text-rose-700 font-bold">High Risk</span>
+                        <span class="text-[11px] text-slate-500">• 78.2%</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">
+                        Cluster 2 (Heavy Wear)
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full action-maintenance text-[10px] font-bold tracking-wide uppercase">
+                        <span class="material-symbols-outlined text-[13px]">build</span>
+                        Maintenance
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 pl-4 pr-6 text-right whitespace-nowrap">
+                      <button class="details-button inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sky-700 bg-sky-50 hover:bg-sky-100 text-[11px] font-semibold transition-colors border border-sky-200" type="button">
+                        Details
+                        <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+                      </button>
+                    </td>
+
+                  </tr>
+
+
+                  <tr class="table-row cursor-pointer" data-machine="#M-4281" data-risk="normal">
+
+                    <td class="py-3.5 pl-6 pr-4 whitespace-nowrap">
+                      <div class="flex flex-col">
+                        <span class="text-slate-900 font-semibold">Oct 24, 13:48</span>
+                        <span class="text-[11px] text-slate-500">56 mins ago</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <div class="flex flex-col">
+                          <span class="text-slate-800 font-semibold">#M-4281</span>
+                          <span class="text-[11px] text-slate-500">Medium Duty</span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex flex-col gap-0.5">
+                        <div>298.1 K <span class="text-slate-300">/</span> 1,504 RPM</div>
+                        <div class="text-[11px] text-slate-500">42.8 Nm • 94 min wear</div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span class="text-emerald-700 font-bold">Normal</span>
+                        <span class="text-[11px] text-slate-500">• 12.4%</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">
+                        Cluster 1 (Medium)
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full action-continue text-[10px] font-bold uppercase">
+                        <span class="material-symbols-outlined text-[13px]">check_circle</span>
+                        Continue
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 pl-4 pr-6 text-right">
+                      <button class="details-button inline-flex items-center gap-1 text-sky-700 hover:bg-sky-50 px-2.5 py-1.5 rounded-md text-[11px] font-semibold" type="button">
+                        Details
+                        <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+                      </button>
+                    </td>
+
+                  </tr>
+
+
+                  <tr class="table-row cursor-pointer" data-machine="#H-1029" data-risk="watch">
+
+                    <td class="py-3.5 pl-6 pr-4 whitespace-nowrap">
+                      <div class="flex flex-col">
+                        <span class="text-slate-900 font-semibold">Oct 24, 11:15</span>
+                        <span class="text-[11px] text-slate-500">3h 20m ago</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                        <div class="flex flex-col">
+                          <span class="text-slate-800 font-semibold">#H-1029</span>
+                          <span class="text-[11px] text-slate-500">Heavy Duty</span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex flex-col gap-0.5">
+                        <div class="text-amber-700 font-semibold">302.8 K <span class="text-slate-300">/</span> <span class="text-slate-700">1,390 RPM</span></div>
+                        <div class="text-[11px] text-slate-500">58.4 Nm • <span class="text-amber-700">172 min wear</span></div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                        <span class="text-amber-700 font-bold">Watch</span>
+                        <span class="text-[11px] text-slate-500">• 34.6%</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">
+                        Cluster 2 (Heavy Wear)
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full action-inspect text-[10px] font-bold uppercase">
+                        <span class="material-symbols-outlined text-[13px]">search</span>
+                        Inspect
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 pl-4 pr-6 text-right">
+                      <button class="details-button inline-flex items-center gap-1 text-sky-700 hover:bg-sky-50 px-2.5 py-1.5 rounded-md text-[11px] font-semibold" type="button">
+                        Details
+                        <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+                      </button>
+                    </td>
+
+                  </tr>
+
+
+                  <tr class="table-row cursor-pointer" data-machine="#L-5532" data-risk="normal">
+
+                    <td class="py-3.5 pl-6 pr-4 whitespace-nowrap">
+                      <div class="flex flex-col">
+                        <span class="text-slate-900 font-semibold">Oct 24, 09:22</span>
+                        <span class="text-[11px] text-slate-500">5h 10m ago</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <div class="flex flex-col">
+                          <span class="text-slate-800 font-semibold">#L-5532</span>
+                          <span class="text-[11px] text-slate-500">Light Duty</span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex flex-col gap-0.5">
+                        <div>297.4 K <span class="text-slate-300">/</span> 1,620 RPM</div>
+                        <div class="text-[11px] text-slate-500">32.1 Nm • 34 min wear</div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span class="text-emerald-700 font-bold">Normal</span>
+                        <span class="text-[11px] text-slate-500">• 8.7%</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">
+                        Cluster 0 (Light Wear)
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full action-continue text-[10px] font-bold uppercase">
+                        <span class="material-symbols-outlined text-[13px]">check_circle</span>
+                        Continue
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 pl-4 pr-6 text-right">
+                      <button class="details-button inline-flex items-center gap-1 text-sky-700 hover:bg-sky-50 px-2.5 py-1.5 rounded-md text-[11px] font-semibold" type="button">
+                        Details
+                        <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+                      </button>
+                    </td>
+
+                  </tr>
+
+
+                  <tr class="table-row cursor-pointer" data-machine="#M-3320" data-risk="high">
+
+                    <td class="py-3.5 pl-6 pr-4 whitespace-nowrap">
+                      <div class="flex flex-col">
+                        <span class="text-slate-900 font-semibold">Oct 23, 22:40</span>
+                        <span class="text-[11px] text-slate-500">16h ago</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                        <div class="flex flex-col">
+                          <span class="text-slate-800 font-semibold">#M-3320</span>
+                          <span class="text-[11px] text-slate-500">Medium Duty</span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex flex-col gap-0.5">
+                        <div class="text-rose-600 font-semibold">305.6 K <span class="text-slate-300">/</span> <span class="text-slate-700">1,310 RPM</span></div>
+                        <div class="text-[11px] text-slate-500">62.7 Nm • <span class="text-rose-600">245 min wear</span></div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                        <span class="text-rose-700 font-bold">High Risk</span>
+                        <span class="text-[11px] text-slate-500">• 84.1%</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">
+                        Cluster 2 (Heavy Wear)
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full action-maintenance text-[10px] font-bold uppercase">
+                        <span class="material-symbols-outlined text-[13px]">build</span>
+                        Maintenance
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 pl-4 pr-6 text-right">
+                      <button class="details-button inline-flex items-center gap-1 text-sky-700 hover:bg-sky-50 px-2.5 py-1.5 rounded-md text-[11px] font-semibold" type="button">
+                        Details
+                        <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+                      </button>
+                    </td>
+
+                  </tr>
+
+
+                  <tr class="table-row cursor-pointer" data-machine="#L-7741" data-risk="normal">
+
+                    <td class="py-3.5 pl-6 pr-4 whitespace-nowrap">
+                      <div class="flex flex-col">
+                        <span class="text-slate-900 font-semibold">Oct 23, 19:14</span>
+                        <span class="text-[11px] text-slate-500">19h ago</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <div class="flex flex-col">
+                          <span class="text-slate-800 font-semibold">#L-7741</span>
+                          <span class="text-[11px] text-slate-500">Light Duty</span>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex flex-col gap-0.5">
+                        <div>296.8 K <span class="text-slate-300">/</span> 1,580 RPM</div>
+                        <div class="text-[11px] text-slate-500">30.2 Nm • 18 min wear</div>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span class="text-emerald-700 font-bold">Normal</span>
+                        <span class="text-[11px] text-slate-500">• 5.2%</span>
+                      </div>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="px-2 py-1 rounded bg-slate-100 border border-slate-200 text-slate-700 text-[11px] font-medium">
+                        Cluster 0 (Light Wear)
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full action-continue text-[10px] font-bold uppercase">
+                        <span class="material-symbols-outlined text-[13px]">check_circle</span>
+                        Continue
+                      </span>
+                    </td>
+
+                    <td class="py-3.5 pl-4 pr-6 text-right">
+                      <button class="details-button inline-flex items-center gap-1 text-sky-700 hover:bg-sky-50 px-2.5 py-1.5 rounded-md text-[11px] font-semibold" type="button">
+                        Details
+                        <span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+                      </button>
+                    </td>
+
+                  </tr>
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+
+            <!-- Pagination -->
+            <div class="p-3.5 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
+
+              <span class="text-[11px] text-slate-500">
+                Showing <span class="font-semibold text-slate-800">1 - 6</span>
+                of <span class="font-semibold text-slate-800">1,428</span> records
+              </span>
+
+              <div class="flex items-center gap-1.5">
+
+                <button class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-400 opacity-50 flex items-center justify-center" disabled>
+                  <span class="material-symbols-outlined text-[16px]">chevron_left</span>
+                </button>
+
+                <button class="w-8 h-8 rounded-lg bg-sky-600 text-white text-[11px] font-semibold">
+                  1
+                </button>
+
+                <button class="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-[11px]">
+                  2
+                </button>
+
+                <button class="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-[11px]">
+                  3
+                </button>
+
+                <span class="text-slate-400 px-1 text-[11px]">...</span>
+
+                <button class="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-[11px]">
+                  238
+                </button>
+
+                <button class="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700">
+                  <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- DETAIL -->
+          <div class="2xl:col-span-4 flex flex-col gap-5">
+
+            <div class="detail-card">
+
+              <div class="flex items-start justify-between gap-4">
+
+                <div>
+                  <div class="flex items-center gap-2">
+                    <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-700 border border-rose-200 text-[10px] font-bold uppercase tracking-wider">
+                      Active Selection
+                    </span>
+
+                    <span class="text-[11px] text-slate-500">
+                      Run #940-B
+                    </span>
+                  </div>
+
+                  <h2 class="text-[20px] text-slate-900 font-bold mt-2">
+                    Machine #M-9104
+                  </h2>
+
+                  <p class="text-[12px] text-slate-500 mt-0.5">
+                    Centrifuge Tugas Sedang Industri
+                  </p>
+                </div>
+
+                <span class="w-10 h-10 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center border border-rose-200 shrink-0">
+                  <span class="material-symbols-outlined text-[22px]">
+                    error
+                  </span>
+                </span>
+
+              </div>
+
+
+              <div class="grid grid-cols-2 gap-3 p-3.5 rounded-lg bg-slate-50 border border-slate-200 mt-5">
+
+                <div>
+                  <span class="text-[10px] text-slate-500">Failure Probability</span>
+                  <div class="text-[20px] text-rose-600 font-bold mt-0.5">78.2%</div>
+                </div>
+
+                <div>
+                  <span class="text-[10px] text-slate-500">Assigned Cluster</span>
+                  <div class="text-[12px] text-slate-900 font-semibold mt-1">Cluster 2 (Heavy)</div>
+                </div>
+
+                <div class="pt-2 border-t border-slate-200">
+                  <span class="text-[10px] text-slate-500">Torque Strain</span>
+                  <div class="text-[12px] text-slate-900 font-semibold mt-1">
+                    54.2 Nm <span class="text-rose-600">(+18%)</span>
+                  </div>
+                </div>
+
+                <div class="pt-2 border-t border-slate-200">
+                  <span class="text-[10px] text-slate-500">Tool Wear Total</span>
+                  <div class="text-[12px] text-rose-600 font-semibold mt-1">218 min</div>
+                </div>
+
+              </div>
+
+
+              <!-- FFT -->
+              <div class="mt-4 rounded-xl bg-slate-50 p-4 border border-slate-200">
+
+                <div class="flex items-center justify-between gap-3 mb-3">
+                  <span class="text-[12px] text-slate-900 font-semibold flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px] text-sky-600">
+                      graphic_eq
+                    </span>
+                    FFT Vibration Spectrum
+                  </span>
+
+                  <span class="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 border border-rose-200 text-[10px] font-semibold whitespace-nowrap">
+                    Peak: 3.82 kHz
+                  </span>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-lg p-2 overflow-hidden">
+
+                  <svg class="w-full h-40" fill="none" preserveAspectRatio="none" viewBox="0 0 800 200">
+
+                    <defs>
+                      <linearGradient id="historyBaseline" x1="0%" x2="0%" y1="0%" y2="100%">
+                        <stop offset="0%" stop-color="#0284c7" stop-opacity=".25"/>
+                        <stop offset="100%" stop-color="#0284c7" stop-opacity=".01"/>
+                      </linearGradient>
+                    </defs>
+
+                    <line stroke="#cbd5e1" stroke-dasharray="4 4" x1="40" x2="760" y1="40" y2="40"/>
+                    <line stroke="#cbd5e1" stroke-dasharray="4 4" x1="40" x2="760" y1="85" y2="85"/>
+                    <line stroke="#cbd5e1" stroke-dasharray="4 4" x1="40" x2="760" y1="130" y2="130"/>
+                    <line stroke="#cbd5e1" stroke-dasharray="4 4" x1="40" x2="760" y1="175" y2="175"/>
+
+                    <path
+                      d="M40 165 Q100 160 160 163 T270 160 Q290 155 300 110 T315 25 T330 120 T350 160 Q420 163 500 161 T620 164 T760 162 L760 175 L40 175Z"
+                      fill="url(#historyBaseline)"
+                    />
+
+                    <path
+                      d="M40 165 Q100 160 160 163 T270 160 Q290 155 300 110 T315 25 T330 120 T350 160 Q420 163 500 161 T620 164 T760 162"
+                      stroke="#0284c7"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                    />
+
+                    <path
+                      d="M292 145 Q302 80 310 45 T315 25 T322 70 T332 130"
+                      stroke="#e11d48"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                    />
+
+                    <line stroke="#dc2626" stroke-dasharray="3 3" x1="315" x2="315" y1="25" y2="175"/>
+                    <circle cx="315" cy="25" r="5" fill="#dc2626"/>
+
+                  </svg>
+
+                  <div class="flex items-center justify-between text-[9px] text-slate-500 px-1 pt-1 border-t border-slate-200">
+                    <span>0 Hz</span>
+                    <span>2 kHz</span>
+                    <span class="text-rose-700 font-bold">4 kHz Peak</span>
+                    <span>6 kHz</span>
+                    <span>8 kHz</span>
+                    <span>10 kHz</span>
+                  </div>
+
+                </div>
+
+                <div class="mt-3 flex items-center justify-between gap-3 text-[10px] text-slate-500">
+                  <span>Baseline: steady 0.8g vibration</span>
+
+                  <span class="text-rose-700 font-semibold flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">warning</span>
+                    Harmonic Discrepancy Identified
+                  </span>
+                </div>
+
+              </div>
+
+
+              <!-- Prescription -->
+              <div class="mt-4 p-4 rounded-lg bg-rose-50/70 border border-rose-200 relative overflow-hidden">
+
+                <div class="absolute left-0 top-0 bottom-0 w-1 bg-rose-500"></div>
+
+                <div class="flex items-center gap-2 pl-1">
+                  <span class="material-symbols-outlined text-[18px] text-rose-600">
+                    assignment_late
+                  </span>
+
+                  <span class="text-[13px] text-slate-900 font-bold">
+                    Prescriptive Guidance
+                  </span>
+                </div>
+
+                <p class="text-[12px] text-slate-700 leading-relaxed pl-1 mt-2">
+                  Detected abnormal bearing vibration during high torque load.
+                  Q-Learning recommends
+                  <strong class="text-slate-900">
+                    physical maintenance within 48 hours
+                  </strong>
+                  to reduce the risk of spindle failure.
+                </p>
+
+                <div class="pt-2 mt-2 border-t border-rose-200/70 flex items-center justify-between text-[10px] text-slate-600 pl-1">
+                  <span>Model Confidence: 94.6%</span>
+                  <span>Policy: Safe Slowdown</span>
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="p-4 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-3">
+
+              <div class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-700 shrink-0">
+                <span class="material-symbols-outlined text-[18px]">
+                  info
+                </span>
+              </div>
+
+              <div class="min-w-0">
+                <div class="text-[12px] text-slate-900 font-semibold truncate">
+                  Sensor Node Calibration
+                </div>
+
+                <div class="text-[11px] text-slate-500 truncate">
+                  Next scheduled telemetry check in 14 hours.
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const sidebar = document.getElementById("historySidebar");
+      const menu = document.getElementById("mobileMenu");
+      const search = document.getElementById("historySearch");
+      const reset = document.getElementById("resetFilters");
+      const rows = Array.from(document.querySelectorAll("#historyTable tbody tr"));
+      const detailButtons = document.querySelectorAll(".details-button");
+
+      if (menu && sidebar) {
+        menu.addEventListener("click", function () {
+          sidebar.classList.toggle("open");
+        });
+      }
+
+      /*
+       * Simple client-side search.
+       * This keeps the Stitch page interactive without changing
+       * the Flask/backend implementation.
+       */
+      if (search) {
+        search.addEventListener("input", function () {
+
+          const query = this.value.trim().toLowerCase();
+
+          rows.forEach(function (row) {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(query) ? "" : "none";
+          });
+
+        });
+      }
+
+      if (reset) {
+        reset.addEventListener("click", function () {
+
+          if (search) {
+            search.value = "";
+          }
+
+          rows.forEach(function (row) {
+            row.style.display = "";
+          });
+
+        });
+      }
+
+      /*
+       * Selecting a table row updates the visual selection.
+       */
+      rows.forEach(function (row) {
+
+        row.addEventListener("click", function (event) {
+
+          if (event.target.closest("button")) {
+            return;
+          }
+
+          rows.forEach(function (item) {
+            item.classList.remove("selected-row");
+          });
+
+          row.classList.add("selected-row");
+
+        });
+
+      });
+
+      /*
+       * Details buttons only select the record visually.
+       * Existing Flask result routing remains untouched.
+       */
+      detailButtons.forEach(function (button) {
+
+        button.addEventListener("click", function (event) {
+          event.stopPropagation();
+
+          const row = button.closest("tr");
+
+          if (!row) return;
+
+          rows.forEach(function (item) {
+            item.classList.remove("selected-row");
+          });
+
+          row.classList.add("selected-row");
+        });
+
+      });
+
+    });
+  </script>
+
+</body>
+</html>

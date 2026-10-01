@@ -1,118 +1,718 @@
-<!DOCTYPE html><html class="light" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">
-  tailwind.config = {
-    darkMode: "class",
-    theme: {
-      extend: {
-        "colors": {
-          "tertiary": "#00875a",
-          "tertiary-container": "#e3fcef",
-          "on-tertiary-container": "#006644",
-          "primary": "#0284c7",
-          "primary-container": "#0284c7",
-          "on-primary-container": "#ffffff",
-          "surface-container-low": "#ffffff",
-          "surface-container": "#ffffff",
-          "surface-container-high": "#f8fafc",
-          "surface-container-highest": "#f1f5f9",
-          "surface-container-lowest": "#ffffff",
-          "outline-variant": "#e2e8f0",
-          "outline": "#cbd5e1",
-          "on-surface": "#0f172a",
-          "on-surface-variant": "#475569",
-          "background": "#f8fafc",
-          "error": "#dc2626",
-          "error-container": "#fef2f2",
-          "secondary": "#6366f1",
-          "secondary-fixed": "#e0e7ff"
-        },
-        "borderRadius": {
-          "DEFAULT": "0.25rem",
-          "lg": "0.5rem",
-          "xl": "0.75rem",
-          "full": "9999px"
-        },
-        "spacing": {
-          "gutter": "1.5rem",
-          "space-md": "1rem",
-          "space-lg": "1.5rem",
-          "margin-mobile": "1rem",
-          "margin": "2rem",
-          "gutter-mobile": "1rem",
-          "space-sm": "0.5rem",
-          "space-xs": "0.25rem",
-          "space-xl": "2rem"
-        },
-        "fontFamily": {
-          "headline": ["Plus Jakarta Sans", "sans-serif"],
-          "body": ["Inter", "sans-serif"]
-        }
-      }
-    }
+{% extends "base.html" %}
+
+{% block title %}Analysis Result{% endblock %}
+
+{% block content %}
+
+<style>
+  .result-v3 {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-bottom: 34px;
   }
-</script></head><body class="bg-[#f8fafc] font-body text-slate-800 antialiased selection:bg-sky-500 selection:text-white"><aside class="fixed left-0 top-0 h-screen w-72 bg-white border-r border-slate-200 z-50 flex flex-col justify-between p-space-lg shadow-sm transition-all" id="main-sidebar"><div class="flex flex-col gap-6"><div class="flex items-center justify-between px-1 gap-2"><div class="flex items-center gap-3 min-w-0 overflow-hidden"><div class="w-10 h-10 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600 shrink-0 shadow-sm"><svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg></div><span class="sidebar-label text-[14px] font-bold text-slate-900 tracking-tight whitespace-nowrap transition-opacity duration-200 font-headline">AI Predictive Maintenance</span></div><button class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 transition-all shrink-0" id="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar"><span class="material-symbols-outlined text-[18px] transition-transform duration-200" id="sidebar-toggle-icon">menu_open</span></button></div><nav class="flex flex-col gap-1.5"><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors font-medium group" data-path="dashboard" href="{{ url_for('main.dashboard') }}" title="Dashboard"><span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-sky-600 transition-colors shrink-0">grid_view</span><span class="sidebar-label truncate transition-opacity duration-200">Dashboard</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors font-medium group" data-path="machine-analysis" href="{{ url_for('analysis.analysis') }}" title="Machine Analysis"><span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-sky-600 transition-colors shrink-0">memory</span><span class="sidebar-label truncate transition-opacity duration-200">Machine Analysis</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors font-medium group" data-path="analysis-history" href="{{ url_for('analysis.history') }}" title="Analysis History"><span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-sky-600 transition-colors shrink-0">schedule</span><span class="sidebar-label truncate transition-opacity duration-200">Analysis History</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors font-medium group" data-path="models" href="{{ url_for('main.models') }}" title="AI Models"><span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-sky-600 transition-colors shrink-0">neurology</span><span class="sidebar-label truncate transition-opacity duration-200">AI Models</span></a><a class="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors font-medium group" data-path="about" href="{{ url_for('main.about') }}" title="About"><span class="material-symbols-outlined text-[20px] text-slate-500 group-hover:text-sky-600 transition-colors shrink-0">info</span><span class="sidebar-label truncate transition-opacity duration-200">About</span></a></nav></div><div class="mt-auto p-4 mb-2 rounded-xl bg-slate-50 border border-slate-200 flex flex-col gap-3 shadow-xs transition-all" id="sidebar-user-card"><div class="flex items-center gap-3"><div class="relative shrink-0"><div class="w-10 h-10 rounded-full bg-sky-100 border border-sky-300 flex items-center justify-center text-sky-700 overflow-hidden shrink-0 font-bold"><svg class="w-6 h-6 text-slate-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div><span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white"></span></div><div class="sidebar-label flex flex-col min-w-0 transition-opacity duration-200"><span class="text-[14px] font-bold text-slate-900 truncate leading-tight font-headline">Dr. Elena Chen</span><span class="text-xs text-slate-500 truncate mt-0.5">Lead Diagnostician</span></div></div><div class="sidebar-label pt-2 border-t border-slate-200 flex items-center justify-between transition-opacity duration-200"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span class="text-xs text-slate-600 font-medium">Online</span></div><a class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-slate-200 hover:border-slate-300 hover:bg-white text-xs text-slate-600 hover:text-slate-900 transition-colors font-medium group" data-path="logout" href="{{ url_for('auth.logout') }}"><span class="material-symbols-outlined text-[16px] text-slate-500 group-hover:text-slate-700 transition-colors">logout</span><span class="">Sign out</span></a></div></div></aside><div class="pl-72 transition-all" id="main-content-layout"><header class="fixed top-0 left-72 right-0 h-16 bg-white/90 backdrop-blur-md border-b border-slate-200 z-40 flex items-center justify-between px-margin shadow-[0_1px_3px_rgba(0,0,0,0.03)] transition-all" id="top-header"><div class="flex items-center gap-space-md"><div class="flex items-center gap-1.5 text-xs text-slate-500"><span class="font-medium text-slate-800">Fleet Telemetry</span><span class="material-symbols-outlined text-[14px] text-slate-400">chevron_right</span><span class="text-sky-600 font-semibold">Live Overview</span></div><div class="h-4 w-px bg-slate-200"></div><div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span class="text-xs text-emerald-700 font-semibold">All Systems Normal</span></div></div><div class="flex items-center gap-space-md"><button class="relative p-2 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors flex items-center justify-center group" title="Notifications"><svg class="w-5 h-5 text-slate-500 group-hover:text-sky-600 transition-colors" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg><span class="absolute top-1.5 right-1.5 flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-500 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-sky-600"></span></span></button></div></header><main class="w-full pt-16 px-margin min-h-screen bg-[#f8fafc]"><div class="flex flex-col w-full">
-<div class="w-full pb-16 space-y-7">
-<!-- Top Action / Breadcrumb Header -->
-<section class="flex flex-col md:flex-row md:items-center justify-between gap-space-md pt-6"><div class="flex flex-col gap-1"><a class="inline-flex items-center gap-1 text-xs text-sky-600 hover:text-sky-800 font-medium transition-colors w-fit" href="{{ url_for('analysis.analysis') }}"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg><span class="">Back to Analysis</span></a><div class="flex flex-wrap items-center gap-2.5 pt-0.5"><h1 class="text-[22px] font-bold text-slate-900 tracking-tight font-headline">Analysis Result for Machine #M-4281</h1><div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span><span class="text-[11px] tracking-wider uppercase font-bold">Analysis Complete • Safe (Normal Condition)</span></div></div><p class="text-xs text-slate-500">Diagnostik dihitung melalui ensemble multi-model (Aliran Telemetri: Sektor 7A • Gantry Milling)</p></div><div class="flex items-center gap-2 flex-wrap self-start md:self-auto"><a href="{{ url_for('analysis.analysis') }}" class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold transition-all shadow-sm shadow-sky-600/20"><span class="material-symbols-outlined text-[18px]">add_circle</span><span class="">Analyze Another Machine</span></a></div></section>
-<!-- Core Takeaway Banner: Reassuring Human-Centered Verdict -->
-<section class="relative overflow-hidden rounded-xl bg-white border border-slate-200 p-6 md:p-7 shadow-sm"><div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-emerald-500/5 blur-3xl pointer-events-none"></div><div class="absolute right-1/3 -bottom-16 w-80 h-80 rounded-full bg-sky-500/5 blur-3xl pointer-events-none"></div><div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6"><div class="flex items-start md:items-center gap-5"><div class="w-14 h-14 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center shrink-0 shadow-sm"><svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div><div class="flex flex-col gap-1.5"><div class="flex items-center gap-2.5 flex-wrap"><span class="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] uppercase tracking-wider font-bold">KONSENSUS ENSEMBLE: 100% KESEPAKATAN</span><span class="text-[11px] text-slate-500 font-medium">Safe Operating Parameters</span></div><h2 class="text-xl md:text-[24px] text-slate-900 font-bold tracking-tight font-headline">Mesin Beroperasi Secara Normal</h2><div class="flex flex-col gap-2"><p class="text-xs md:text-sm text-slate-600 max-w-2xl leading-relaxed">Ketiga model AI sepakat bahwa <strong class="text-slate-900 font-semibold">Machine #M-4281</strong> berada dalam kondisi operasional yang stabil. Keausan pahat saat ini terindeks pada <strong class="text-slate-900 font-semibold">60%</strong> dan metrik disipasi panas tetap berada dalam batas toleransi yang sehat.</p><div class="flex flex-wrap items-center gap-4 text-xs text-slate-600 pt-0.5"><span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="font-medium">Tidak terdeteksi lonjakan termal</span></span><span class="flex items-center gap-1.5"><svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" stroke-linecap="round" stroke-linejoin="round"></path></svg><span class="font-medium">Frekuensi spindle stabil pada 1.551 rpm</span></span></div></div></div></div><div class="lg:w-80 shrink-0"><div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col gap-2.5 shadow-xs"><div class="flex items-center justify-between"><span class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">REKOMENDASI STRATEGIS</span><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold">Healthy</span></div><div class="flex items-center gap-1.5 pt-0.5"><span class="material-symbols-outlined text-sky-600 text-[20px]">verified</span><span class="text-sm font-bold text-slate-900 font-headline">Routine Inspection</span></div><p class="text-xs text-slate-600 leading-relaxed">Keseimbangan optimal antara throughput waktu kerja dan pemeliharaan pencegahan kesehatan pahat. Lakukan pemeriksaan visual optik pada penghentian siklus terjadwal.</p><div class="pt-2 border-t border-slate-200 flex items-center justify-between text-xs"><span class="text-slate-500">Scheduled Slot: <strong class="text-slate-800 font-semibold">Shift 2 (in 4.2h)</strong></span></div></div></div></div></section>
-<!-- The 3 AI Models Explained Simply -->
-<section class="space-y-4"><div class="flex items-center justify-between"><div><h3 class="text-lg md:text-xl font-bold text-slate-900 tracking-tight font-headline">Diagnostic Models Overview</h3><p class="text-xs text-slate-500 mt-0.5">Pipeline verifikasi ganda tiga model dengan landasan statistik transparan</p></div></div><div class="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch"><!-- Card 1: Supervised Learning --><div class="rounded-xl bg-white border border-slate-200 p-5 shadow-sm hover:shadow-md flex flex-col justify-between gap-5 transition-all"><div class="space-y-4"><div class="flex items-center justify-between flex-wrap gap-2 pb-2.5 border-b border-slate-100"><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-700 text-[10px] font-bold uppercase tracking-wider"><svg class="w-3 h-3 text-sky-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M12 20V10"></path><path d="M18 20V4"></path><path d="M6 20v-4"></path></svg>SUPERVISED LEARNING</span><span class="text-xs text-slate-700 font-semibold">Random Forest</span></div><span class="text-xs text-emerald-600 font-semibold flex items-center gap-1"><svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>98.7% Conf.</span></div><div class="space-y-1.5"><div class="flex items-center justify-between"><span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">CUMULATIVE FAILURE RISK</span><span class="text-[11px] font-semibold text-sky-700 font-mono">ROC-AUC: 0.992</span></div><div class="flex items-baseline gap-2.5 mt-0.5"><span class="text-3xl font-extrabold text-emerald-600 tracking-tight font-headline">12.4%</span><span class="px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-bold uppercase tracking-wider">LOW RISK ENVELOPE</span></div><div class="w-full space-y-1.5 pt-1"><div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden"><div class="h-full bg-emerald-500 rounded-full transition-all duration-1000" style="width: 12.4%;"></div></div><div class="flex justify-between text-[10px] text-slate-500 font-medium"><span class="">0% Safe</span><span class="">Threshold: 65%</span><span class="">100% Critical</span></div></div></div><div class="p-3.5 rounded-lg bg-slate-50 border border-slate-200 space-y-2.5"><div class="flex items-center justify-between text-[11px] font-bold text-slate-900 border-b border-slate-200 pb-1.5"><span class="">AI4I Failure Mode Breakdown</span><span class="text-sky-700 font-mono text-[10px]">P(Failure)</span></div><div class="space-y-2 text-[11px]"><div class="flex items-center justify-between"><span class="text-slate-700 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-amber-500"></span>Heat Dissipation (HDF)</span><div class="flex items-center gap-2.5"><div class="w-20 h-1.5 rounded-full bg-slate-200 overflow-hidden"><div class="h-full bg-amber-500 rounded-full" style="width: 48%;"></div></div><span class="font-mono font-bold text-slate-800 w-8 text-right text-[11px]">4.8%</span></div></div><div class="flex items-center justify-between"><span class="text-slate-700 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-sky-600"></span>Tool Wear Failure (TWF)</span><div class="flex items-center gap-2.5"><div class="w-20 h-1.5 rounded-full bg-slate-200 overflow-hidden"><div class="h-full bg-sky-600 rounded-full" style="width: 32%;"></div></div><span class="font-mono font-bold text-slate-800 w-8 text-right text-[11px]">3.2%</span></div></div><div class="flex items-center justify-between"><span class="text-slate-700 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-indigo-500"></span>Overstrain Failure (OSF)</span><div class="flex items-center gap-2.5"><div class="w-20 h-1.5 rounded-full bg-slate-200 overflow-hidden"><div class="h-full bg-indigo-500 rounded-full" style="width: 21%;"></div></div><span class="font-mono font-bold text-slate-800 w-8 text-right text-[11px]">2.1%</span></div></div><div class="flex items-center justify-between"><span class="text-slate-700 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-teal-500"></span>Power Failure (PWF)</span><div class="flex items-center gap-2.5"><div class="w-20 h-1.5 rounded-full bg-slate-200 overflow-hidden"><div class="h-full bg-teal-500 rounded-full" style="width: 18%;"></div></div><span class="font-mono font-bold text-slate-800 w-8 text-right text-[11px]">1.8%</span></div></div><div class="flex items-center justify-between"><span class="text-slate-700 flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-slate-400"></span>Random Failure (RNF)</span><div class="flex items-center gap-2.5"><div class="w-20 h-1.5 rounded-full bg-slate-200 overflow-hidden"><div class="h-full bg-slate-400 rounded-full" style="width: 5%;"></div></div><span class="font-mono font-bold text-slate-800 w-8 text-right text-[11px]">0.5%</span></div></div></div></div></div><p class="text-xs text-slate-500 leading-relaxed pt-2.5 border-t border-slate-100">Probabilitas sangat rendah untuk kerusakan mekanis atau termal selama 100 jam operasional berkelanjutan berikutnya berdasarkan 10.000 titik data historis.</p></div><!-- Card 2: Unsupervised Pattern --><div class="rounded-xl bg-white border border-slate-200 p-5 shadow-sm hover:shadow-md flex flex-col justify-between gap-5 transition-all"><div class="space-y-4"><div class="flex items-center justify-between flex-wrap gap-2 pb-2.5 border-b border-slate-100"><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-700 text-[10px] font-bold uppercase tracking-wider"><svg class="w-3 h-3 text-teal-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="7.5" cy="7.5" r="2.5"></circle><circle cx="16.5" cy="7.5" r="2.5"></circle><circle cx="12" cy="16.5" r="2.5"></circle></svg>UNSUPERVISED PATTERN</span><span class="text-xs text-slate-700 font-semibold">K-Means (k=3)</span></div><span class="text-xs text-sky-700 font-semibold flex items-center gap-1.5"><svg class="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4"></circle><circle cx="12" cy="12" r="1"></circle></svg>Steady Latent</span></div><div><span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">OPERATING REGIME CLUSTERED</span><div class="mt-1.5 p-3 rounded-lg bg-slate-50 border border-slate-200 flex flex-col gap-2.5"><div class="flex items-start gap-2.5 min-w-0"><span class="w-2.5 h-2.5 rounded-full bg-teal-500 shrink-0 mt-1 shadow-sm"></span><div class="flex flex-col min-w-0"><span class="text-sm font-bold text-slate-900 tracking-tight leading-tight font-headline">Cluster 1: Medium Wear</span><span class="text-[11px] text-slate-600 font-medium leading-normal mt-0.5">Operating Regime: Nominal Wear</span></div></div><div class="flex items-center justify-between pt-2 border-t border-slate-200"><span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Centroid Distance</span><div class="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white border border-slate-200 shadow-xs"><span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider font-mono">D_CENTROID</span><span class="font-mono font-bold text-xs text-teal-700">0.14</span></div></div></div></div><div class="relative p-3 rounded-lg bg-slate-50 border border-slate-200"><div class="flex items-center justify-between text-[11px] text-slate-700 mb-1.5 font-medium"><span class="">2D Latent Feature Space (Torque vs Tool Wear)</span><span class="text-sky-700 font-mono text-[10px]">Inertia: Nominal</span></div><svg class="w-full h-32 rounded bg-white border border-slate-200" viewBox="0 0 280 130"><g stroke="#e2e8f0" stroke-dasharray="2 2" stroke-width="0.8"><line x1="20" x2="260" y1="20" y2="20"></line><line x1="20" x2="260" y1="65" y2="65"></line><line x1="20" x2="260" y1="110" y2="110"></line><line x1="70" x2="70" y1="10" y2="120"></line><line x1="140" x2="140" y1="10" y2="120"></line><line x1="210" x2="210" y1="10" y2="120"></line></g><ellipse cx="65" cy="85" fill="#0284c7" fill-opacity="0.08" rx="35" ry="22" stroke="#0284c7" stroke-dasharray="3 3" stroke-width="1"></ellipse><circle cx="50" cy="80" fill="#0284c7" opacity="0.7" r="2.5"></circle><circle cx="62" cy="92" fill="#0284c7" opacity="0.8" r="2.5"></circle><circle cx="75" cy="78" fill="#0284c7" opacity="0.7" r="2.5"></circle><circle cx="80" cy="88" fill="#0284c7" opacity="0.6" r="2.5"></circle><text fill="#0284c7" font-family="sans-serif" font-size="8.5" font-weight="600" x="40" y="116">C0 (Fresh)</text><ellipse cx="145" cy="60" fill="#059669" fill-opacity="0.1" rx="40" ry="25" stroke="#059669" stroke-dasharray="3 3" stroke-width="1.2"></ellipse><circle cx="130" cy="55" fill="#059669" opacity="0.7" r="2.5"></circle><circle cx="155" cy="68" fill="#059669" opacity="0.8" r="2.5"></circle><circle cx="162" cy="52" fill="#059669" opacity="0.6" r="2.5"></circle><circle cx="138" cy="70" fill="#059669" opacity="0.7" r="2.5"></circle><circle class="animate-ping" cx="142" cy="60" fill="#059669" fill-opacity="0.25" r="6.5"></circle><circle cx="142" cy="60" fill="#059669" r="4.5" stroke="#ffffff" stroke-width="1.5"></circle><text fill="#0f172a" font-family="sans-serif" font-size="8.5" font-weight="bold" x="150" y="58">M-4281 (Active)</text><text fill="#059669" font-family="sans-serif" font-size="8.5" font-weight="600" x="130" y="94">C1 (Medium Wear)</text><ellipse cx="225" cy="35" fill="#dc2626" fill-opacity="0.08" rx="30" ry="20" stroke="#dc2626" stroke-dasharray="3 3" stroke-width="1"></ellipse><circle cx="215" cy="30" fill="#dc2626" opacity="0.6" r="2.5"></circle><circle cx="232" cy="42" fill="#dc2626" opacity="0.7" r="2.5"></circle><circle cx="240" cy="28" fill="#dc2626" opacity="0.5" r="2.5"></circle><text fill="#dc2626" font-family="sans-serif" font-size="8.5" font-weight="600" x="208" y="62">C2 (Critical)</text></svg><div class="flex items-center justify-between text-[10px] text-slate-500 font-mono mt-1.5"><span class="">Centroid: 42.8 Nm · 120 min</span><span class="">Cluster Dispersion: σ=0.08</span></div></div></div><p class="text-xs text-slate-500 leading-relaxed pt-2.5 border-t border-slate-100">Tanda tangan operasional sesuai dengan keausan pahat tingkat menengah yang diperkirakan. Koherensi harmonik tinggi menunjukkan tidak adanya lonjakan mikro akustik atau termal.</p></div><!-- Card 3: Autonomous Policy --><div class="rounded-xl bg-white border border-slate-200 p-5 shadow-sm hover:shadow-md flex flex-col justify-between gap-5 transition-all"><div class="space-y-4"><div class="flex items-center justify-between flex-wrap gap-2 pb-2.5 border-b border-slate-100"><div class="flex items-center gap-2"><span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-50 border border-indigo-200 text-indigo-700 text-[10px] font-bold uppercase tracking-wider"><svg class="w-3 h-3 text-indigo-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><line x1="12" x2="12" y1="1" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>AUTONOMOUS POLICY</span><span class="text-xs text-slate-700 font-semibold">Q-Learning Agent</span></div><span class="text-xs text-indigo-700 font-semibold flex items-center gap-1.5"><svg class="w-3.5 h-3.5 text-indigo-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>Q-Policy v2.4</span></div><div><div class="flex items-center justify-between mb-1.5"><span class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">PRESCRIPTIVE DECISION</span><span class="text-[11px] font-mono text-sky-700 font-bold">argmax Q = +6.82</span></div><div class="w-full px-4 py-3 rounded-lg bg-emerald-600 text-white font-bold text-base tracking-wide shadow-xs flex items-center justify-between"><span class="flex items-center gap-2"><span class="material-symbols-outlined text-white text-[20px]">verified</span>ROUTINE INSPECT</span><span class="text-xs font-mono font-bold text-emerald-800 bg-white px-2.5 py-0.5 rounded shadow-xs border border-emerald-200">Optimal</span></div></div><div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-2"><div class="flex items-center justify-between text-[11px] font-bold text-slate-900 border-b border-slate-200 pb-1.5"><span class="">Action-Value Q(s, a) Matrix</span><span class="text-slate-500 font-mono text-[10px]">Reward: +24.6</span></div><div class="space-y-2"><div class="p-2.5 rounded-lg bg-emerald-50 border border-emerald-300 space-y-1.5"><div class="flex justify-between items-center text-[11px]"><span class="text-emerald-900 font-bold flex items-center gap-1.5"><svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"></path></svg>a₁: ROUTINE INSPECT</span><span class="font-mono font-bold text-emerald-800 text-[11px] bg-white px-1.5 py-0.5 rounded border border-emerald-200">Q = +6.82 (Optimal)</span></div><div class="w-full h-1.5 rounded-full bg-emerald-200/60 overflow-hidden"><div class="h-full bg-emerald-600 rounded-full" style="width: 82%;"></div></div></div><div class="p-2.5 rounded-lg bg-sky-50 border border-sky-200 space-y-1.5"><div class="flex justify-between items-center text-[11px]"><span class="text-sky-900 font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-sky-500 shrink-0"></span>a₀: CONTINUE OP</span><span class="font-mono font-bold text-sky-700 text-[11px] bg-white px-1.5 py-0.5 rounded border border-sky-200">Q = +3.12</span></div><div class="w-full h-1.5 rounded-full bg-sky-200/60 overflow-hidden"><div class="h-full bg-sky-600 rounded-full" style="width: 52%;"></div></div></div><div class="p-2.5 rounded-lg bg-rose-50 border border-rose-200 space-y-1.5"><div class="flex justify-between items-center text-[11px]"><span class="text-rose-900 font-semibold flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-500 shrink-0"></span>a₂: EMERGENCY HALT</span><span class="font-mono font-bold text-rose-700 text-[11px] bg-white px-1.5 py-0.5 rounded border border-rose-200">Q = -8.40 (Penalty)</span></div><div class="w-full h-1.5 rounded-full bg-rose-200/60 overflow-hidden"><div class="h-full bg-rose-500 rounded-full" style="width: 18%;"></div></div></div></div><div class="flex items-center justify-between pt-1.5 border-t border-slate-200 text-[10px] text-slate-500 font-mono"><span class="">Discount γ: 0.95</span><span class="">Exploration ε: 0.02</span><span class="">Cost Avoidance: 94.2%</span></div></div></div><p class="text-xs text-slate-500 leading-relaxed pt-2.5 border-t border-slate-100">Kondisi operasi saat ini tidak menunjukkan bahaya langsung, namun inspeksi proaktif meminimalkan risiko waktu henti sambil mengoptimalkan 94% dari siklus hidup pahat yang direncanakan.</p></div></div></section>
-<!-- Collapsible / Clean Input Parameters Snapshot -->
-<section class="rounded-xl bg-white border border-slate-200 p-space-lg shadow-sm"><div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-sky-600 text-[18px]">tune</span><h4 class="text-sm font-bold text-slate-900 font-headline">Input Parameters Snapshot</h4><span class="text-xs text-slate-500">(Telemetry Captured 2 mins ago)</span></div><button class="text-sky-600 hover:text-sky-800 text-xs font-semibold flex items-center gap-1 transition-colors self-start" id="toggle-params-btn" onclick="toggleParams()"><span id="toggle-text" class="">Hide Detail Matrix</span><span class="material-symbols-outlined text-[16px]" id="toggle-icon">expand_less</span></button></div><div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 transition-all" id="params-container"><div class="p-3 rounded-lg bg-slate-50 border border-slate-200 flex flex-col gap-0.5"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Product Type</span><div class="flex items-baseline gap-1"><span class="text-xs font-bold text-slate-800">Type L</span><span class="text-[10px] text-slate-500">(Low var)</span></div></div><div class="p-3 rounded-lg bg-slate-50 border border-slate-200 flex flex-col gap-0.5"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Air Temperature</span><div class="flex items-baseline gap-1"><span class="text-xs font-bold text-slate-800">298.1 K</span><span class="text-[10px] text-slate-500">(24.9°C)</span></div></div><div class="p-3 rounded-lg bg-slate-50 border border-slate-200 flex flex-col gap-0.5"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Process Temp</span><div class="flex items-baseline gap-1"><span class="text-xs font-bold text-slate-800">308.6 K</span><span class="text-[10px] text-slate-500">(35.4°C)</span></div></div><div class="p-3 rounded-lg bg-slate-50 border border-slate-200 flex flex-col gap-0.5"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Rotational Speed</span><div class="flex items-baseline gap-1"><span class="text-xs font-bold text-slate-800">1,551</span><span class="text-[10px] text-slate-500">rpm</span></div></div><div class="p-3 rounded-lg bg-slate-50 border border-slate-200 flex flex-col gap-0.5"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Applied Torque</span><div class="flex items-baseline gap-1"><span class="text-xs font-bold text-slate-800">42.8</span><span class="text-[10px] text-slate-500">Nm</span></div></div><div class="p-3 rounded-lg bg-slate-50 border border-slate-200 flex flex-col gap-0.5"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Tool Wear Time</span><div class="flex items-baseline gap-1"><span class="text-xs font-bold text-sky-700">120 min</span><span class="text-[10px] text-slate-500">(60%)</span></div></div></div></section>
-<!-- Visual Health Insight & Sensor Cross-Section -->
-<section class="rounded-xl bg-white border border-slate-200 p-space-lg shadow-sm space-y-4"><div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3"><div><h4 class="text-sm font-bold text-slate-900 font-headline">FFT Frequency &amp; Vibration Cross-Section</h4><p class="text-xs text-slate-500">Analisis spektrum harmonik aksial dan radial untuk deteksi dini ketidakseimbangan spindle</p></div><div class="flex items-center gap-3 text-xs"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-600"></span><span class="text-slate-600 font-medium">Harmonic Base</span></span><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span><span class="text-slate-600 font-medium">Tolerance Envelope</span></span></div></div><div class="w-full h-36 bg-slate-50 rounded-lg border border-slate-200 p-2 flex items-end relative overflow-hidden"><svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 700 120"><path d="M 0,110 L 40,108 L 70,104 L 100,107 L 130,90 L 140,40 L 150,95 L 180,105 L 220,106 L 250,98 L 280,30 L 290,105 L 340,107 L 380,102 L 420,50 L 430,104 L 480,108 L 520,106 L 560,70 L 570,106 L 620,108 L 700,110" fill="none" stroke="#0284c7" stroke-width="2.5"></path><path d="M 0,110 L 40,108 L 70,104 L 100,107 L 130,90 L 140,40 L 150,95 L 180,105 L 220,106 L 250,98 L 280,30 L 290,105 L 340,107 L 380,102 L 420,50 L 430,104 L 480,108 L 520,106 L 560,70 L 570,106 L 620,108 L 700,110 L 700,120 L 0,120 Z" fill="#0284c7" fill-opacity="0.08"></path><line stroke="#10b981" stroke-dasharray="4 4" stroke-width="1.5" x1="0" x2="700" y1="25" y2="25"></line><text fill="#059669" font-family="sans-serif" font-size="10" font-weight="600" x="10" y="20">Max Safe Vibration Threshold (2.8 mm/s)</text><circle cx="280" cy="30" fill="#0284c7" r="4" stroke="#ffffff" stroke-width="2"></circle><text fill="#0f172a" font-family="sans-serif" font-size="10" font-weight="bold" x="288" y="32">Spindle 1X (25.8 Hz)</text></svg></div><div class="flex items-center justify-between text-xs text-slate-500 pt-1 font-mono"><span class="">Sensor Node: ACC-X42 · Radial Tri-Axial</span><span class="">Peak Amplitude: 1.18 mm/s RMS (Healthy)</span></div></section>
-<!-- Bottom Navigation / Persistent Actions -->
-<section class="rounded-xl bg-white border border-slate-200 p-space-md md:p-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md shadow-sm"><div class="flex items-center gap-2.5 text-slate-600"><div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0"><span class="material-symbols-outlined text-[18px]">bookmark_check</span></div><div class="flex flex-col"><span class="text-xs font-bold text-slate-900 font-headline">Tersimpan secara otomatis ke Riwayat</span><span class="text-[11px] text-slate-500">Log Reference: #LOG-2023-M4281-0941</span></div></div><div class="flex items-center gap-2 w-full sm:w-auto justify-end flex-wrap"><button class="flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 text-slate-700 text-xs font-semibold transition-all shadow-xs" onclick="window.print()"><svg class="w-3.5 h-3.5 text-sky-600" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg><span class="">Export Summary</span></button><a href="{{ url_for('analysis.analysis') }}" class="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold transition-all shadow-sm shadow-sky-600/20"><span class="material-symbols-outlined text-[18px]">add_circle</span><span class="">Analyze Another Machine</span></a></div></section>
+
+  .result-header {
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:20px;
+    padding:24px 0 22px;
+  }
+
+  .result-header-left { min-width:0; }
+
+  .result-back {
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    margin-bottom:7px;
+    color:#0284c7;
+    font-size:.74rem;
+    font-weight:700;
+    text-decoration:none;
+  }
+  .result-back:hover { color:#0369a1; }
+
+  .result-title-row {
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+
+  .result-title {
+    margin:0;
+    color:#0f172a;
+    font-size:clamp(1.45rem,2.4vw,1.9rem);
+    font-weight:800;
+    letter-spacing:-.03em;
+  }
+
+  .status-pill {
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:6px 10px;
+    border:1px solid #bbf7d0;
+    border-radius:999px;
+    background:#f0fdf4;
+    color:#047857;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.045em;
+    text-transform:uppercase;
+  }
+  .status-pill .dot {
+    width:6px;height:6px;border-radius:50%;background:#10b981;
+  }
+
+  .result-subtitle {
+    margin:6px 0 0;
+    color:#64748b;
+    font-size:.77rem;
+    line-height:1.6;
+  }
+
+  .v3-btn {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    min-height:40px;
+    padding:0 15px;
+    border-radius:9px;
+    border:1px solid transparent;
+    font-size:.76rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s ease;
+    text-decoration:none;
+  }
+  .v3-btn-primary {
+    background:#0284c7;color:white;box-shadow:0 4px 12px rgba(2,132,199,.16);
+  }
+  .v3-btn-primary:hover { background:#0369a1; }
+  .v3-btn-secondary {
+    background:#fff;color:#334155;border-color:#e2e8f0;
+  }
+  .v3-btn-secondary:hover { background:#f8fafc;border-color:#cbd5e1; }
+
+  .result-section {
+    margin-bottom:18px;
+  }
+
+  .result-card {
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:16px;
+    box-shadow:0 7px 24px rgba(15,23,42,.045);
+  }
+
+  .takeaway {
+    position:relative;
+    overflow:hidden;
+    padding:23px;
+  }
+  .takeaway::before {
+    content:"";
+    position:absolute;
+    width:280px;height:280px;
+    right:-110px;top:-130px;
+    border-radius:50%;
+    background:#10b9810d;
+    filter:blur(25px);
+  }
+  .takeaway-inner {
+    position:relative;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 310px;
+    gap:24px;
+    align-items:center;
+  }
+  .takeaway-main {
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+  }
+  .takeaway-icon {
+    width:52px;height:52px;flex:0 0 52px;
+    display:grid;place-items:center;
+    border-radius:13px;
+    background:#ecfdf5;border:1px solid #a7f3d0;color:#059669;
+  }
+  .takeaway-icon .material-symbols-outlined { font-size:27px; }
+
+  .mini-label {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:5px 9px;
+    border-radius:999px;
+    background:#ecfdf5;border:1px solid #bbf7d0;
+    color:#047857;
+    font-size:9px;font-weight:800;letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .safe-note {
+    margin-left:7px;color:#64748b;font-size:10px;font-weight:600;
+  }
+
+  .takeaway h2 {
+    margin:8px 0 6px;
+    color:#0f172a;font-size:1.35rem;font-weight:800;letter-spacing:-.025em;
+  }
+  .takeaway p {
+    margin:0;color:#475569;font-size:.78rem;line-height:1.7;
+  }
+  .takeaway strong { color:#0f172a; }
+
+  .quick-facts {
+    display:flex;flex-wrap:wrap;gap:16px;margin-top:10px;
+    color:#475569;font-size:.7rem;font-weight:600;
+  }
+  .quick-facts span { display:flex;align-items:center;gap:5px; }
+
+  .strategy-card {
+    padding:15px;
+    border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;
+  }
+  .strategy-top {
+    display:flex;justify-content:space-between;align-items:center;
+    color:#64748b;font-size:9px;font-weight:800;letter-spacing:.06em;
+  }
+  .healthy {
+    padding:4px 7px;border-radius:999px;background:#dcfce7;color:#047857;
+    font-size:9px;font-weight:800;
+  }
+  .strategy-name {
+    display:flex;align-items:center;gap:7px;margin:10px 0 5px;
+    color:#0f172a;font-size:.82rem;font-weight:800;
+  }
+  .strategy-desc { color:#475569;font-size:.7rem!important;line-height:1.55!important; }
+  .strategy-slot {
+    margin-top:9px;padding-top:8px;border-top:1px solid #e2e8f0;
+    color:#64748b;font-size:.65rem;
+  }
+  .strategy-slot strong { color:#334155; }
+
+  .section-title {
+    display:flex;align-items:flex-end;justify-content:space-between;gap:12px;
+    margin-bottom:12px;
+  }
+  .section-title h3 {
+    margin:0;color:#0f172a;font-size:1.08rem;font-weight:800;letter-spacing:-.02em;
+  }
+  .section-title p { margin:4px 0 0;color:#64748b;font-size:.72rem; }
+
+  .model-results-grid {
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;
+  }
+
+  .model-result-card {
+    display:flex;flex-direction:column;
+    min-width:0;
+    padding:18px;
+    background:#fff;border:1px solid #e2e8f0;border-radius:14px;
+    box-shadow:0 6px 20px rgba(15,23,42,.04);
+  }
+  .model-result-top {
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    padding-bottom:11px;border-bottom:1px solid #f1f5f9;
+  }
+  .model-name {
+    display:flex;align-items:center;gap:7px;
+    color:#334155;font-size:.73rem;font-weight:800;
+  }
+  .model-tag {
+    padding:5px 7px;border-radius:999px;
+    font-size:8.5px;font-weight:800;letter-spacing:.05em;
+  }
+  .tag-blue {background:#eff6ff;border:1px solid #bfdbfe;color:#0369a1;}
+  .tag-teal {background:#f0fdfa;border:1px solid #99f6e4;color:#0f766e;}
+  .tag-indigo {background:#eef2ff;border:1px solid #c7d2fe;color:#4f46e5;}
+
+  .confidence { color:#059669;font-size:.65rem;font-weight:800;white-space:nowrap; }
+  .metric-label { margin-top:14px;color:#64748b;font-size:8.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase; }
+  .metric-value { display:flex;align-items:center;gap:8px;margin-top:4px; }
+  .metric-value strong { color:#059669;font-size:1.8rem;line-height:1;font-weight:900; }
+  .risk-badge {padding:4px 7px;border-radius:999px;background:#ecfdf5;border:1px solid #bbf7d0;color:#047857;font-size:8px;font-weight:800;}
+  .progress {height:7px;margin-top:9px;background:#f1f5f9;border-radius:99px;overflow:hidden;}
+  .progress > span {display:block;height:100%;border-radius:99px;background:#10b981;}
+
+  .scale {
+    display:flex;justify-content:space-between;margin-top:5px;
+    color:#94a3b8;font-size:8px;font-weight:600;
+  }
+
+  .detail-box {
+    margin-top:13px;padding:12px;
+    background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;
+  }
+  .detail-head {
+    display:flex;justify-content:space-between;gap:8px;
+    padding-bottom:8px;border-bottom:1px solid #e2e8f0;
+    color:#0f172a;font-size:.67rem;font-weight:800;
+  }
+  .detail-head span:last-child { color:#0369a1;font-family:monospace;font-size:8px; }
+
+  .breakdown {display:grid;gap:8px;margin-top:9px;}
+  .break-row {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;}
+  .break-name {color:#475569;font-size:.62rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .break-right {display:flex;align-items:center;gap:6px;}
+  .mini-progress {width:48px;height:5px;background:#e2e8f0;border-radius:99px;overflow:hidden;}
+  .mini-progress span {display:block;height:100%;border-radius:99px;}
+  .break-pct {width:30px;text-align:right;color:#334155;font:700 8px monospace;}
+
+  .cluster-box {
+    margin-top:13px;padding:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;
+  }
+  .cluster-title {color:#0f172a;font-size:.75rem;font-weight:800;}
+  .cluster-sub {margin-top:2px;color:#64748b;font-size:.62rem;}
+  .cluster-meta {display:flex;justify-content:space-between;gap:8px;margin-top:10px;padding-top:8px;border-top:1px solid #e2e8f0;color:#64748b;font-size:8px;}
+  .cluster-meta strong {color:#0f766e;font-family:monospace;}
+
+  .cluster-svg {
+    width:100%;height:105px;margin-top:10px;
+    background:#fff;border:1px solid #e2e8f0;border-radius:8px;
+  }
+
+  .policy-action {
+    display:flex;align-items:center;justify-content:space-between;gap:8px;
+    margin-top:13px;padding:11px 12px;border-radius:9px;
+    background:#059669;color:#fff;
+  }
+  .policy-action strong {display:flex;align-items:center;gap:6px;font-size:.75rem;}
+  .optimal {padding:3px 6px;border-radius:5px;background:#fff;color:#047857;font:800 8px monospace;}
+
+  .q-list {display:grid;gap:7px;margin-top:9px;}
+  .q-item {padding:9px;border-radius:8px;border:1px solid;}
+  .q-item.green {background:#ecfdf5;border-color:#a7f3d0;}
+  .q-item.blue {background:#eff6ff;border-color:#bfdbfe;}
+  .q-item.red {background:#fff1f2;border-color:#fecdd3;}
+  .q-row {display:flex;justify-content:space-between;gap:6px;color:#334155;font-size:9px;font-weight:700;}
+  .q-score {font-family:monospace;}
+  .q-bar {height:5px;margin-top:6px;border-radius:99px;background:#dbeafe;overflow:hidden;}
+  .q-bar span {display:block;height:100%;border-radius:99px;}
+
+  .card-note {
+    margin-top:auto;padding-top:12px;border-top:1px solid #f1f5f9;
+    color:#64748b;font-size:.67rem;line-height:1.6;
+  }
+
+  .params-card, .fft-card, .actions-card {
+    padding:18px;
+  }
+
+  .params-head, .fft-head {
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    margin-bottom:12px;
+  }
+  .small-heading {display:flex;align-items:center;gap:7px;color:#0f172a;font-size:.78rem;font-weight:800;}
+  .small-heading .material-symbols-outlined {color:#0284c7;font-size:18px;}
+  .small-muted {color:#64748b;font-size:.67rem;}
+  .toggle-btn {border:0;background:none;color:#0284c7;font-size:.68rem;font-weight:800;cursor:pointer;}
+
+  .param-grid {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px;}
+  .param-item {padding:11px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;}
+  .param-label {display:block;color:#64748b;font-size:8px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;}
+  .param-value {margin-top:4px;color:#334155;font-size:.68rem;font-weight:800;}
+  .param-value span {color:#94a3b8;font-size:8px;font-weight:500;}
+
+  .fft-head {padding-bottom:11px;border-bottom:1px solid #f1f5f9;}
+  .fft-legend {display:flex;gap:12px;color:#64748b;font-size:8px;font-weight:700;}
+  .legend-dot {width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;}
+  .fft-chart {height:150px;padding:8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;}
+  .fft-chart svg {width:100%;height:100%;}
+  .fft-meta {display:flex;justify-content:space-between;gap:10px;margin-top:8px;color:#64748b;font:600 8px monospace;}
+
+  .actions-card {
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+  }
+  .saved-info {display:flex;align-items:center;gap:10px;}
+  .saved-icon {width:34px;height:34px;display:grid;place-items:center;border-radius:9px;background:#ecfdf5;border:1px solid #bbf7d0;color:#059669;}
+  .saved-title {color:#0f172a;font-size:.72rem;font-weight:800;}
+  .saved-ref {margin-top:2px;color:#64748b;font-size:.62rem;}
+
+  .action-buttons {display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+
+  @media (max-width:1100px) {
+    .model-results-grid {grid-template-columns:1fr;}
+    .takeaway-inner {grid-template-columns:1fr;}
+    .param-grid {grid-template-columns:repeat(3,1fr);}
+  }
+  @media (max-width:700px) {
+    .result-header {align-items:flex-start;flex-direction:column;}
+    .result-title {font-size:1.35rem;}
+    .takeaway {padding:17px;}
+    .takeaway-main {gap:11px;}
+    .takeaway-icon {width:44px;height:44px;flex-basis:44px;}
+    .quick-facts {gap:9px;flex-direction:column;}
+    .param-grid {grid-template-columns:repeat(2,1fr);}
+    .params-head,.fft-head {align-items:flex-start;flex-direction:column;}
+    .actions-card {align-items:flex-start;flex-direction:column;}
+    .action-buttons {width:100%;justify-content:stretch;}
+    .action-buttons .v3-btn {flex:1;}
+  }
+</style>
+
+<div class="result-v3">
+
+  <header class="result-header">
+    <div class="result-header-left">
+      <a class="result-back" href="{{ url_for('analysis.analysis') }}">
+        <span class="material-symbols-outlined" style="font-size:15px;">arrow_back</span>
+        Back to Analysis
+      </a>
+
+      <div class="result-title-row">
+        <h1 class="result-title">Analysis Result for Machine #M-4281</h1>
+        <span class="status-pill"><span class="dot"></span>Analysis Complete • Safe</span>
+      </div>
+
+      <p class="result-subtitle">
+        Diagnostik dihitung melalui ensemble multi-model
+        (Aliran Telemetri: Sektor 7A • Gantry Milling)
+      </p>
+    </div>
+
+    <a class="v3-btn v3-btn-primary" href="{{ url_for('analysis.analysis') }}">
+      <span class="material-symbols-outlined" style="font-size:18px;">add_circle</span>
+      Analyze Another Machine
+    </a>
+  </header>
+
+  <section class="result-card takeaway result-section">
+    <div class="takeaway-inner">
+      <div class="takeaway-main">
+        <div class="takeaway-icon">
+          <span class="material-symbols-outlined">check_circle</span>
+        </div>
+
+        <div>
+          <div>
+            <span class="mini-label">Consensus Ensemble: 100% Agreement</span>
+            <span class="safe-note">Safe Operating Parameters</span>
+          </div>
+
+          <h2>Mesin Beroperasi Secara Normal</h2>
+
+          <p>
+            Ketiga model AI sepakat bahwa <strong>Machine #M-4281</strong>
+            berada dalam kondisi operasional yang stabil. Keausan pahat saat ini
+            terindeks pada <strong>60%</strong> dan metrik disipasi panas tetap
+            berada dalam batas toleransi yang sehat.
+          </p>
+
+          <div class="quick-facts">
+            <span>
+              <span class="material-symbols-outlined" style="font-size:15px;color:#059669;">check_circle</span>
+              Tidak terdeteksi lonjakan termal
+            </span>
+            <span>
+              <span class="material-symbols-outlined" style="font-size:15px;color:#059669;">bolt</span>
+              Frekuensi spindle stabil pada 1.551 rpm
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="strategy-card">
+        <div class="strategy-top">
+          <span>REKOMENDASI STRATEGIS</span>
+          <span class="healthy">Healthy</span>
+        </div>
+
+        <div class="strategy-name">
+          <span class="material-symbols-outlined" style="font-size:19px;color:#0284c7;">verified</span>
+          Routine Inspection
+        </div>
+
+        <p class="strategy-desc">
+          Keseimbangan optimal antara throughput waktu kerja dan pemeliharaan
+          pencegahan kesehatan pahat. Lakukan pemeriksaan visual optik pada
+          penghentian siklus terjadwal.
+        </p>
+
+        <div class="strategy-slot">
+          Scheduled Slot: <strong>Shift 2 (in 4.2h)</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="result-section">
+    <div class="section-title">
+      <div>
+        <h3>Diagnostic Models Overview</h3>
+        <p>Pipeline verifikasi ganda tiga model dengan landasan statistik transparan</p>
+      </div>
+    </div>
+
+    <div class="model-results-grid">
+
+      <!-- Random Forest -->
+      <article class="model-result-card">
+        <div>
+          <div class="model-result-top">
+            <div class="model-name">
+              <span class="model-tag tag-blue">SUPERVISED LEARNING</span>
+              Random Forest
+            </div>
+            <span class="confidence">98.7% Conf.</span>
+          </div>
+
+          <div class="metric-label">Cumulative Failure Risk</div>
+          <div class="metric-value">
+            <strong>12.4%</strong>
+            <span class="risk-badge">LOW RISK ENVELOPE</span>
+          </div>
+
+          <div class="progress"><span style="width:12.4%;"></span></div>
+          <div class="scale"><span>0% Safe</span><span>Threshold: 65%</span><span>100% Critical</span></div>
+
+          <div class="detail-box">
+            <div class="detail-head">
+              <span>AI4I Failure Mode Breakdown</span>
+              <span>P(Failure)</span>
+            </div>
+
+            <div class="breakdown">
+              <div class="break-row">
+                <span class="break-name">● Heat Dissipation (HDF)</span>
+                <div class="break-right"><div class="mini-progress"><span style="width:48%;background:#f59e0b;"></span></div><span class="break-pct">4.8%</span></div>
+              </div>
+              <div class="break-row">
+                <span class="break-name">● Tool Wear Failure (TWF)</span>
+                <div class="break-right"><div class="mini-progress"><span style="width:32%;background:#0284c7;"></span></div><span class="break-pct">3.2%</span></div>
+              </div>
+              <div class="break-row">
+                <span class="break-name">● Overstrain Failure (OSF)</span>
+                <div class="break-right"><div class="mini-progress"><span style="width:21%;background:#6366f1;"></span></div><span class="break-pct">2.1%</span></div>
+              </div>
+              <div class="break-row">
+                <span class="break-name">● Power Failure (PWF)</span>
+                <div class="break-right"><div class="mini-progress"><span style="width:18%;background:#14b8a6;"></span></div><span class="break-pct">1.8%</span></div>
+              </div>
+              <div class="break-row">
+                <span class="break-name">● Random Failure (RNF)</span>
+                <div class="break-right"><div class="mini-progress"><span style="width:5%;background:#94a3b8;"></span></div><span class="break-pct">0.5%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="card-note">
+          Probabilitas sangat rendah untuk kerusakan mekanis atau termal selama
+          100 jam operasional berkelanjutan berikutnya berdasarkan 10.000 titik data historis.
+        </p>
+      </article>
+
+      <!-- K-Means -->
+      <article class="model-result-card">
+        <div>
+          <div class="model-result-top">
+            <div class="model-name">
+              <span class="model-tag tag-teal">UNSUPERVISED PATTERN</span>
+              K-Means (k=3)
+            </div>
+            <span class="confidence" style="color:#0369a1;">Steady Latent</span>
+          </div>
+
+          <div class="metric-label">Operating Regime Clustered</div>
+
+          <div class="cluster-box">
+            <div class="cluster-title">Cluster 1: Medium Wear</div>
+            <div class="cluster-sub">Operating Regime: Nominal Wear</div>
+
+            <div class="cluster-meta">
+              <span>Centroid Distance</span>
+              <strong>D_CENTROID 0.14</strong>
+            </div>
+          </div>
+
+          <svg class="cluster-svg" viewBox="0 0 280 105" preserveAspectRatio="none">
+            <g stroke="#e2e8f0" stroke-dasharray="2 2" stroke-width=".8">
+              <line x1="15" x2="265" y1="20" y2="20"/><line x1="15" x2="265" y1="52" y2="52"/><line x1="15" x2="265" y1="85" y2="85"/>
+              <line x1="70" x2="70" y1="10" y2="95"/><line x1="140" x2="140" y1="10" y2="95"/><line x1="210" x2="210" y1="10" y2="95"/>
+            </g>
+            <ellipse cx="62" cy="73" fill="#0284c7" fill-opacity=".08" rx="34" ry="17" stroke="#0284c7" stroke-dasharray="3 3"/>
+            <circle cx="48" cy="70" fill="#0284c7" opacity=".7" r="2.5"/><circle cx="61" cy="78" fill="#0284c7" opacity=".8" r="2.5"/><circle cx="74" cy="67" fill="#0284c7" opacity=".7" r="2.5"/>
+            <text fill="#0284c7" font-family="sans-serif" font-size="8" font-weight="600" x="37" y="96">C0 Fresh</text>
+            <ellipse cx="143" cy="48" fill="#059669" fill-opacity=".1" rx="39" ry="20" stroke="#059669" stroke-dasharray="3 3"/>
+            <circle cx="129" cy="45" fill="#059669" opacity=".7" r="2.5"/><circle cx="155" cy="55" fill="#059669" opacity=".8" r="2.5"/><circle cx="163" cy="42" fill="#059669" opacity=".6" r="2.5"/>
+            <circle cx="142" cy="48" fill="#059669" r="4.5" stroke="#fff" stroke-width="1.5"/>
+            <text fill="#0f172a" font-family="sans-serif" font-size="8" font-weight="bold" x="151" y="45">M-4281</text>
+            <text fill="#059669" font-family="sans-serif" font-size="8" font-weight="600" x="130" y="73">C1 Medium</text>
+            <ellipse cx="225" cy="28" fill="#dc2626" fill-opacity=".08" rx="28" ry="15" stroke="#dc2626" stroke-dasharray="3 3"/>
+            <circle cx="215" cy="25" fill="#dc2626" opacity=".6" r="2.5"/><circle cx="233" cy="34" fill="#dc2626" opacity=".7" r="2.5"/>
+            <text fill="#dc2626" font-family="sans-serif" font-size="8" font-weight="600" x="207" y="51">C2 Critical</text>
+          </svg>
+
+          <div class="cluster-meta" style="margin-top:7px;border-top:0;padding-top:0;">
+            <span>Centroid: 42.8 Nm · 120 min</span>
+            <span>σ=0.08</span>
+          </div>
+        </div>
+
+        <p class="card-note">
+          Tanda tangan operasional sesuai dengan keausan pahat tingkat menengah
+          yang diperkirakan. Koherensi harmonik tinggi menunjukkan tidak adanya
+          lonjakan mikro akustik atau termal.
+        </p>
+      </article>
+
+      <!-- Q-Learning -->
+      <article class="model-result-card">
+        <div>
+          <div class="model-result-top">
+            <div class="model-name">
+              <span class="model-tag tag-indigo">AUTONOMOUS POLICY</span>
+              Q-Learning Agent
+            </div>
+            <span class="confidence" style="color:#4f46e5;">Q-Policy v2.4</span>
+          </div>
+
+          <div class="metric-label">Prescriptive Decision</div>
+
+          <div class="policy-action">
+            <strong><span class="material-symbols-outlined" style="font-size:18px;">verified</span>ROUTINE INSPECT</strong>
+            <span class="optimal">Q = +6.82</span>
+          </div>
+
+          <div class="detail-box">
+            <div class="detail-head">
+              <span>Action-Value Q(s,a) Matrix</span>
+              <span>Reward: +24.6</span>
+            </div>
+
+            <div class="q-list">
+              <div class="q-item green">
+                <div class="q-row"><span>a₁: ROUTINE INSPECT</span><span class="q-score">Q = +6.82</span></div>
+                <div class="q-bar" style="background:#bbf7d0;"><span style="width:82%;background:#059669;"></span></div>
+              </div>
+              <div class="q-item blue">
+                <div class="q-row"><span>a₀: CONTINUE OP</span><span class="q-score">Q = +3.12</span></div>
+                <div class="q-bar"><span style="width:52%;background:#0284c7;"></span></div>
+              </div>
+              <div class="q-item red">
+                <div class="q-row"><span>a₂: EMERGENCY HALT</span><span class="q-score">Q = -8.40</span></div>
+                <div class="q-bar" style="background:#fecdd3;"><span style="width:18%;background:#f43f5e;"></span></div>
+              </div>
+            </div>
+
+            <div class="cluster-meta">
+              <span>Discount γ: 0.95</span><span>Exploration ε: 0.02</span><span>Cost Avoidance: 94.2%</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="card-note">
+          Kondisi operasi saat ini tidak menunjukkan bahaya langsung, namun
+          inspeksi proaktif meminimalkan risiko waktu henti sambil mengoptimalkan
+          94% dari siklus hidup pahat yang direncanakan.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="result-card params-card result-section">
+    <div class="params-head">
+      <div>
+        <div class="small-heading">
+          <span class="material-symbols-outlined">tune</span>
+          Input Parameters Snapshot
+          <span class="small-muted">(Telemetry Captured 2 mins ago)</span>
+        </div>
+      </div>
+
+      <button class="toggle-btn" id="toggle-params-btn" type="button" onclick="toggleParams()">
+        <span id="toggle-text">Hide Detail Matrix</span>
+        <span class="material-symbols-outlined" style="font-size:15px;vertical-align:middle;" id="toggle-icon">expand_less</span>
+      </button>
+    </div>
+
+    <div class="param-grid" id="params-container">
+      <div class="param-item"><span class="param-label">Product Type</span><div class="param-value">Type L <span>(Low var)</span></div></div>
+      <div class="param-item"><span class="param-label">Air Temperature</span><div class="param-value">298.1 K <span>(24.9°C)</span></div></div>
+      <div class="param-item"><span class="param-label">Process Temp</span><div class="param-value">308.6 K <span>(35.4°C)</span></div></div>
+      <div class="param-item"><span class="param-label">Rotational Speed</span><div class="param-value">1,551 <span>rpm</span></div></div>
+      <div class="param-item"><span class="param-label">Applied Torque</span><div class="param-value">42.8 <span>Nm</span></div></div>
+      <div class="param-item"><span class="param-label">Tool Wear Time</span><div class="param-value" style="color:#0369a1;">120 min <span>(60%)</span></div></div>
+    </div>
+  </section>
+
+  <section class="result-card fft-card result-section">
+    <div class="fft-head">
+      <div>
+        <div class="small-heading">FFT Frequency &amp; Vibration Cross-Section</div>
+        <div class="small-muted">Analisis spektrum harmonik aksial dan radial untuk deteksi dini ketidakseimbangan spindle</div>
+      </div>
+
+      <div class="fft-legend">
+        <span><span class="legend-dot" style="background:#0284c7;"></span>Harmonic Base</span>
+        <span><span class="legend-dot" style="background:#10b981;"></span>Tolerance Envelope</span>
+      </div>
+    </div>
+
+    <div class="fft-chart">
+      <svg viewBox="0 0 700 120" preserveAspectRatio="none">
+        <path d="M0 110 L40 108 L70 104 L100 107 L130 90 L140 40 L150 95 L180 105 L220 106 L250 98 L280 30 L290 105 L340 107 L380 102 L420 50 L430 104 L480 108 L520 106 L560 70 L570 106 L620 108 L700 110"
+              fill="none" stroke="#0284c7" stroke-width="2.5"/>
+        <path d="M0 110 L40 108 L70 104 L100 107 L130 90 L140 40 L150 95 L180 105 L220 106 L250 98 L280 30 L290 105 L340 107 L380 102 L420 50 L430 104 L480 108 L520 106 L560 70 L570 106 L620 108 L700 110 L700 120 L0 120 Z"
+              fill="#0284c7" fill-opacity=".08"/>
+        <line x1="0" x2="700" y1="25" y2="25" stroke="#10b981" stroke-dasharray="4 4" stroke-width="1.5"/>
+        <text x="10" y="19" fill="#059669" font-family="sans-serif" font-size="9" font-weight="600">Max Safe Vibration Threshold (2.8 mm/s)</text>
+        <circle cx="280" cy="30" r="4" fill="#0284c7" stroke="#fff" stroke-width="2"/>
+        <text x="288" y="32" fill="#0f172a" font-family="sans-serif" font-size="9" font-weight="bold">Spindle 1X (25.8 Hz)</text>
+      </svg>
+    </div>
+
+    <div class="fft-meta">
+      <span>Sensor Node: ACC-X42 · Radial Tri-Axial</span>
+      <span>Peak Amplitude: 1.18 mm/s RMS (Healthy)</span>
+    </div>
+  </section>
+
+  <section class="result-card actions-card">
+    <div class="saved-info">
+      <div class="saved-icon"><span class="material-symbols-outlined" style="font-size:18px;">bookmark_check</span></div>
+      <div>
+        <div class="saved-title">Tersimpan secara otomatis ke Riwayat</div>
+        <div class="saved-ref">Log Reference: #LOG-2023-M4281-0941</div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="v3-btn v3-btn-secondary" type="button" onclick="window.print()">
+        <span class="material-symbols-outlined" style="font-size:16px;">download</span>
+        Export Summary
+      </button>
+
+      <a class="v3-btn v3-btn-primary" href="{{ url_for('analysis.analysis') }}">
+        <span class="material-symbols-outlined" style="font-size:18px;">add_circle</span>
+        Analyze Another Machine
+      </a>
+    </div>
+  </section>
+
 </div>
-<script>
-    function toggleParams() {
-      const container = document.getElementById('params-container');
-      const text = document.getElementById('toggle-text');
-      const icon = document.getElementById('toggle-icon');
-      
-      if (container.classList.contains('hidden')) {
-        container.classList.remove('hidden');
-        text.textContent = 'Hide Detail Matrix';
-        icon.textContent = 'expand_less';
-      } else {
-        container.classList.add('hidden');
-        text.textContent = 'Show Detail Matrix';
-        icon.textContent = 'expand_more';
-      }
-    }
-  </script>
-</div></main></div>
-<script>
-  function toggleSidebar() {
-    const sidebar = document.getElementById('main-sidebar');
-    const header = document.getElementById('top-header');
-    const layout = document.getElementById('main-content-layout');
-    const toggleIcon = document.getElementById('sidebar-toggle-icon');
-    const labels = document.querySelectorAll('.sidebar-label');
-    const userCard = document.getElementById('sidebar-user-card');
 
-    const isCollapsed = sidebar.classList.contains('w-20');
+<script>
+function toggleParams() {
+  const container = document.getElementById('params-container');
+  const text = document.getElementById('toggle-text');
+  const icon = document.getElementById('toggle-icon');
 
-    if (isCollapsed) {
-      sidebar.classList.remove('w-20', 'px-3');
-      sidebar.classList.add('w-72', 'p-space-lg');
-      if (header) { header.classList.remove('left-20'); header.classList.add('left-72'); }
-      if (layout) { layout.classList.remove('pl-20'); layout.classList.add('pl-72'); }
-      if (userCard) { userCard.classList.remove('p-2', 'items-center'); userCard.classList.add('p-4'); }
-      labels.forEach(label => label.classList.remove('hidden'));
-      if (toggleIcon) { toggleIcon.textContent = 'menu_open'; }
-    } else {
-      sidebar.classList.remove('w-72', 'p-space-lg');
-      sidebar.classList.add('w-20', 'px-3');
-      if (header) { header.classList.remove('left-72'); header.classList.add('left-20'); }
-      if (layout) { layout.classList.remove('pl-72'); layout.classList.add('pl-20'); }
-      if (userCard) { userCard.classList.remove('p-4'); userCard.classList.add('p-2', 'items-center'); }
-      labels.forEach(label => label.classList.add('hidden'));
-      if (toggleIcon) { toggleIcon.textContent = 'menu'; }
-    }
+  if (container.classList.contains('hidden')) {
+    container.classList.remove('hidden');
+    text.textContent = 'Hide Detail Matrix';
+    icon.textContent = 'expand_less';
+  } else {
+    container.classList.add('hidden');
+    text.textContent = 'Show Detail Matrix';
+    icon.textContent = 'expand_more';
   }
+}
 </script>
-
-
-
-</body></html>
+{% endblock %}

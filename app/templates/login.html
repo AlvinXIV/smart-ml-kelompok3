@@ -1,50 +1,30 @@
 <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login • APM Core Diagnostics</title>
 
-<html lang="id"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta content="web_standard" name="shell-type"/>
-<title>Masuk ke Akun • APM Core Diagnostics</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-    @layer base {
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        overscroll-behavior: none;
-      }
-    }
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  </style>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <script>
     tailwind.config = {
-      darkMode: "class",
       theme: {
         extend: {
           colors: {
-            "surface-bright": "#ffffff",
-            "primary": "#0891b2",
-            "primary-hover": "#0e7490",
-            "primary-container": "#0891b2",
-            "on-primary": "#ffffff",
+            primary: "#0284c7",
+            "primary-dark": "#0369a1",
             "surface": "#f8fafc",
-            "surface-container": "#ffffff",
-            "surface-container-high": "#f1f5f9",
-            "surface-container-lowest": "#ffffff",
-            "on-surface": "#0f172a",
-            "on-surface-variant": "#475569",
-            "outline": "#94a3b8",
-            "outline-variant": "#e2e8f0",
-            "border-subtle": "#e2e8f0",
-            "tertiary": "#059669",
-            "tertiary-container": "#ecfdf5",
-            "on-tertiary-container": "#047857"
+            "surface-card": "#ffffff",
+            "surface-soft": "#f1f5f9",
+            ink: "#0f172a",
+            muted: "#64748b",
+            border: "#e2e8f0",
+            success: "#059669"
           },
           fontFamily: {
             sans: ["Plus Jakarta Sans", "Inter", "sans-serif"],
@@ -52,165 +32,286 @@
           }
         }
       }
-    };
+    }
   </script>
+
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: Inter, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    .font-display { font-family: "Plus Jakarta Sans", Inter, sans-serif; }
+    .ambient {
+      background:
+        radial-gradient(circle at 12% 12%, rgba(14,165,233,.09), transparent 28%),
+        radial-gradient(circle at 88% 20%, rgba(99,102,241,.07), transparent 25%),
+        linear-gradient(180deg, #f8fafc 0%, #f8fafc 100%);
+    }
+    .login-shell {
+      box-shadow: 0 18px 45px rgba(15,23,42,.08), 0 3px 10px rgba(15,23,42,.04);
+    }
+    .brand-panel {
+      background:
+        radial-gradient(circle at 80% 10%, rgba(14,165,233,.18), transparent 28%),
+        radial-gradient(circle at 10% 90%, rgba(99,102,241,.14), transparent 30%),
+        linear-gradient(145deg, #0f172a 0%, #172033 55%, #082f49 100%);
+    }
+    .grid-pattern {
+      background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .input-wrap:focus-within .input-icon { color: #0284c7; }
+    .input-field:focus {
+      box-shadow: 0 0 0 3px rgba(2,132,199,.10);
+    }
+    .btn-login { box-shadow: 0 8px 18px rgba(2,132,199,.18); }
+    @media (max-width: 1023px) {
+      .brand-panel { min-height: 300px; }
+    }
+  </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-900 min-h-screen flex flex-col justify-between selection:bg-cyan-100 selection:text-cyan-900 antialiased relative">
-<!-- Subtle light ambient background -->
-<div class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[420px] bg-gradient-to-b from-cyan-50/60 via-slate-100/40 to-transparent pointer-events-none -z-10"></div>
-<div class="fixed top-24 right-1/4 w-[400px] h-[300px] bg-cyan-100/30 rounded-full blur-[100px] pointer-events-none -z-10"></div>
-<div class="fixed bottom-10 left-1/4 w-[350px] h-[250px] bg-sky-100/40 rounded-full blur-[90px] pointer-events-none -z-10"></div>
-<!-- Minimal Header -->
-<header class="w-full h-16 px-6 lg:px-12 flex items-center justify-between border-b border-slate-200/80 bg-white/80 backdrop-blur-md z-20">
-<div class="flex items-center gap-3">
-<a href="{{ url_for('main.dashboard') }}" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
-<div class="w-8 h-8 rounded-lg bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-700 shadow-sm">
-<span class="material-symbols-outlined text-[20px]">hub</span>
-</div>
-<span class="text-base font-bold text-slate-900 tracking-tight">APM Core</span>
-</a>
-<span class="hidden sm:inline-flex items-center gap-1.5 ml-2 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-[11px] font-medium text-emerald-700">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        Sistem Operasional
-      </span>
-</div>
-<div class="flex items-center gap-3 text-xs sm:text-sm">
-<span class="text-slate-500 hidden sm:inline text-xs">Belum punya akun operator?</span>
-<a class="px-3 py-1.5 rounded-lg border border-slate-300 hover:border-cyan-600 text-slate-700 hover:text-cyan-700 hover:bg-cyan-50/50 transition-all text-xs font-semibold" data-path="register" href="{{ url_for('main.dashboard') }}">
-        Masuk Demo
-      </a>
-</div>
-</header>
-<!-- Main Content Area -->
-<main class="w-full flex-1 flex flex-col items-center justify-center px-4 py-8 sm:py-12 z-10">
-<div class="w-full max-w-4xl">
-<!-- Split container with Visual Branding & Clean Card -->
-<div class="grid grid-cols-1 lg:grid-cols-12 rounded-2xl bg-white border border-slate-200/90 shadow-md shadow-slate-200/50 overflow-hidden">
-<!-- Left visual / branding panel -->
-<div class="lg:col-span-5 bg-gradient-to-br from-slate-900 via-slate-900 to-cyan-950 p-6 sm:p-8 flex flex-col justify-between text-white relative overflow-hidden">
-<!-- Abstract pattern accents -->
-<div class="absolute -right-16 -top-16 w-56 h-56 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-<div class="absolute -left-12 -bottom-12 w-48 h-48 bg-sky-500/10 rounded-full blur-2xl pointer-events-none"></div>
-<div class="relative z-10">
-<div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-white/10 border border-white/10 text-cyan-300 text-xs font-medium mb-6">
-<span class="material-symbols-outlined text-[15px]">precision_manufacturing</span>
-<span>Precision Industrial AI</span>
-</div>
-<h2 class="text-xl sm:text-2xl font-bold tracking-tight text-white leading-tight">
-        Sistem Diagnostik &amp; Pemeliharaan Prediktif
-      </h2>
-<p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
-        Pantau performa aset industri dan telemetri mesin secara real-time dengan akurasi prediksi presisi tinggi.
-      </p>
-</div>
-<!-- Feature badges -->
-<div class="relative z-10 mt-8 space-y-3">
-<div class="flex items-center gap-3 p-2.5 rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm">
-<div class="w-7 h-7 rounded-md bg-cyan-500/20 text-cyan-300 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[16px]">sensors</span>
-</div>
-<div>
-<p class="text-xs font-semibold text-white">Telemetri Real-Time</p>
-<p class="text-[11px] text-slate-400">Deteksi anomali getaran &amp; suhu instan</p>
-</div>
-</div>
-<div class="flex items-center gap-3 p-2.5 rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm">
-<div class="w-7 h-7 rounded-md bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-[16px]">verified_user</span>
-</div>
-<div>
-<p class="text-xs font-semibold text-white">Autentikasi Aman</p>
-<p class="text-[11px] text-slate-400">Enkripsi terintegrasi standar IEC-62443</p>
-</div>
-</div>
-</div>
-<div class="relative z-10 mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
-<span>Konsol Operasional v2.4</span>
-<span class="text-cyan-300 font-medium">99.98% Uptime</span>
-</div>
-</div>
-<!-- Right Form Panel -->
-<div class="lg:col-span-7 p-6 sm:p-8 bg-white flex flex-col justify-center">
-<!-- Header inside form -->
-<div class="mb-6">
-<div class="inline-flex lg:hidden items-center justify-center w-10 h-10 rounded-lg bg-cyan-50 border border-cyan-200 text-cyan-700 mb-3">
-<span class="material-symbols-outlined text-[20px]">hub</span>
-</div>
-<h1 class="text-2xl font-bold text-slate-900 tracking-tight">Masuk ke Akun</h1>
-<p class="text-xs sm:text-sm text-slate-500 mt-1">Masukkan kredensial operator Anda untuk mengakses konsol telemetri</p>
-</div>
-<!-- Form -->
-<form class="space-y-4" id="login-form" onsubmit="event.preventDefault(); handleLogin();">
-<!-- Email Field -->
-<div class="space-y-1.5">
-<label class="block text-xs font-semibold text-slate-700" for="work-email">Email</label>
-<div class="relative flex items-center">
-<span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px] pointer-events-none">mail</span>
-<input class="w-full h-10 pl-9 pr-3 text-sm rounded-lg bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 focus:outline-none transition-all" id="work-email" name="email" placeholder="nama@perusahaan.com" required="" type="email" value="diagnostician@predictive-ai.io"/>
-</div>
-</div>
-<!-- Password Field -->
-<div class="space-y-1.5">
-<div class="flex items-center justify-between">
-<label class="block text-xs font-semibold text-slate-700" for="master-password">Kata Sandi</label>
-</div>
-<div class="relative flex items-center">
-<span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px] pointer-events-none">lock</span>
-<input class="w-full h-10 pl-9 pr-10 text-sm rounded-lg bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 focus:outline-none transition-all" id="master-password" name="password" placeholder="••••••••••••" required="" type="password" value="TelemetricSecure2024!"/>
-<button aria-label="Toggle password visibility" class="absolute right-2.5 text-slate-400 hover:text-slate-700 transition-colors p-1" id="toggle-pw-btn" type="button">
-<span class="material-symbols-outlined text-[18px]" id="toggle-pw-icon">visibility_off</span>
-</button>
-</div>
-</div>
-<!-- Checkbox & Forgot Password -->
-<div class="flex items-center justify-between pt-1">
-<label class="flex items-center gap-2 cursor-pointer select-none text-xs text-slate-600">
-<input checked="" class="w-4 h-4 rounded border-slate-300 bg-white text-cyan-600 focus:ring-cyan-500 focus:ring-offset-0 cursor-pointer" id="remember-workstation" type="checkbox"/>
-<span>Ingat saya (30 hari)</span>
-</label>
-<a class="text-xs font-medium text-cyan-700 hover:text-cyan-800 transition-colors hover:underline" href="#">Lupa kata sandi?</a>
-</div>
-<!-- Primary CTA Button -->
-<button class="w-full h-10 mt-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow active:scale-[0.99]" id="submit-btn" type="submit">
-<span>Masuk ke Konsol</span>
-<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-</button>
-</form>
-<!-- Demo Quick-Fill Pill -->
-<div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-center">
-<button class="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-cyan-700 transition-colors px-3 py-1 rounded-full bg-slate-100 hover:bg-cyan-50 border border-slate-200" id="autofill-btn" type="button">
-<span class="material-symbols-outlined text-[15px] text-cyan-600">key</span>
-<span>Gunakan Akun Demo</span>
-</button>
-</div>
-<!-- Registration Link -->
-<div class="text-center mt-4 text-xs text-slate-500">
-<span>Langsung coba konsol?</span>
-<a class="ml-1 text-cyan-700 hover:text-cyan-800 font-semibold hover:underline" data-path="dashboard" href="{{ url_for('main.dashboard') }}">Buka Dashboard Langsung</a>
-</div>
-</div>
-</div>
-</div>
-</main>
-<!-- Clean Minimalist Footer -->
-<footer class="w-full border-t border-slate-200/70 py-4 px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 bg-white/60">
-<p class="w-full text-center text-slate-500 text-xs">© 2024 APM Core Diagnostics. Seluruh hak cipta dilindungi undang-undang.</p>
-</footer>
-<script>
-    // Toggle Password Visibility
+
+<body class="ambient min-h-screen flex flex-col antialiased">
+
+  <!-- Minimal V3 Header -->
+  <header class="h-16 shrink-0 border-b border-slate-200/80 bg-white/85 backdrop-blur-md flex items-center justify-between px-5 sm:px-8 lg:px-12">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-sky-50 border border-sky-200 text-sky-700 flex items-center justify-center">
+        <span class="material-symbols-outlined text-[20px]">hub</span>
+      </div>
+      <div>
+        <div class="font-display text-sm font-bold tracking-tight text-slate-900">APM Core</div>
+        <div class="text-[10px] text-slate-500 uppercase tracking-[.12em]">Predictive Maintenance</div>
+      </div>
+    </div>
+
+    <div class="hidden sm:flex items-center gap-2 text-xs text-slate-500">
+      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      Sistem Operasional
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="flex-1 flex items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
+    <div class="w-full max-w-5xl">
+
+      <div class="login-shell grid grid-cols-1 lg:grid-cols-12 overflow-hidden rounded-2xl border border-slate-200 bg-white">
+
+        <!-- Branding / System Info -->
+        <section class="brand-panel grid-pattern relative lg:col-span-5 p-7 sm:p-9 text-white overflow-hidden">
+          <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-sky-400/10 blur-3xl"></div>
+          <div class="absolute -left-20 -bottom-20 w-64 h-64 rounded-full bg-indigo-400/10 blur-3xl"></div>
+
+          <div class="relative z-10 h-full flex flex-col justify-between">
+            <div>
+              <div class="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[.06] px-3 py-1.5 text-[11px] font-semibold text-sky-300">
+                <span class="material-symbols-outlined text-[16px]">precision_manufacturing</span>
+                Predictive Maintenance
+              </div>
+
+              <h1 class="font-display mt-6 text-2xl sm:text-3xl font-bold leading-tight tracking-tight">
+                Industrial Intelligence
+                <span class="text-sky-300">for Every Machine.</span>
+              </h1>
+
+              <p class="mt-4 max-w-sm text-sm leading-6 text-slate-300">
+                Platform diagnostik untuk memantau kondisi mesin, menganalisis telemetri,
+                dan mendukung keputusan pemeliharaan berbasis Machine Learning.
+              </p>
+            </div>
+
+            <div class="mt-8 space-y-3">
+              <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[.05] p-3">
+                <div class="w-9 h-9 rounded-lg bg-sky-500/15 text-sky-300 flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-[19px]">sensors</span>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold text-white">Telemetri Mesin</p>
+                  <p class="mt-0.5 text-[11px] text-slate-400">Monitoring parameter operasional</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[.05] p-3">
+                <div class="w-9 h-9 rounded-lg bg-emerald-500/15 text-emerald-300 flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-[19px]">analytics</span>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold text-white">Analisis Prediktif</p>
+                  <p class="mt-0.5 text-[11px] text-slate-400">Deteksi risiko dan pola anomali</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[.05] p-3">
+                <div class="w-9 h-9 rounded-lg bg-indigo-500/15 text-indigo-300 flex items-center justify-center shrink-0">
+                  <span class="material-symbols-outlined text-[19px]">verified_user</span>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold text-white">Akses Terproteksi</p>
+                  <p class="mt-0.5 text-[11px] text-slate-400">Konsol khusus operator sistem</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-7 pt-4 border-t border-white/10 flex items-center justify-between text-[10px] text-slate-400">
+              <span>APM Core Diagnostics</span>
+              <span class="text-sky-300 font-medium">SYSTEM ONLINE</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Login Form -->
+        <section class="lg:col-span-7 bg-white p-7 sm:p-10 flex items-center">
+          <div class="w-full max-w-md mx-auto">
+
+            <div class="mb-7">
+              <div class="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[.14em] text-sky-600">
+                <span class="w-7 h-px bg-sky-500"></span>
+                Secure Access
+              </div>
+              <h2 class="font-display mt-3 text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
+                Masuk ke Akun
+              </h2>
+              <p class="mt-2 text-sm leading-5 text-slate-500">
+                Masukkan kredensial operator untuk mengakses konsol predictive maintenance.
+              </p>
+            </div>
+
+            <form id="login-form" class="space-y-5" onsubmit="event.preventDefault(); handleLogin();">
+
+              <!-- Email -->
+              <div>
+                <label for="work-email" class="mb-1.5 block text-xs font-semibold text-slate-700">
+                  Email
+                </label>
+                <div class="input-wrap relative">
+                  <span class="input-icon material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[19px] text-slate-400 transition-colors">
+                    mail
+                  </span>
+                  <input
+                    id="work-email"
+                    name="email"
+                    type="email"
+                    required
+                    value="diagnostician@predictive-ai.io"
+                    placeholder="nama@perusahaan.com"
+                    class="input-field w-full h-11 rounded-xl border border-slate-300 bg-white pl-10 pr-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:border-sky-600 focus:ring-0"
+                  >
+                </div>
+              </div>
+
+              <!-- Password -->
+              <div>
+                <div class="mb-1.5 flex items-center justify-between">
+                  <label for="master-password" class="text-xs font-semibold text-slate-700">
+                    Kata Sandi
+                  </label>
+                </div>
+
+                <div class="input-wrap relative">
+                  <span class="input-icon material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[19px] text-slate-400 transition-colors">
+                    lock
+                  </span>
+
+                  <input
+                    id="master-password"
+                    name="password"
+                    type="password"
+                    required
+                    value="TelemetricSecure2024!"
+                    placeholder="Masukkan kata sandi"
+                    class="input-field w-full h-11 rounded-xl border border-slate-300 bg-white pl-10 pr-11 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:border-sky-600 focus:ring-0"
+                  >
+
+                  <button
+                    id="toggle-pw-btn"
+                    type="button"
+                    aria-label="Tampilkan kata sandi"
+                    class="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+                  >
+                    <span id="toggle-pw-icon" class="material-symbols-outlined text-[19px]">visibility_off</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Remember -->
+              <div class="flex items-center justify-between pt-0.5">
+                <label class="flex cursor-pointer items-center gap-2 text-xs text-slate-600">
+                  <input
+                    id="remember-workstation"
+                    type="checkbox"
+                    checked
+                    class="h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+                  >
+                  <span>Ingat saya (30 hari)</span>
+                </label>
+
+                <a href="#" class="text-xs font-semibold text-sky-700 hover:text-sky-800 hover:underline">
+                  Lupa kata sandi?
+                </a>
+              </div>
+
+              <!-- Submit -->
+              <button
+                id="submit-btn"
+                type="submit"
+                class="btn-login flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-sky-600 text-sm font-semibold text-white transition-all hover:bg-sky-700 active:scale-[.99] disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                <span>Masuk ke Konsol</span>
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </button>
+            </form>
+
+            <!-- Demo -->
+            <div class="mt-6 border-t border-slate-100 pt-5 text-center">
+              <button
+                id="autofill-btn"
+                type="button"
+                class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-2 text-xs font-medium text-slate-600 transition hover:border-sky-200 hover:bg-sky-50 hover:text-sky-700"
+              >
+                <span class="material-symbols-outlined text-[16px] text-sky-600">key</span>
+                Gunakan Akun Demo
+              </button>
+            </div>
+
+            <!-- System note — no registration -->
+            <div class="mt-6 flex items-start gap-2.5 rounded-xl border border-slate-200 bg-slate-50 p-3.5">
+              <span class="material-symbols-outlined mt-0.5 text-[18px] text-slate-400">info</span>
+              <p class="text-[11px] leading-5 text-slate-500">
+                Akses akun dikelola oleh administrator sistem. Halaman registrasi tidak tersedia pada konsol ini.
+              </p>
+            </div>
+
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-200/80 bg-white/70 px-5 py-4 text-center text-[11px] text-slate-500">
+    © 2024 APM Core Diagnostics. Seluruh hak cipta dilindungi undang-undang.
+  </footer>
+
+  <script>
+    // Toggle password visibility
     const toggleBtn = document.getElementById('toggle-pw-btn');
     const pwInput = document.getElementById('master-password');
     const pwIcon = document.getElementById('toggle-pw-icon');
 
     if (toggleBtn && pwInput && pwIcon) {
       toggleBtn.addEventListener('click', () => {
-        const isPassword = pwInput.getAttribute('type') === 'password';
-        pwInput.setAttribute('type', isPassword ? 'text' : 'password');
+        const isPassword = pwInput.type === 'password';
+        pwInput.type = isPassword ? 'text' : 'password';
         pwIcon.textContent = isPassword ? 'visibility' : 'visibility_off';
+        toggleBtn.setAttribute('aria-label', isPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi');
       });
     }
 
-    // 1-Click Demo Fill
+    // Demo account quick fill
     const autofillBtn = document.getElementById('autofill-btn');
     const emailInput = document.getElementById('work-email');
 
@@ -218,37 +319,34 @@
       autofillBtn.addEventListener('click', () => {
         emailInput.value = 'diagnostician@predictive-ai.io';
         pwInput.value = 'TelemetricSecure2024!';
-        
-        // Gentle highlight animation
+
         [emailInput, pwInput].forEach(el => {
-          el.classList.add('border-cyan-600', 'ring-1', 'ring-cyan-600');
-          setTimeout(() => el.classList.remove('border-cyan-600', 'ring-1', 'ring-cyan-600'), 600);
+          el.classList.add('border-sky-600', 'ring-2', 'ring-sky-100');
+          setTimeout(() => el.classList.remove('border-sky-600', 'ring-2', 'ring-sky-100'), 700);
         });
       });
     }
 
-    // Interactive Submit Simulation
+    // Keep the existing demo interaction from the supplied Stitch file.
     function handleLogin() {
       const submitBtn = document.getElementById('submit-btn');
       if (!submitBtn) return;
-      
+
       submitBtn.disabled = true;
       submitBtn.innerHTML = `
         <span class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
         <span>Memverifikasi...</span>
       `;
-      
+
       setTimeout(() => {
         submitBtn.innerHTML = `
           <span class="material-symbols-outlined text-[18px]">check_circle</span>
           <span>Akses Diterima • Mengalihkan...</span>
         `;
-        submitBtn.classList.remove('bg-cyan-600', 'hover:bg-cyan-700');
-        submitBtn.classList.add('bg-emerald-600', 'text-white');
-        setTimeout(() => {
-          window.location.href = "{{ url_for('main.dashboard') }}";
-        }, 500);
+        submitBtn.classList.remove('bg-sky-600', 'hover:bg-sky-700');
+        submitBtn.classList.add('bg-emerald-600');
       }, 750);
     }
   </script>
-</body></html>
+</body>
+</html>
