@@ -1,31 +1,6 @@
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin
 from datetime import datetime
-
-<<<<<<< Updated upstream
-# Schema placeholder for database models (User, MachineAnalysis)
-class User:
-    def __init__(self, id, username, email):
-        self.id = id
-        self.username = username
-        self.email = email
-
-class MachineAnalysis:
-    def __init__(self, id, machine_type, air_temp, process_temp, rotational_speed, torque, tool_wear,
-                 failure_pred, failure_prob, cluster, condition, action, q_value, created_at=None):
-        self.id = id
-        self.machine_type = machine_type
-        self.air_temp = air_temp
-        self.process_temp = process_temp
-        self.rotational_speed = rotational_speed
-        self.torque = torque
-        self.tool_wear = tool_wear
-        self.failure_pred = failure_pred
-        self.failure_prob = failure_prob
-        self.cluster = cluster
-        self.condition = condition
-        self.action = action
-        self.q_value = q_value
-        self.created_at = created_at or datetime.now()
-=======
 
 db = SQLAlchemy()
 
@@ -73,4 +48,37 @@ class MachineAnalysis(db.Model):
     q_value = db.Column(db.Float, nullable=False)                  
     
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
->>>>>>> Stashed changes
+
+    def __init__(self, user_id=None, machine_type=None, air_temp=None, process_temp=None,
+                 rotational_speed=None, torque=None, tool_wear=None, failure_pred=None,
+                 failure_prob=None, cluster=None, condition=None, action=None, q_value=None,
+                 created_at=None, **kwargs):
+        super().__init__(**kwargs)
+        if user_id is not None:
+            self.user_id = user_id
+        if machine_type is not None:
+            self.machine_type = machine_type
+        if air_temp is not None:
+            self.air_temp = air_temp
+        if process_temp is not None:
+            self.process_temp = process_temp
+        if rotational_speed is not None:
+            self.rotational_speed = rotational_speed
+        if torque is not None:
+            self.torque = torque
+        if tool_wear is not None:
+            self.tool_wear = tool_wear
+        if failure_pred is not None:
+            self.failure_pred = failure_pred
+        if failure_prob is not None:
+            self.failure_prob = failure_prob
+        if cluster is not None:
+            self.cluster = cluster
+        if condition is not None:
+            self.condition = condition
+        if action is not None:
+            self.action = action
+        if q_value is not None:
+            self.q_value = q_value
+        if created_at is not None:
+            self.created_at = created_at

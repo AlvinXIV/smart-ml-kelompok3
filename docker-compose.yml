@@ -24,14 +24,8 @@ services:
       - ./data:/app/data
     environment:
       - FLASK_ENV=production
-      - SECRET_KEY=your_secret_key_here
-<<<<<<< Updated upstream
-      # Ubah URL dari SQLite menjadi PostgreSQL
-      - DATABASE_URL=postgresql://admin:secretpassword@db:5432/ai_maintenance
-=======
-      
+      # Database URL PostgreSQL dengan driver psycopg2
       - DATABASE_URL=postgresql+psycopg2://admin:secretpassword@db:5432/ai_maintenance
->>>>>>> Stashed changes
     depends_on:
       - db
     restart: always

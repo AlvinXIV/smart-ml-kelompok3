@@ -161,7 +161,7 @@
 <label class="block text-xs font-semibold text-slate-700" for="work-email">Email</label>
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px] pointer-events-none">mail</span>
-<input class="w-full h-10 pl-9 pr-3 text-sm rounded-lg bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 focus:outline-none transition-all" id="work-email" name="email" placeholder="nama@perusahaan.com" required="" type="email" value="diagnostician@predictive-ai.io"/>
+<input class="w-full h-10 pl-9 pr-3 text-sm rounded-lg bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 focus:outline-none transition-all" id="work-email" name="email" placeholder="admin@email.com" required="" type="email" value="admin@email.com"/>
 </div>
 </div>
 <!-- Password Field -->
@@ -171,7 +171,7 @@
 </div>
 <div class="relative flex items-center">
 <span class="material-symbols-outlined absolute left-3 text-slate-400 text-[18px] pointer-events-none">lock</span>
-<input class="w-full h-10 pl-9 pr-10 text-sm rounded-lg bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 focus:outline-none transition-all" id="master-password" name="password" placeholder="••••••••••••" required="" type="password" value="TelemetricSecure2024!"/>
+<input class="w-full h-10 pl-9 pr-10 text-sm rounded-lg bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 focus:border-cyan-600 focus:ring-1 focus:ring-cyan-600 focus:outline-none transition-all" id="master-password" name="password" placeholder="123" required="" type="password" value="123"/>
 <button aria-label="Toggle password visibility" class="absolute right-2.5 text-slate-400 hover:text-slate-700 transition-colors p-1" id="toggle-pw-btn" type="button">
 <span class="material-symbols-outlined text-[18px]" id="toggle-pw-icon">visibility_off</span>
 </button>
@@ -231,8 +231,8 @@
 
     if (autofillBtn && emailInput && pwInput) {
       autofillBtn.addEventListener('click', () => {
-        emailInput.value = 'diagnostician@predictive-ai.io';
-        pwInput.value = 'TelemetricSecure2024!';
+        emailInput.value = 'admin@email.com';
+        pwInput.value = '123';
         
         // Gentle highlight animation
         [emailInput, pwInput].forEach(el => {
