@@ -23,7 +23,8 @@ class MachineAnalysis(db.Model):
     failure_prob = db.Column(db.Float, nullable=False)      
     cluster = db.Column(db.Integer, nullable=False)             
     condition = db.Column(db.String(100), nullable=False)
-    action = db.Column(db.String(20), nullable=True, default='')  
-    q_value = db.Column(db.Float, nullable=True, default=0.0)                  
     
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)

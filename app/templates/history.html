@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html><html class="light" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+<!DOCTYPE html><html class="light" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
   darkMode: "class",
   theme: {
     extend: {
@@ -152,8 +152,8 @@
     <div class="flex flex-col min-w-0">
       <span class="text-[10px] text-slate-500 uppercase tracking-wide font-semibold truncate">Total Analyzed</span>
       <div class="flex items-baseline gap-1.5">
-        <span class="text-lg font-bold text-slate-900 leading-tight">1,428</span>
-        <span class="text-[10px] text-emerald-600 font-semibold">+4.2%</span>
+        <span class="text-lg font-bold text-slate-900 leading-tight">{{ "{:,}".format(total_count) if total_count is defined else (records|length) }}</span>
+        <span class="text-[10px] text-emerald-600 font-semibold">Active</span>
       </div>
     </div>
   </div>
@@ -165,8 +165,8 @@
     <div class="flex flex-col min-w-0">
       <span class="text-[10px] text-slate-500 uppercase tracking-wide font-semibold truncate">Normal / Low Risk</span>
       <div class="flex items-baseline gap-1.5">
-        <span class="text-lg font-bold text-slate-900 leading-tight">1,379</span>
-        <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">96.5%</span>
+        <span class="text-lg font-bold text-slate-900 leading-tight">{{ "{:,}".format(normal_count) if normal_count is defined else (records|length) }}</span>
+        <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold">{{ normal_pct if normal_pct is defined else '100' }}%</span>
       </div>
     </div>
   </div>
@@ -178,8 +178,8 @@
     <div class="flex flex-col min-w-0">
       <span class="text-[10px] text-slate-500 uppercase tracking-wide font-semibold truncate">High Risk Flagged</span>
       <div class="flex items-baseline gap-1.5">
-        <span class="text-lg font-bold text-rose-600 leading-tight">49</span>
-        <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 font-semibold">3.5%</span>
+        <span class="text-lg font-bold text-rose-600 leading-tight">{{ "{:,}".format(high_risk_count) if high_risk_count is defined else 0 }}</span>
+        <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 font-semibold">{{ high_risk_pct if high_risk_pct is defined else '0' }}%</span>
       </div>
     </div>
   </div>
@@ -233,237 +233,77 @@
   <th class="py-2 pl-3 pr-4 text-right text-[10px] text-slate-500 uppercase tracking-wider font-semibold" scope="col">Aksi</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-slate-100">
-  <!-- Row 1: High Risk -->
-  <tr class="hover:bg-rose-50/30 transition-colors cursor-pointer group">
-    <td class="py-2.5 pl-4 pr-3 whitespace-nowrap">
-      <span class="text-slate-800 font-semibold text-xs">24 Okt, 14:32</span>
-      <span class="block text-[10px] text-slate-400">12 mnt lalu</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <div class="flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse shrink-0"></span>
-        <div>
-          <span class="text-sky-700 font-bold text-xs">#M-9104</span>
-          <span class="block text-[10px] text-slate-400">Medium Duty</span>
+<tbody class="divide-y divide-slate-100" id="history-table-body">
+  {% if records and records|length > 0 %}
+    {% for r in records %}
+    {% set is_risk = (r.failure_pred in ['FAILURE RISK', 'High Risk', 'Failure Risk'] or r.failure_prob >= 50.0) %}
+    <tr class="hover:bg-slate-50 transition-colors cursor-pointer group" onclick="window.location='{{ url_for('analysis.result') }}?id={{ r.raw_id }}'">
+      <td class="py-2.5 pl-4 pr-3 whitespace-nowrap">
+        <span class="text-slate-800 font-semibold text-xs">{{ r.date }}</span>
+        <span class="block text-[10px] text-slate-400">ID: {{ r.id }}</span>
+      </td>
+      <td class="py-2.5 px-3 whitespace-nowrap">
+        <div class="flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full {% if is_risk %}bg-rose-500 animate-pulse{% else %}bg-emerald-500{% endif %} shrink-0"></span>
+          <div>
+            <span class="text-sky-700 font-bold text-xs">{{ r.id }}</span>
+            <span class="block text-[10px] text-slate-400">Type {{ r.machine_type }}</span>
+          </div>
         </div>
-      </div>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="text-rose-600 font-semibold">304.2 K</span><span class="text-slate-300 mx-1">/</span><span class="text-slate-700">1,480 RPM</span>
-      <span class="block text-[10px] text-slate-400">54.2 Nm · <span class="text-rose-500 font-medium">218 min wear</span></span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span><span class="text-rose-700 font-bold">High Risk</span></span>
-      <span class="block text-[10px] text-slate-400">78.2%</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-medium">Cluster 2</span>
-      <span class="block text-[10px] text-slate-400">Heavy Wear</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold tracking-wide uppercase border border-rose-200">
-        <span class="material-symbols-outlined text-[11px]">build</span>Maintenance
-      </span>
-    </td>
-    <td class="py-2.5 pl-3 pr-4 text-right">
-      <button class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sky-700 bg-sky-50 hover:bg-sky-100 text-[10px] font-semibold transition-colors border border-sky-200" type="button">Detail <span class="material-symbols-outlined text-[12px]">arrow_forward</span></button>
-    </td>
-  </tr>
-  <!-- Row 2: Normal -->
-  <tr class="hover:bg-slate-50 transition-colors cursor-pointer">
-    <td class="py-2.5 pl-4 pr-3 whitespace-nowrap">
-      <span class="text-slate-800 font-semibold text-xs">24 Okt, 13:48</span>
-      <span class="block text-[10px] text-slate-400">56 mnt lalu</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <div class="flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
-        <div>
-          <span class="text-slate-800 font-semibold text-xs">#M-4281</span>
-          <span class="block text-[10px] text-slate-400">Medium Duty</span>
+      </td>
+      <td class="py-2.5 px-3 whitespace-nowrap">
+        <span class="{% if is_risk %}text-rose-600 font-semibold{% else %}text-slate-700 font-medium{% endif %}">{{ "%.1f"|format(r.air_temp) }} K</span><span class="text-slate-300 mx-1">/</span><span class="text-slate-700">{{ r.rotational_speed }} RPM</span>
+        <span class="block text-[10px] text-slate-400">{{ "%.1f"|format(r.torque) }} Nm · <span class="{% if is_risk %}text-rose-500 font-medium{% else %}text-slate-500{% endif %}">{{ r.tool_wear }} min wear</span></span>
+      </td>
+      <td class="py-2.5 px-3 whitespace-nowrap">
+        <span class="inline-flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full {% if is_risk %}bg-rose-500{% else %}bg-emerald-500{% endif %}"></span>
+          <span class="{% if is_risk %}text-rose-700 font-bold{% else %}text-emerald-700 font-bold{% endif %}">{{ r.failure_pred }}</span>
+        </span>
+        <span class="block text-[10px] text-slate-400">{{ "%.1f"|format(r.failure_prob) }}%</span>
+      </td>
+      <td class="py-2.5 px-3 whitespace-nowrap">
+        <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-medium">Cluster {{ r.cluster }}</span>
+        <span class="block text-[10px] text-slate-400 truncate max-w-[130px]" title="{{ r.cluster_condition }}">{{ r.cluster_condition }}</span>
+      </td>
+      <td class="py-2.5 px-3 whitespace-nowrap">
+        {% if is_risk %}
+        <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold tracking-wide uppercase border border-rose-200">
+          <span class="material-symbols-outlined text-[11px]">build</span>Maintenance
+        </span>
+        {% else %}
+        <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold tracking-wide uppercase border border-emerald-200">
+          <span class="material-symbols-outlined text-[11px]">check_circle</span>Normal
+        </span>
+        {% endif %}
+      </td>
+      <td class="py-2.5 pl-3 pr-4 text-right">
+        <a href="{{ url_for('analysis.result') }}?id={{ r.raw_id }}" class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sky-700 bg-sky-50 hover:bg-sky-100 text-[10px] font-semibold transition-colors border border-sky-200" onclick="event.stopPropagation();">Detail <span class="material-symbols-outlined text-[12px]">arrow_forward</span></a>
+      </td>
+    </tr>
+    {% endfor %}
+  {% else %}
+    <tr>
+      <td colspan="7" class="py-12 text-center text-slate-500">
+        <div class="flex flex-col items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[40px] text-slate-300">hourglass_empty</span>
+          <span class="text-sm font-semibold text-slate-700">Belum ada riwayat analisis telemetri</span>
+          <p class="text-xs text-slate-400">Jalankan diagnostik mesin baru di halaman Machine Analysis.</p>
+          <a href="{{ url_for('analysis.analysis') }}" class="mt-2 px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold shadow-xs">Mulai Analisis Sekarang</a>
         </div>
-      </div>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="text-slate-700 font-medium">298.1 K</span><span class="text-slate-300 mx-1">/</span><span class="text-slate-700">1,504 RPM</span>
-      <span class="block text-[10px] text-slate-400">42.8 Nm · 94 min wear</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-emerald-700 font-bold">Normal</span></span>
-      <span class="block text-[10px] text-slate-400">12.4%</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-medium">Cluster 1</span>
-      <span class="block text-[10px] text-slate-400">Medium</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold tracking-wide uppercase border border-emerald-200">
-        <span class="material-symbols-outlined text-[11px]">check_circle</span>Continue
-      </span>
-    </td>
-    <td class="py-2.5 pl-3 pr-4 text-right">
-      <button class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sky-600 hover:bg-sky-50 text-[10px] font-semibold transition-colors" type="button">Detail <span class="material-symbols-outlined text-[12px]">arrow_forward</span></button>
-    </td>
-  </tr>
-  <!-- Row 3: Watch -->
-  <tr class="hover:bg-amber-50/30 transition-colors cursor-pointer">
-    <td class="py-2.5 pl-4 pr-3 whitespace-nowrap">
-      <span class="text-slate-800 font-semibold text-xs">24 Okt, 11:15</span>
-      <span class="block text-[10px] text-slate-400">3j 20m lalu</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <div class="flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0"></span>
-        <div>
-          <span class="text-slate-800 font-semibold text-xs">#H-1029</span>
-          <span class="block text-[10px] text-slate-400">Heavy Duty</span>
-        </div>
-      </div>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="text-amber-700 font-semibold">302.8 K</span><span class="text-slate-300 mx-1">/</span><span class="text-slate-700">1,390 RPM</span>
-      <span class="block text-[10px] text-slate-400">58.4 Nm · <span class="text-amber-600 font-medium">172 min wear</span></span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span><span class="text-amber-700 font-bold">Watch</span></span>
-      <span class="block text-[10px] text-slate-400">34.6%</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-medium">Cluster 2</span>
-      <span class="block text-[10px] text-slate-400">Heavy Wear</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold tracking-wide uppercase border border-amber-200">
-        <span class="material-symbols-outlined text-[11px]">search</span>Inspect
-      </span>
-    </td>
-    <td class="py-2.5 pl-3 pr-4 text-right">
-      <button class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sky-600 hover:bg-sky-50 text-[10px] font-semibold transition-colors" type="button">Detail <span class="material-symbols-outlined text-[12px]">arrow_forward</span></button>
-    </td>
-  </tr>
-  <!-- Row 4: Normal -->
-  <tr class="hover:bg-slate-50 transition-colors cursor-pointer">
-    <td class="py-2.5 pl-4 pr-3 whitespace-nowrap">
-      <span class="text-slate-800 font-semibold text-xs">24 Okt, 09:22</span>
-      <span class="block text-[10px] text-slate-400">5j 10m lalu</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <div class="flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
-        <div>
-          <span class="text-slate-800 font-semibold text-xs">#L-5532</span>
-          <span class="block text-[10px] text-slate-400">Light Duty</span>
-        </div>
-      </div>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="text-slate-700 font-medium">297.4 K</span><span class="text-slate-300 mx-1">/</span><span class="text-slate-700">1,620 RPM</span>
-      <span class="block text-[10px] text-slate-400">32.1 Nm · 34 min wear</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-emerald-700 font-bold">Normal</span></span>
-      <span class="block text-[10px] text-slate-400">8.7%</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-medium">Cluster 0</span>
-      <span class="block text-[10px] text-slate-400">Light Wear</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold tracking-wide uppercase border border-emerald-200">
-        <span class="material-symbols-outlined text-[11px]">check_circle</span>Continue
-      </span>
-    </td>
-    <td class="py-2.5 pl-3 pr-4 text-right">
-      <button class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sky-600 hover:bg-sky-50 text-[10px] font-semibold transition-colors" type="button">Detail <span class="material-symbols-outlined text-[12px]">arrow_forward</span></button>
-    </td>
-  </tr>
-  <!-- Row 5: High Risk -->
-  <tr class="hover:bg-rose-50/30 transition-colors cursor-pointer">
-    <td class="py-2.5 pl-4 pr-3 whitespace-nowrap">
-      <span class="text-slate-800 font-semibold text-xs">23 Okt, 22:40</span>
-      <span class="block text-[10px] text-slate-400">16j lalu</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <div class="flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0"></span>
-        <div>
-          <span class="text-slate-800 font-semibold text-xs">#M-3320</span>
-          <span class="block text-[10px] text-slate-400">Medium Duty</span>
-        </div>
-      </div>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="text-rose-600 font-semibold">305.6 K</span><span class="text-slate-300 mx-1">/</span><span class="text-slate-700">1,310 RPM</span>
-      <span class="block text-[10px] text-slate-400">62.7 Nm · <span class="text-rose-500 font-medium">245 min wear</span></span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span><span class="text-rose-700 font-bold">High Risk</span></span>
-      <span class="block text-[10px] text-slate-400">84.1%</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-medium">Cluster 2</span>
-      <span class="block text-[10px] text-slate-400">Heavy Wear</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 text-[10px] font-bold tracking-wide uppercase border border-rose-200">
-        <span class="material-symbols-outlined text-[11px]">build</span>Maintenance
-      </span>
-    </td>
-    <td class="py-2.5 pl-3 pr-4 text-right">
-      <button class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sky-600 hover:bg-sky-50 text-[10px] font-semibold transition-colors" type="button">Detail <span class="material-symbols-outlined text-[12px]">arrow_forward</span></button>
-    </td>
-  </tr>
-  <!-- Row 6: Normal -->
-  <tr class="hover:bg-slate-50 transition-colors cursor-pointer">
-    <td class="py-2.5 pl-4 pr-3 whitespace-nowrap">
-      <span class="text-slate-800 font-semibold text-xs">23 Okt, 19:14</span>
-      <span class="block text-[10px] text-slate-400">19j lalu</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <div class="flex items-center gap-1.5">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
-        <div>
-          <span class="text-slate-800 font-semibold text-xs">#L-7741</span>
-          <span class="block text-[10px] text-slate-400">Light Duty</span>
-        </div>
-      </div>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="text-slate-700 font-medium">296.8 K</span><span class="text-slate-300 mx-1">/</span><span class="text-slate-700">1,580 RPM</span>
-      <span class="block text-[10px] text-slate-400">30.2 Nm · 18 min wear</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><span class="text-emerald-700 font-bold">Normal</span></span>
-      <span class="block text-[10px] text-slate-400">5.2%</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="px-1.5 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600 text-[10px] font-medium">Cluster 0</span>
-      <span class="block text-[10px] text-slate-400">Light Wear</span>
-    </td>
-    <td class="py-2.5 px-3 whitespace-nowrap">
-      <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold tracking-wide uppercase border border-emerald-200">
-        <span class="material-symbols-outlined text-[11px]">check_circle</span>Continue
-      </span>
-    </td>
-    <td class="py-2.5 pl-3 pr-4 text-right">
-      <button class="inline-flex items-center gap-1 px-2 py-1 rounded-md text-sky-600 hover:bg-sky-50 text-[10px] font-semibold transition-colors" type="button">Detail <span class="material-symbols-outlined text-[12px]">arrow_forward</span></button>
-    </td>
-  </tr>
+      </td>
+    </tr>
+  {% endif %}
 </tbody>
 </table>
 </div>
 <!-- Pagination -->
 <div class="px-4 py-2.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
-  <span class="text-[11px] text-slate-500">Menampilkan <span class="font-semibold text-slate-700">1–6</span> dari <span class="font-semibold text-slate-700">1,428</span> record</span>
+  <span class="text-[11px] text-slate-500">Menampilkan <span class="font-semibold text-slate-700">1–{{ records|length }}</span> dari <span class="font-semibold text-slate-700">{{ "{:,}".format(total_count) if total_count is defined else (records|length) }}</span> record</span>
   <div class="flex items-center gap-1">
     <button class="w-6 h-6 rounded bg-white border border-slate-200 text-slate-400 opacity-50 flex items-center justify-center cursor-not-allowed" disabled type="button"><span class="material-symbols-outlined text-[14px]">chevron_left</span></button>
     <button class="w-6 h-6 rounded bg-sky-600 text-white text-[11px] font-bold flex items-center justify-center" type="button">1</button>
-    <button class="w-6 h-6 rounded bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-[11px] flex items-center justify-center transition-colors" type="button">2</button>
-    <button class="w-6 h-6 rounded bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-[11px] flex items-center justify-center transition-colors" type="button">3</button>
-    <span class="text-slate-400 text-[11px] px-0.5">...</span>
-    <button class="w-6 h-6 rounded bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-[11px] flex items-center justify-center transition-colors" type="button">238</button>
-    <button class="w-6 h-6 rounded bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center transition-colors" type="button"><span class="material-symbols-outlined text-[14px]">chevron_right</span></button>
+    <button class="w-6 h-6 rounded bg-white border border-slate-200 text-slate-400 opacity-50 flex items-center justify-center cursor-not-allowed" disabled type="button"><span class="material-symbols-outlined text-[14px]">chevron_right</span></button>
   </div>
 </div>
 </div>

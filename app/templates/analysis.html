@@ -224,83 +224,104 @@
     applyPreset('nominal');
   }
 
-  function triggerSimulation() {
+  async function triggerSimulation() {
+    const type = document.getElementById('input-type').value || 'L';
     const air = parseFloat(document.getElementById('input-air-temp').value) || 298.1;
     const proc = parseFloat(document.getElementById('input-proc-temp').value) || 308.6;
+    const speed = parseInt(document.getElementById('input-speed').value) || 1551;
     const torque = parseFloat(document.getElementById('input-torque').value) || 42.8;
     const wear = parseInt(document.getElementById('slider-tool-wear').value) || 120;
-    const speed = parseInt(document.getElementById('input-speed').value) || 1551;
 
     const btn = document.getElementById('btn-run-analysis');
-    btn.innerHTML = `<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Computing...</span>`;
+    btn.innerHTML = `<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Computing & Saving...</span>`;
 
-    setTimeout(() => {
+    try {
+      const resp = await fetch("{{ url_for('analysis.analysis') }}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          machine_type: type,
+          air_temp: air,
+          process_temp: proc,
+          rotational_speed: speed,
+          torque: torque,
+          tool_wear: wear
+        })
+      });
+
+      const data = await resp.json();
       btn.innerHTML = `<span class="material-symbols-outlined text-[18px]">neurology</span><span>Jalankan Analisis AI</span>`;
-      
-      // Calculate realistic simulated outputs based on simple heuristics
-      let failScore = 2.5;
-      if (torque > 60) failScore += (torque - 60) * 1.8;
-      if (wear > 180) failScore += (wear - 180) * 0.45;
-      if (speed < 1350 || speed > 1900) failScore += 18;
-      if ((proc - air) < 8.0) failScore += 15; // Heat dissipation strain
 
-      failScore = Math.min(Math.max(failScore, 1.2), 96.5);
-      const health = (100 - failScore).toFixed(1);
+      if (data.success && data.result) {
+        const res = data.result;
+        const failScore = parseFloat(res.failure_probability !== undefined ? res.failure_probability : 12.4);
+        const health = parseFloat(res.health_score !== undefined ? res.health_score : (100.0 - failScore));
 
-      const circle = document.getElementById('verdict-svg-circle');
-      const donutVal = document.getElementById('verdict-donut-val');
-      const verdictDot = document.getElementById('verdict-dot');
-      const verdictTitle = document.getElementById('verdict-title');
-      const verdictDesc = document.getElementById('verdict-desc');
-      const outRf = document.getElementById('out-rf');
-      const outKmeans = document.getElementById('out-kmeans');
-      const calloutText = document.getElementById('verdict-callout-text');
+        const circle = document.getElementById('verdict-svg-circle');
+        const donutVal = document.getElementById('verdict-donut-val');
+        const verdictDot = document.getElementById('verdict-dot');
+        const verdictTitle = document.getElementById('verdict-title');
+        const verdictDesc = document.getElementById('verdict-desc');
+        const outRf = document.getElementById('out-rf');
+        const outKmeans = document.getElementById('out-kmeans');
+        const calloutText = document.getElementById('verdict-callout-text');
 
-      donutVal.innerText = `${Math.round(health)}%`;
-      circle.setAttribute('stroke-dasharray', `${Math.round(health)}, 100`);
-      document.getElementById('verdict-timestamp').innerText = 'Evaluated just now';
+        donutVal.innerText = `${Math.round(health)}%`;
+        circle.setAttribute('stroke-dasharray', `${Math.round(health)}, 100`);
+        document.getElementById('verdict-timestamp').innerText = 'Tersimpan ke Riwayat baru saja';
 
-      if (health > 80) {
-        circle.setAttribute('class', 'text-emerald-500 transition-all duration-700');
-        verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
-        verdictTitle.innerText = `Skor Kesehatan: ${health}%`;
-        verdictTitle.className = 'text-base font-bold text-slate-900';
-        verdictDesc.innerText = 'Sistem beroperasi dalam kondisi termomekanis nominal. Tidak ada anomali terdeteksi.';
-        outRf.innerText = `${failScore.toFixed(1)}%`;
-        outRf.className = 'text-sm font-bold text-emerald-600 mt-0.5';
-        outKmeans.innerText = wear > 130 ? 'Medium Wear' : 'Light Wear';
-        outKmeans.className = 'text-sm font-bold text-cyan-700 mt-0.5';
-        calloutText.innerText = 'Parameter berada dalam batas operasional historis yang aman.';
+        const isRisk = res.failure_prediction === 'FAILURE RISK' || failScore >= 50.0;
+        if (!isRisk && health > 80) {
+          circle.setAttribute('class', 'text-emerald-500 transition-all duration-700');
+          verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
+          verdictTitle.innerText = `Skor Kesehatan: ${health.toFixed(1)}%`;
+          verdictTitle.className = 'text-base font-bold text-slate-900';
+          verdictDesc.innerText = 'Sistem beroperasi dalam kondisi termomekanis nominal. Tidak ada anomali terdeteksi.';
+          outRf.innerText = `${failScore.toFixed(1)}%`;
+          outRf.className = 'text-sm font-bold text-emerald-600 mt-0.5';
+          outKmeans.innerText = res.cluster_condition || 'Kondisi Optimal';
+          outKmeans.className = 'text-sm font-bold text-cyan-700 mt-0.5';
+          calloutText.innerText = 'Parameter berada dalam batas operasional historis yang aman.';
+        } else if (!isRisk) {
+          circle.setAttribute('class', 'text-amber-500 transition-all duration-700');
+          verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse';
+          verdictTitle.innerText = `Skor Kesehatan: ${health.toFixed(1)}%`;
+          verdictTitle.className = 'text-base font-bold text-slate-900';
+          verdictDesc.innerText = 'Profil keausan meningkat terdeteksi. Jadwalkan inspeksi visual dalam 48 jam operasi.';
+          outRf.innerText = `${failScore.toFixed(1)}%`;
+          outRf.className = 'text-sm font-bold text-amber-600 mt-0.5';
+          outKmeans.innerText = res.cluster_condition || 'Moderate Strain';
+          outKmeans.className = 'text-sm font-bold text-amber-600 mt-0.5';
+          calloutText.innerText = 'Degradasi alat yang kentara atau ketidakseimbangan beban termodinamika.';
+        } else {
+          circle.setAttribute('class', 'text-red-500 transition-all duration-700');
+          verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500 animate-ping';
+          verdictTitle.innerText = `Skor Kesehatan: ${health.toFixed(1)}% (Risk)`;
+          verdictTitle.className = 'text-base font-bold text-red-600';
+          verdictDesc.innerText = 'Probabilitas kegagalan terdeteksi oleh Random Forest. Risiko kelebihan beban keausan tinggi.';
+          outRf.innerText = `${failScore.toFixed(1)}%`;
+          outRf.className = 'text-sm font-bold text-red-600 mt-0.5';
+          outKmeans.innerText = res.cluster_condition || 'Heavy Wear';
+          outKmeans.className = 'text-sm font-bold text-red-600 mt-0.5';
+          calloutText.innerText = 'Sistem menyarankan penghentian produksi untuk mengganti komponen yang telah aus.';
+        }
+
         const rptLink = document.getElementById('btn-view-detailed-report');
-        if (rptLink) rptLink.href = "{{ url_for('analysis.result') }}?status=normal";
-      } else if (health > 50) {
-        circle.setAttribute('class', 'text-amber-500 transition-all duration-700');
-        verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse';
-        verdictTitle.innerText = `Skor Kesehatan: ${health}%`;
-        verdictTitle.className = 'text-base font-bold text-slate-900';
-        verdictDesc.innerText = 'Profil keausan meningkat terdeteksi. Jadwalkan inspeksi visual dalam 48 jam operasi.';
-        outRf.innerText = `${failScore.toFixed(1)}%`;
-        outRf.className = 'text-sm font-bold text-amber-600 mt-0.5';
-        outKmeans.innerText = 'Moderate Strain';
-        outKmeans.className = 'text-sm font-bold text-amber-600 mt-0.5';
-        calloutText.innerText = 'Degradasi alat yang kentara atau ketidakseimbangan beban termodinamika.';
-        const rptLink = document.getElementById('btn-view-detailed-report');
-        if (rptLink) rptLink.href = "{{ url_for('analysis.result') }}?status=normal";
-      } else {
-        circle.setAttribute('class', 'text-red-500 transition-all duration-700');
-        verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500 animate-ping';
-        verdictTitle.innerText = `Skor Kesehatan: ${health}% (Risk)`;
-        verdictTitle.className = 'text-base font-bold text-red-600';
-        verdictDesc.innerText = 'Probabilitas kegagalan terdeteksi oleh Random Forest. Risiko kelebihan beban keausan tinggi.';
-        outRf.innerText = `${failScore.toFixed(1)}%`;
-        outRf.className = 'text-sm font-bold text-red-600 mt-0.5';
-        outKmeans.innerText = 'Heavy Wear';
-        outKmeans.className = 'text-sm font-bold text-red-600 mt-0.5';
-        calloutText.innerText = 'Sistem menyarankan penghentian produksi untuk mengganti komponen yang telah aus.';
-        const rptLink = document.getElementById('btn-view-detailed-report');
-        if (rptLink) rptLink.href = "{{ url_for('analysis.result') }}?status=high_risk";
+        if (rptLink) {
+          if (data.record_id) {
+            rptLink.href = `{{ url_for('analysis.result') }}?id=${data.record_id}`;
+          } else {
+            rptLink.href = `{{ url_for('analysis.result') }}?status=${isRisk ? 'high_risk' : 'normal'}`;
+          }
+        }
       }
-    }, 450);
+    } catch (err) {
+      console.error("Error executing analysis:", err);
+      btn.innerHTML = `<span class="material-symbols-outlined text-[18px]">neurology</span><span>Jalankan Analisis AI</span>`;
+    }
   }
 </script></main></div>
 
