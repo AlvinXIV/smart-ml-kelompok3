@@ -1,5 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from app.ml_engine.pipeline import predict_machine
+import re
+from flask import Blueprint, render_template, request, redirect, url_for, jsonify, Response
+from app.ml_engine.pipeline import predict_machine, analyze_machine
+from app.report import build_report_pdf
 
 analysis_bp = Blueprint('analysis', __name__)
 
@@ -170,3 +172,52 @@ def history():
         }
     ]
     return render_template('history.html', records=history_records)
+
+
+# ----------------------------------------------------------------------
+# API analisis lengkap + ekspor laporan PDF (dipakai halaman Machine Analysis)
+# ----------------------------------------------------------------------
+_BOUNDS = {
+    'air_temp': (250, 350), 'process_temp': (250, 350),
+    'rotational_speed': (0, 10000), 'torque': (0, 500), 'tool_wear': (0, 1000),
+}
+
+
+def _parse_inputs(src):
+    """Validasi input dari JSON/form. Mengembalikan (dict, error)."""
+    mtype = str(src.get('machine_type', 'L')).upper()
+    if mtype not in ('L', 'M', 'H'):
+        return None, 'machine_type harus L, M, atau H'
+    out = {'machine_type': mtype}
+    for key, (lo, hi) in _BOUNDS.items():
+        try:
+            val = float(src.get(key))
+        except (TypeError, ValueError):
+            return None, f'{key} harus berupa angka'
+        if not (lo <= val <= hi):
+            return None, f'{key} harus di antara {lo} dan {hi}'
+        out[key] = val
+    return out, None
+
+
+@analysis_bp.route('/api/analyze', methods=['POST'])
+def api_analyze():
+    inputs, err = _parse_inputs(request.get_json(silent=True) or {})
+    if err:
+        return jsonify({'error': err}), 400
+    return jsonify(analyze_machine(**inputs))
+
+
+@analysis_bp.route('/analysis/report.pdf', methods=['POST'])
+def report_pdf():
+    # Hasil dihitung ulang di server dari input agar laporan tidak bergantung data dari browser
+    inputs, err = _parse_inputs(request.form)
+    if err:
+        return jsonify({'error': err}), 400
+    result = analyze_machine(**inputs)
+    meta = {k: (request.form.get(k) or '')[:80] for k in ('machine_id', 'company', 'prepared_by')}
+    pdf = build_report_pdf(result, meta)
+    label = re.sub(r'[^A-Za-z0-9_-]+', '-', meta['machine_id']).strip('-') or 'Mesin'
+    filename = f"Laporan-Diagnostik-{label}-{result['report_id'][3:]}.pdf"
+    return Response(pdf, mimetype='application/pdf',
+                    headers={'Content-Disposition': f'attachment; filename="{filename}"'})

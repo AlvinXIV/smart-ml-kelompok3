@@ -184,8 +184,8 @@
           </div>
           <h1 class="font-display text-2xl md:text-3xl font-bold tracking-tight text-slate-900">Machine Analysis</h1>
           <p class="mt-2 text-sm text-slate-500 max-w-2xl leading-6">
-            Masukkan parameter sensor untuk mengevaluasi kesehatan mesin dengan pipeline AI tiga langkah.
-            Dapatkan skor kesehatan, profil keausan, dan rekomendasi tindakan.
+            Masukkan parameter sensor untuk mengevaluasi kesehatan mesin dengan pipeline AI dua langkah.
+            Dapatkan skor kesehatan, probabilitas kegagalan, pengelompokan kondisi, dan laporan diagnostik.
           </p>
         </div>
 
@@ -347,12 +347,12 @@
               </div>
               <div>
                 <h3 class="font-display text-sm font-bold text-slate-900">Cara AI Menganalisis Data Ini</h3>
-                <p class="text-xs text-slate-500 mt-0.5">Pipeline konsensus tiga model kecerdasan buatan</p>
+                <p class="text-xs text-slate-500 mt-0.5">Pipeline dua model kecerdasan buatan</p>
               </div>
             </div>
 
             <div class="relative pt-5 pl-1">
-              <div class="absolute left-[18px] top-9 bottom-7 w-px bg-slate-200"></div>
+              <div class="absolute left-[18px] top-9 bottom-4 w-px bg-slate-200"></div>
 
               <div class="relative flex gap-4 pb-6">
                 <div class="w-8 h-8 rounded-xl bg-cyan-600 text-white flex items-center justify-center text-xs font-bold z-10 shrink-0 shadow-sm">1</div>
@@ -365,27 +365,17 @@
                 </div>
               </div>
 
-              <div class="relative flex gap-4 pb-6">
+              <div class="relative flex gap-4">
                 <div class="w-8 h-8 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 flex items-center justify-center text-xs font-bold z-10 shrink-0">2</div>
                 <div>
                   <div class="flex flex-wrap items-center gap-2">
                     <span class="text-xs font-bold text-slate-800">Condition Grouping</span>
                     <span class="px-2 py-0.5 rounded bg-indigo-50 border border-indigo-200 text-indigo-700 text-[10px] font-semibold">K-Means</span>
                   </div>
-                  <p class="mt-1 text-[11px] text-slate-500 leading-5">Mengelompokkan kondisi operasi ke dalam profil keausan ringan, sedang, atau berat.</p>
+                  <p class="mt-1 text-[11px] text-slate-500 leading-5">Mengelompokkan kondisi operasi ke dalam tiga kelompok berdasarkan kemiripan data sensor.</p>
                 </div>
               </div>
 
-              <div class="relative flex gap-4">
-                <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs font-bold z-10 shrink-0">3</div>
-                <div>
-                  <div class="flex flex-wrap items-center gap-2">
-                    <span class="text-xs font-bold text-slate-800">Optimal Recommendation</span>
-                    <span class="px-2 py-0.5 rounded bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-semibold">Q-Learning</span>
-                  </div>
-                  <p class="mt-1 text-[11px] text-slate-500 leading-5">Menentukan apakah mesin dapat melanjutkan operasi, perlu inspeksi, atau membutuhkan pemeliharaan.</p>
-                </div>
-              </div>
             </div>
           </section>
 
@@ -416,25 +406,62 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-2 mt-5">
+            <div class="grid grid-cols-2 gap-2 mt-5">
               <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
                 <span class="block text-[9px] text-slate-400 font-bold uppercase tracking-wider">Failure Prob.</span>
                 <span id="out-rf" class="block text-sm font-bold text-emerald-600 mt-1">3.8%</span>
+                <span class="block text-[10px] text-slate-400 mt-0.5">Random Forest</span>
               </div>
               <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
                 <span class="block text-[9px] text-slate-400 font-bold uppercase tracking-wider">Wear Cluster</span>
-                <span id="out-kmeans" class="block text-sm font-bold text-cyan-700 mt-1">Light Wear</span>
-              </div>
-              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-center">
-                <span class="block text-[9px] text-slate-400 font-bold uppercase tracking-wider">Q-Action</span>
-                <span id="out-action" class="block text-sm font-bold text-emerald-600 mt-1">CONTINUE</span>
+                <span id="out-kmeans" class="block text-sm font-bold text-cyan-700 mt-1">Cluster 1</span>
+                <span id="out-kmeans-sub" class="block text-[10px] text-slate-400 mt-0.5 truncate">K-Means</span>
               </div>
             </div>
 
+            <!-- Visual: probabilitas kegagalan (supervised) -->
+            <div class="mt-4 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Probabilitas Kegagalan</span>
+                <span id="vis-rf-level" class="px-2 py-0.5 rounded-full text-[10px] font-bold border bg-emerald-50 border-emerald-200 text-emerald-700">RISIKO RENDAH</span>
+              </div>
+              <div class="relative mt-3.5">
+                <div class="h-2.5 rounded-full overflow-hidden flex">
+                  <div class="h-full bg-emerald-200" style="width:25%"></div>
+                  <div class="h-full bg-amber-200" style="width:25%"></div>
+                  <div class="h-full bg-red-200" style="width:50%"></div>
+                </div>
+                <div id="vis-rf-marker" class="absolute -top-1 w-1 h-[18px] rounded-full bg-slate-900 ring-2 ring-white transition-all duration-700" style="left:0%"></div>
+              </div>
+              <div class="relative h-3 mt-1.5 text-[9px] text-slate-400">
+                <span class="absolute left-0">0%</span>
+                <span class="absolute -translate-x-1/2" style="left:25%">25%</span>
+                <span class="absolute -translate-x-1/2" style="left:50%">Batas 50%</span>
+                <span class="absolute right-0">100%</span>
+              </div>
+            </div>
+
+            <!-- Visual: kedekatan cluster (unsupervised) -->
+            <div class="mt-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Pengelompokan Kondisi</span>
+                <span id="vis-km-name" class="text-[10px] font-semibold text-cyan-700 truncate">Cluster 1</span>
+              </div>
+              <div id="vis-km-rows" class="mt-3 space-y-2"></div>
+              <p class="mt-2.5 text-[10px] text-slate-400 leading-4">Kedekatan relatif data input terhadap pusat tiap cluster (K-Means).</p>
+            </div>
+
             <div id="verdict-callout" class="mt-4 flex items-start gap-2.5 p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-slate-700">
-              <span class="material-symbols-outlined text-[18px] text-emerald-600 shrink-0">check_circle</span>
+              <span id="verdict-callout-icon" class="material-symbols-outlined text-[18px] text-emerald-600 shrink-0">check_circle</span>
               <span id="verdict-callout-text" class="font-medium">Parameter berada dalam batas operasional historis yang aman.</span>
             </div>
+
+            <button id="btn-open-report" type="button" onclick="openReport()" disabled
+              class="mt-3 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 text-cyan-800 text-xs font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+              <span class="material-symbols-outlined text-[18px]">assignment</span>
+              Lihat Detail Laporan Diagnostik
+              <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
           </section>
 
         </div>
@@ -446,6 +473,57 @@
       </div>
     </div>
   </main>
+
+  <!-- MODAL: LAPORAN DIAGNOSTIK -->
+  <div id="report-modal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true" aria-labelledby="report-title">
+    <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" onclick="closeReport()"></div>
+    <div class="relative mx-auto my-6 w-[min(960px,calc(100%-2rem))] max-h-[calc(100vh-3rem)] flex flex-col bg-white rounded-2xl border border-slate-200 shadow-2xl">
+      <div class="flex items-center justify-between gap-4 px-6 py-4 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-600">
+            <span class="material-symbols-outlined text-[19px]">assignment</span>
+          </div>
+          <div>
+            <h2 id="report-title" class="font-display text-sm font-bold text-slate-900">Laporan Diagnostik Kondisi Mesin</h2>
+            <p id="report-subtitle" class="text-xs text-slate-500 mt-0.5"></p>
+          </div>
+        </div>
+        <button type="button" onclick="closeReport()" aria-label="Tutup"
+          class="w-9 h-9 rounded-xl border border-slate-200 bg-white text-slate-500 hover:bg-slate-50 flex items-center justify-center">
+          <span class="material-symbols-outlined text-[19px]">close</span>
+        </button>
+      </div>
+
+      <div id="report-body" class="overflow-y-auto px-6 py-5 space-y-5"></div>
+
+      <div class="px-6 py-4 border-t border-slate-100 bg-slate-50 rounded-b-2xl">
+        <p class="text-[11px] text-slate-500 mb-2.5">Informasi berikut akan dicantumkan pada laporan PDF (opsional).</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <input id="rep-machine-id" type="text" maxlength="80" placeholder="Nama / ID mesin"
+            class="px-3 py-2 rounded-lg bg-white border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500">
+          <input id="rep-company" type="text" maxlength="80" placeholder="Ditujukan kepada (perusahaan)"
+            class="px-3 py-2 rounded-lg bg-white border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500">
+          <input id="rep-prepared" type="text" maxlength="80" placeholder="Disusun oleh"
+            class="px-3 py-2 rounded-lg bg-white border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500">
+        </div>
+        <div class="flex justify-end gap-2 mt-3">
+          <button type="button" onclick="closeReport()"
+            class="px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 text-xs font-semibold transition-all">Tutup</button>
+          <button id="btn-export-pdf" type="button" onclick="exportPdf()"
+            class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-semibold transition-all shadow-sm">
+            <span class="material-symbols-outlined text-[17px]">picture_as_pdf</span>
+            <span id="btn-export-label">Ekspor ke PDF</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form id="pdf-form" method="POST" action="{{ url_for('analysis.report_pdf') }}" class="hidden">
+    <input type="hidden" name="machine_type"><input type="hidden" name="air_temp"><input type="hidden" name="process_temp">
+    <input type="hidden" name="rotational_speed"><input type="hidden" name="torque"><input type="hidden" name="tool_wear">
+    <input type="hidden" name="machine_id"><input type="hidden" name="company"><input type="hidden" name="prepared_by">
+  </form>
 
   <script>
 // Simple interactive state synchronizers
@@ -560,85 +638,245 @@
     applyPreset('nominal');
   }
 
-  function triggerSimulation() {
-    const air = parseFloat(document.getElementById('input-air-temp').value) || 298.1;
-    const proc = parseFloat(document.getElementById('input-proc-temp').value) || 308.6;
-    const torque = parseFloat(document.getElementById('input-torque').value) || 42.8;
-    const wear = parseInt(document.getElementById('slider-tool-wear').value) || 120;
-    const speed = parseInt(document.getElementById('input-speed').value) || 1551;
+  // ====== Analisis nyata via backend (Random Forest + K-Means) ======
+  let lastResult = null;
+  let analysisSeq = 0;
 
-    const btn = document.getElementById('btn-run-analysis');
-    btn.innerHTML = `<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Computing...</span>`;
+  const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-    setTimeout(() => {
-      btn.innerHTML = `<span class="material-symbols-outlined text-[18px]">neurology</span><span>Jalankan Analisis AI</span>`;
-      
-      // Calculate realistic simulated outputs based on simple heuristics
-      let failScore = 2.5;
-      if (torque > 60) failScore += (torque - 60) * 1.8;
-      if (wear > 180) failScore += (wear - 180) * 0.45;
-      if (speed < 1350 || speed > 1900) failScore += 18;
-      if ((proc - air) < 8.0) failScore += 15; // Heat dissipation strain
+  const LEVELS = {
+    low:    { text: 'text-emerald-600', ring: 'text-emerald-500', dot: 'bg-emerald-500 animate-pulse', badge: 'bg-emerald-50 border-emerald-200 text-emerald-700', label: 'RISIKO RENDAH',
+              box: 'bg-emerald-50 border-emerald-200', icon: 'check_circle', iconCls: 'text-emerald-600', solid: 'bg-emerald-600' },
+    medium: { text: 'text-amber-600', ring: 'text-amber-500', dot: 'bg-amber-500 animate-pulse', badge: 'bg-amber-50 border-amber-200 text-amber-700', label: 'RISIKO SEDANG',
+              box: 'bg-amber-50 border-amber-200', icon: 'warning', iconCls: 'text-amber-600', solid: 'bg-amber-500' },
+    high:   { text: 'text-red-600', ring: 'text-red-500', dot: 'bg-red-500 animate-ping', badge: 'bg-red-50 border-red-200 text-red-700', label: 'RISIKO TINGGI',
+              box: 'bg-red-50 border-red-200', icon: 'error', iconCls: 'text-red-600', solid: 'bg-red-600' }
+  };
+  const STATUS = {
+    ok:    { label: 'Normal', cls: 'bg-emerald-50 border-emerald-200 text-emerald-700' },
+    warn:  { label: 'Perhatian', cls: 'bg-amber-50 border-amber-200 text-amber-700' },
+    alert: { label: 'Di luar batas', cls: 'bg-red-50 border-red-200 text-red-700' }
+  };
 
-      failScore = Math.min(Math.max(failScore, 1.2), 96.5);
-      const health = (100 - failScore).toFixed(1);
-
-      const circle = document.getElementById('verdict-svg-circle');
-      const donutVal = document.getElementById('verdict-donut-val');
-      const verdictDot = document.getElementById('verdict-dot');
-      const verdictTitle = document.getElementById('verdict-title');
-      const verdictDesc = document.getElementById('verdict-desc');
-      const outRf = document.getElementById('out-rf');
-      const outKmeans = document.getElementById('out-kmeans');
-      const outAction = document.getElementById('out-action');
-      const calloutText = document.getElementById('verdict-callout-text');
-
-      donutVal.innerText = `${Math.round(health)}%`;
-      circle.setAttribute('stroke-dasharray', `${Math.round(health)}, 100`);
-      document.getElementById('verdict-timestamp').innerText = 'Evaluated just now';
-
-      if (health > 80) {
-        circle.setAttribute('class', 'text-emerald-500 transition-all duration-700');
-        verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse';
-        verdictTitle.innerText = `Skor Kesehatan: ${health}%`;
-        verdictTitle.className = 'text-base font-bold text-slate-900';
-        verdictDesc.innerText = 'Sistem beroperasi dalam kondisi termomekanis nominal. Tidak ada anomali terdeteksi.';
-        outRf.innerText = `${failScore.toFixed(1)}%`;
-        outRf.className = 'text-sm font-bold text-emerald-600 mt-0.5';
-        outKmeans.innerText = wear > 130 ? 'Medium Wear' : 'Light Wear';
-        outKmeans.className = 'text-sm font-bold text-cyan-700 mt-0.5';
-        outAction.innerText = 'CONTINUE';
-        outAction.className = 'text-sm font-bold text-emerald-600 mt-0.5';
-        calloutText.innerText = 'Parameter berada dalam batas operasional historis yang aman.';
-      } else if (health > 50) {
-        circle.setAttribute('class', 'text-amber-500 transition-all duration-700');
-        verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse';
-        verdictTitle.innerText = `Skor Kesehatan: ${health}%`;
-        verdictTitle.className = 'text-base font-bold text-slate-900';
-        verdictDesc.innerText = 'Profil keausan meningkat terdeteksi. Jadwalkan inspeksi visual dalam 48 jam operasi.';
-        outRf.innerText = `${failScore.toFixed(1)}%`;
-        outRf.className = 'text-sm font-bold text-amber-600 mt-0.5';
-        outKmeans.innerText = 'Moderate Strain';
-        outKmeans.className = 'text-sm font-bold text-amber-600 mt-0.5';
-        outAction.innerText = 'INSPECT';
-        outAction.className = 'text-sm font-bold text-amber-600 mt-0.5';
-        calloutText.innerText = 'Degradasi alat yang kentara atau ketidakseimbangan beban termodinamika.';
-      } else {
-        circle.setAttribute('class', 'text-red-500 transition-all duration-700');
-        verdictDot.className = 'w-2.5 h-2.5 rounded-full bg-red-500 animate-ping';
-        verdictTitle.innerText = `Skor Kesehatan: ${health}% (Risk)`;
-        verdictTitle.className = 'text-base font-bold text-red-600';
-        verdictDesc.innerText = 'Probabilitas kegagalan terdeteksi oleh Random Forest. Risiko kelebihan beban keausan tinggi.';
-        outRf.innerText = `${failScore.toFixed(1)}%`;
-        outRf.className = 'text-sm font-bold text-red-600 mt-0.5';
-        outKmeans.innerText = 'Heavy Wear';
-        outKmeans.className = 'text-sm font-bold text-red-600 mt-0.5';
-        outAction.innerText = 'MAINTAIN';
-        outAction.className = 'text-sm font-bold text-red-600 mt-0.5';
-        calloutText.innerText = 'Agen Q-Learning menyarankan penghentian produksi untuk mengganti komponen aus.';
-      }
-    }, 450);
+  function numVal(id, fallback) {
+    const v = parseFloat(document.getElementById(id).value);
+    return isNaN(v) ? fallback : v;
   }
+
+  function collectInputs() {
+    return {
+      machine_type: document.getElementById('input-type').value,
+      air_temp: numVal('input-air-temp', 298.1),
+      process_temp: numVal('input-proc-temp', 308.6),
+      rotational_speed: numVal('input-speed', 1551),
+      torque: numVal('input-torque', 42.8),
+      tool_wear: numVal('slider-tool-wear', 120)
+    };
+  }
+
+  async function triggerSimulation() {
+    const seq = ++analysisSeq;
+    const btn = document.getElementById('btn-run-analysis');
+    const idle = '<span class="material-symbols-outlined text-[19px]">neurology</span><span>Jalankan Analisis AI</span>';
+    btn.disabled = true;
+    btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span><span>Computing...</span>';
+
+    try {
+      const res = await fetch('{{ url_for("analysis.api_analyze") }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(collectInputs())
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Analisis gagal dijalankan.');
+      if (seq !== analysisSeq) return;
+      lastResult = data;
+      renderVerdict(data);
+    } catch (err) {
+      if (seq === analysisSeq) renderError(err.message || 'Tidak dapat terhubung ke server.');
+    } finally {
+      if (seq === analysisSeq) { btn.disabled = false; btn.innerHTML = idle; }
+    }
+  }
+
+  function renderVerdict(r) {
+    const L = LEVELS[r.level];
+    const prob = r.supervised.failure_probability;
+    const health = r.health_score;
+    const uns = r.unsupervised;
+
+    document.getElementById('verdict-svg-circle').setAttribute('class', L.ring + ' transition-all duration-700');
+    document.getElementById('verdict-svg-circle').setAttribute('stroke-dasharray', Math.round(health) + ', 100');
+    document.getElementById('verdict-donut-val').innerText = Math.round(health) + '%';
+    document.getElementById('verdict-dot').className = 'w-2.5 h-2.5 rounded-full ' + L.dot;
+    const title = document.getElementById('verdict-title');
+    title.innerText = 'Skor Kesehatan: ' + health.toFixed(1) + '%' + (r.level === 'high' ? ' (Risk)' : '');
+    title.className = 'text-base font-bold ' + (r.level === 'high' ? 'text-red-600' : 'text-slate-900');
+    document.getElementById('verdict-desc').innerText = r.description;
+    document.getElementById('verdict-timestamp').innerText = 'Dievaluasi baru saja';
+
+    const outRf = document.getElementById('out-rf');
+    outRf.innerText = prob.toFixed(1) + '%';
+    outRf.className = 'block text-sm font-bold mt-1 ' + L.text;
+    document.getElementById('out-kmeans').innerText = 'Cluster ' + uns.cluster;
+    document.getElementById('out-kmeans-sub').innerText = uns.cluster_name;
+
+    const badge = document.getElementById('vis-rf-level');
+    badge.innerText = L.label;
+    badge.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold border ' + L.badge;
+    document.getElementById('vis-rf-marker').style.left = 'calc(' + Math.max(0, Math.min(prob, 100)) + '% - 2px)';
+
+    document.getElementById('vis-km-name').innerText = 'Cluster ' + uns.cluster + ' · ' + uns.cluster_name;
+    document.getElementById('vis-km-rows').innerHTML = uns.clusters.map((c) => (
+      '<div class="flex items-center gap-2" title="' + esc(c.name) + '">' +
+        '<span class="w-16 shrink-0 text-[10px] ' + (c.assigned ? 'font-bold text-slate-800' : 'font-medium text-slate-500') + '">Cluster ' + c.id + '</span>' +
+        '<div class="flex-1 h-2 rounded-full bg-slate-200 overflow-hidden"><div class="h-full rounded-full transition-all duration-700 ' + (c.assigned ? 'bg-cyan-600' : 'bg-slate-300') + '" style="width:' + c.similarity + '%"></div></div>' +
+        '<span class="w-11 text-right text-[10px] font-mono ' + (c.assigned ? 'font-bold text-cyan-700' : 'text-slate-500') + '">' + c.similarity.toFixed(1) + '%</span>' +
+      '</div>'
+    )).join('');
+
+    document.getElementById('verdict-callout').className = 'mt-4 flex items-start gap-2.5 p-3 rounded-xl border text-xs text-slate-700 ' + L.box;
+    const icon = document.getElementById('verdict-callout-icon');
+    icon.innerText = L.icon;
+    icon.className = 'material-symbols-outlined text-[18px] shrink-0 ' + L.iconCls;
+    document.getElementById('verdict-callout-text').innerText = r.callout;
+
+    document.getElementById('btn-open-report').disabled = false;
+  }
+
+  function renderError(msg) {
+    lastResult = null;
+    document.getElementById('verdict-timestamp').innerText = 'Gagal dievaluasi';
+    document.getElementById('verdict-title').innerText = 'Analisis tidak dapat ditampilkan';
+    document.getElementById('verdict-desc').innerText = msg;
+    document.getElementById('out-rf').innerText = '—';
+    document.getElementById('out-kmeans').innerText = '—';
+    document.getElementById('out-kmeans-sub').innerText = 'K-Means';
+    document.getElementById('vis-km-rows').innerHTML = '';
+    document.getElementById('verdict-callout-text').innerText = 'Pastikan server aplikasi berjalan, lalu coba jalankan analisis lagi.';
+    document.getElementById('btn-open-report').disabled = true;
+  }
+
+  // ====== Laporan diagnostik ======
+  function pct(v) { return v === null || v === undefined ? '-' : (v * 100).toFixed(1) + '%'; }
+  function dec(v) { return v === null || v === undefined ? '-' : v.toFixed(3); }
+
+  function openReport() {
+    if (!lastResult) return;
+    const r = lastResult, L = LEVELS[r.level], sup = r.supervised, uns = r.unsupervised, rec = r.recommendation, mi = r.model_info;
+
+    document.getElementById('report-subtitle').innerText = r.report_id + ' · ' + r.generated_at;
+
+    const stat = (label, value, cls) => (
+      '<div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200"><div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">' + label + '</div>' +
+      '<div class="mt-1 text-lg font-bold ' + cls + '">' + value + '</div></div>'
+    );
+    const section = (title, inner) => (
+      '<section><h3 class="font-display text-xs font-bold text-slate-900 mb-2.5">' + title + '</h3>' + inner + '</section>'
+    );
+
+    const params = r.parameters.map((p) => (
+      '<tr class="border-t border-slate-100"><td class="py-2 pr-3 font-semibold text-slate-700">' + esc(p.label) + '</td>' +
+      '<td class="py-2 pr-3 text-slate-700">' + esc(p.value) + '</td>' +
+      '<td class="py-2 pr-3 text-slate-500">' + esc(p.ref) + '</td>' +
+      '<td class="py-2 text-right"><span class="px-2 py-0.5 rounded-full border text-[10px] font-bold ' + STATUS[p.status].cls + '">' + STATUS[p.status].label + '</span></td></tr>'
+    )).join('');
+
+    const imp = sup.feature_importance.map((f) => (
+      '<div class="flex items-center gap-2"><span class="w-36 shrink-0 text-[10px] text-slate-600 truncate">' + esc(f.feature) + '</span>' +
+      '<div class="flex-1 h-1.5 rounded-full bg-slate-200 overflow-hidden"><div class="h-full rounded-full bg-cyan-600" style="width:' + Math.min(100, f.importance * 2.5) + '%"></div></div>' +
+      '<span class="w-10 text-right text-[10px] font-mono text-slate-600">' + f.importance.toFixed(1) + '%</span></div>'
+    )).join('');
+
+    const clusters = uns.clusters.map((c) => (
+      '<div class="' + (c.assigned ? 'bg-cyan-50 border-cyan-200' : 'bg-white border-slate-200') + ' border rounded-lg p-2.5">' +
+        '<div class="flex items-center justify-between gap-2"><span class="text-[11px] font-bold text-slate-800">Cluster ' + c.id + ' · ' + esc(c.name) + (c.assigned ? ' <span class="text-cyan-700">(terpilih)</span>' : '') + '</span>' +
+        '<span class="text-[10px] font-mono text-slate-600">' + c.similarity.toFixed(1) + '% · jarak ' + c.distance.toFixed(2) + '</span></div>' +
+        '<div class="mt-1.5 h-1.5 rounded-full bg-slate-200 overflow-hidden"><div class="h-full rounded-full ' + (c.assigned ? 'bg-cyan-600' : 'bg-slate-400') + '" style="width:' + c.similarity + '%"></div></div>' +
+        '<p class="mt-1.5 text-[10px] text-slate-500 leading-4">' + esc(c.profile) + '</p></div>'
+    )).join('');
+
+    const rules = r.rules.map((x) => (
+      '<tr class="border-t border-slate-100"><td class="py-2 pr-3 font-bold text-slate-800">' + esc(x.code) + '</td>' +
+      '<td class="py-2 pr-3 text-slate-700">' + esc(x.name) + '</td>' +
+      '<td class="py-2 pr-3 text-slate-500">' + esc(x.condition) + '</td>' +
+      '<td class="py-2 pr-3 text-slate-700">' + esc(x.value) + '</td>' +
+      '<td class="py-2 text-right"><span class="px-2 py-0.5 rounded-full border text-[10px] font-bold ' + (x.triggered ? STATUS.alert.cls : STATUS.ok.cls) + '">' + (x.triggered ? 'Terpenuhi' : 'Tidak') + '</span></td></tr>'
+    )).join('');
+
+    const notes = rec.notes.length ? '<ul class="mt-2 space-y-1 list-disc pl-4 text-xs text-slate-700">' + rec.notes.map((n) => '<li>' + esc(n) + '</li>').join('') + '</ul>' : '';
+
+    document.getElementById('report-body').innerHTML =
+      '<div class="grid grid-cols-2 md:grid-cols-4 gap-3">' +
+        stat('Skor Kesehatan', r.health_score.toFixed(1) + '%', L.text) +
+        stat('Probabilitas Gagal', sup.failure_probability.toFixed(1) + '%', L.text) +
+        stat('Tingkat Risiko', L.label.replace('RISIKO ', ''), L.text) +
+        stat('Kelompok K-Means', 'Cluster ' + uns.cluster, 'text-cyan-700') +
+      '</div>' +
+      '<p class="text-xs text-slate-600 leading-5">' + esc(r.description) + '</p>' +
+
+      section('1. Parameter Input Mesin',
+        '<div class="overflow-x-auto"><table class="w-full text-xs"><thead><tr class="text-[9px] text-slate-400 uppercase tracking-wider text-left"><th class="pb-2 font-bold">Parameter</th><th class="pb-2 font-bold">Nilai</th><th class="pb-2 font-bold">Acuan</th><th class="pb-2 font-bold text-right">Status</th></tr></thead><tbody>' + params + '</tbody></table></div>') +
+
+      '<div class="grid grid-cols-1 lg:grid-cols-2 gap-5">' +
+        section('2. Probabilitas Kegagalan <span class="font-normal text-slate-400">· Supervised (Random Forest)</span>',
+          '<div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">' +
+            '<div class="flex items-end justify-between"><span class="text-2xl font-bold ' + L.text + '">' + sup.failure_probability.toFixed(1) + '%</span>' +
+            '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold border ' + L.badge + '">' + L.label + '</span></div>' +
+            '<div class="relative mt-3"><div class="h-2.5 rounded-full overflow-hidden flex"><div class="h-full bg-emerald-200" style="width:' + sup.medium_from + '%"></div><div class="h-full bg-amber-200" style="width:' + (sup.decision_threshold - sup.medium_from) + '%"></div><div class="h-full bg-red-200" style="width:' + (100 - sup.decision_threshold) + '%"></div></div>' +
+            '<div class="absolute -top-1 w-1 h-[18px] rounded-full bg-slate-900 ring-2 ring-white" style="left:calc(' + Math.max(0, Math.min(sup.failure_probability, 100)) + '% - 2px)"></div></div>' +
+            '<div class="flex justify-between mt-1.5 text-[9px] text-slate-400"><span>0%</span><span>Batas keputusan model ' + sup.decision_threshold + '%</span><span>100%</span></div>' +
+            '<div class="mt-3.5 pt-3 border-t border-slate-200"><div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider mb-2">Pengaruh faktor pada model (global)</div><div class="space-y-1.5">' + imp + '</div></div>' +
+          '</div>') +
+        section('3. Pengelompokan Kondisi <span class="font-normal text-slate-400">· Unsupervised (K-Means)</span>',
+          '<div class="space-y-2">' + clusters + '</div>') +
+      '</div>' +
+
+      section('4. Pemeriksaan Aturan Mode Kegagalan <span class="font-normal text-slate-400">· referensi dataset AI4I 2020</span>',
+        '<div class="overflow-x-auto"><table class="w-full text-xs"><thead><tr class="text-[9px] text-slate-400 uppercase tracking-wider text-left"><th class="pb-2 font-bold">Kode</th><th class="pb-2 font-bold">Mode</th><th class="pb-2 font-bold">Kondisi</th><th class="pb-2 font-bold">Nilai</th><th class="pb-2 font-bold text-right">Hasil</th></tr></thead><tbody>' + rules + '</tbody></table></div>') +
+
+      section('5. Rekomendasi Tindakan',
+        '<div class="p-3.5 rounded-xl border ' + L.box + '"><div class="flex items-center gap-2 text-sm font-bold ' + L.text + '"><span class="material-symbols-outlined text-[18px]">' + L.icon + '</span>' + esc(rec.title) + '</div>' +
+        '<p class="mt-1.5 text-xs text-slate-700 leading-5">' + esc(rec.text) + '</p>' + notes + '</div>' +
+        '<p class="mt-1.5 text-[10px] text-slate-400">Rekomendasi disusun dengan aturan sederhana dari probabilitas kegagalan dan pemeriksaan parameter, bukan keluaran model pembelajaran.</p>') +
+
+      section('6. Catatan Model dan Batasan',
+        '<p class="text-xs text-slate-600 leading-5"><b>Random Forest</b> (data uji): akurasi ' + pct(mi.rf.accuracy) + ', AUC-ROC ' + dec(mi.rf.auc) + ', presisi ' + pct(mi.rf.precision) + ', recall ' + pct(mi.rf.recall) + ', F1 ' + pct(mi.rf.f1) + '. <b>K-Means</b>: silhouette ' + dec(mi.km.silhouette) + ', Davies-Bouldin ' + dec(mi.km.davies_bouldin) + '.</p>' +
+        '<p class="mt-1.5 text-[11px] text-slate-500 leading-4">Recall yang belum tinggi berarti sebagian kegagalan nyata dapat tidak terdeteksi. Gunakan hasil ini sebagai alat bantu keputusan bersama inspeksi lapangan dan penilaian teknisi.</p>');
+
+    document.getElementById('report-body').scrollTop = 0;
+    document.getElementById('report-modal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeReport() {
+    document.getElementById('report-modal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function exportPdf() {
+    if (!lastResult) return;
+    const f = document.getElementById('pdf-form');
+    const i = lastResult.inputs;
+    const set = (name, val) => { f.elements[name].value = val; };
+    set('machine_type', i.machine_type);
+    set('air_temp', i.air_temp);
+    set('process_temp', i.process_temp);
+    set('rotational_speed', i.rotational_speed);
+    set('torque', i.torque);
+    set('tool_wear', i.tool_wear);
+    set('machine_id', document.getElementById('rep-machine-id').value);
+    set('company', document.getElementById('rep-company').value);
+    set('prepared_by', document.getElementById('rep-prepared').value);
+    f.submit();
+
+    const label = document.getElementById('btn-export-label');
+    label.innerText = 'Menyiapkan PDF...';
+    setTimeout(() => { label.innerText = 'Ekspor ke PDF'; }, 1800);
+  }
+
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeReport(); });
+  document.addEventListener('DOMContentLoaded', () => triggerSimulation());
   </script>
 </body>
 </html>
