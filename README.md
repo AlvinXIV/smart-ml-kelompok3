@@ -128,7 +128,7 @@ Temuan dari EDA tidak secara otomatis membuktikan hubungan sebab-akibat. Selain 
 
 * `ai4i2020.csv` — dataset yang dianalisis.
 * `EDA_AI4I2020_Machine_Failure.ipynb` — notebook eksplorasi data dan analisis awal.
-* `readme_data.md` — dokumentasi dataset.
+* `README.md` — dokumentasi dataset.
 
 ## 9. Sumber Dataset
 
