@@ -15,13 +15,11 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-    # Import dan daftarkan semua blueprint
+    # Import dan daftarkan blueprint
     from app.routes.main import main_bp
     from app.routes.analysis import analysis_bp
-    from app.routes.auth import auth_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(analysis_bp)
-    app.register_blueprint(auth_bp)
 
     return app

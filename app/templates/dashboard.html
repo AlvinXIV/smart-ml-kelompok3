@@ -1,696 +1,801 @@
-<!DOCTYPE html><html class="light" lang="en"><head>
-<meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="web_dashboard" name="shell-type">
-<title>AI Predictive Maintenance - Fleet Intelligence Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-<style>
-@layer base {
-  html, body { margin: 0; padding: 0; }
-  body { overscroll-behavior: none; }
-  main > :first-child { margin-top: 0 !important; }
-  main > :last-child { margin-bottom: 0 !important; }
-}
-::-webkit-scrollbar { display: none; }
-</style>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        "background": "#f8fafc",
-        "surface": "#ffffff",
-        "surface-container-low": "#ffffff",
-        "surface-container": "#f1f5f9",
-        "surface-container-high": "#e2e8f0",
-        "surface-container-highest": "#cbd5e1",
-        "surface-container-lowest": "#ffffff",
-        "on-surface": "#0f172a",
-        "on-surface-variant": "#64748b",
-        "primary": "#0284c7",
-        "primary-container": "#0284c7",
-        "on-primary": "#ffffff",
-        "secondary": "#6366f1",
-        "tertiary": "#059669",
-        "error": "#dc2626",
-        "error-container": "#fef2f2",
-        "outline": "#cbd5e1",
-        "outline-variant": "#e2e8f0"
-      },
-      borderRadius: {
-        "DEFAULT": "0.375rem",
-        "lg": "0.5rem",
-        "xl": "0.75rem",
-        "2xl": "1rem",
-        "full": "9999px"
-      },
-      spacing: {
-        "gutter": "1.5rem",
-        "space-md": "1rem",
-        "space-lg": "1.5rem",
-        "space-sm": "0.5rem",
-        "space-xs": "0.25rem",
-        "space-xl": "2rem",
-        "margin": "2rem"
-      },
-      fontFamily: {
-        "headline-xl": ["Plus Jakarta Sans", "sans-serif"],
-        "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
-        "headline-md": ["Plus Jakarta Sans", "sans-serif"],
-        "title-sm": ["Plus Jakarta Sans", "sans-serif"],
-        "body-lg": ["Inter", "sans-serif"],
-        "body-md": ["Inter", "sans-serif"],
-        "body-sm": ["Inter", "sans-serif"],
-        "label-md": ["Inter", "sans-serif"],
-        "label-sm": ["Inter", "sans-serif"]
-      }
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <meta content="web_dashboard" name="shell-type">
+  <title>AI Predictive Maintenance - Fleet Intelligence Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
     }
-  }
-};
-</script>
+    ::-webkit-scrollbar { display: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "background": "#f8fafc",
+            "surface": "#ffffff",
+            "surface-container-low": "#ffffff",
+            "surface-container": "#f1f5f9",
+            "surface-container-high": "#e2e8f0",
+            "surface-container-highest": "#cbd5e1",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#0f172a",
+            "on-surface-variant": "#64748b",
+            "primary": "#0284c7",
+            "primary-container": "#0284c7",
+            "on-primary": "#ffffff",
+            "secondary": "#6366f1",
+            "tertiary": "#059669",
+            "error": "#dc2626",
+            "error-container": "#fef2f2",
+            "outline": "#cbd5e1",
+            "outline-variant": "#e2e8f0"
+          },
+          borderRadius: {
+            "DEFAULT": "0.375rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "gutter": "1.5rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2rem",
+            "margin": "2rem"
+          },
+          fontFamily: {
+            "headline-xl": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "title-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "body-md": ["Inter", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"],
+            "label-md": ["Inter", "sans-serif"],
+            "label-sm": ["Inter", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
 </head>
 <body class="bg-slate-50 font-body-md text-slate-800 antialiased selection:bg-sky-500 selection:text-white">
+
 <!-- Sidebar -->
 <aside class="fixed left-0 top-0 h-screen w-64 bg-white border-r border-slate-200 z-50 flex flex-col justify-between p-4 shadow-[1px_0_12px_rgba(0,0,0,0.02)]">
-<div class="flex flex-col gap-6">
-<!-- Brand Logo -->
-<div class="flex items-center gap-3 px-1 pt-1">
-<div class="w-10 h-10 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600 shrink-0 shadow-sm">
-<span class="material-symbols-outlined text-[22px]">layers</span>
-</div>
-<span class="text-[14px] font-bold text-slate-900 tracking-tight leading-tight whitespace-nowrap">AI Predictive Maintenance</span>
-</div>
-<!-- Navigation -->
-<nav class="flex flex-col gap-1.5">
-<a aria-current="page" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-sky-50 border border-sky-200 text-sky-700 font-semibold text-sm transition-all shadow-sm" data-path="dashboard" href="{{ url_for('main.dashboard') }}">
-<span class="material-symbols-outlined text-[20px] text-sky-600">grid_view</span>
-<span class="">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" data-path="machine-analysis" href="{{ url_for('analysis.analysis') }}">
-<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-sky-600 transition-colors">developer_board</span>
-<span class="">Machine Analysis</span>
-</a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" data-path="analysis-history" href="{{ url_for('analysis.history') }}">
-<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-sky-600 transition-colors">schedule</span>
-<span class="">Analysis History</span>
-</a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" data-path="models" href="{{ url_for('main.models') }}">
-<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-sky-600 transition-colors">neurology</span>
-<span class="">AI Models</span>
-</a>
-<a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" data-path="about" href="{{ url_for('main.about') }}">
-<span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-sky-600 transition-colors">info</span>
-<span class="">About</span>
-</a>
-</nav>
-</div>
-<!-- User Profile Card -->
-<div class="mt-auto flex flex-col gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-200 mb-1 shadow-sm">
-<div class="flex items-center gap-3">
-<div class="relative w-9 h-9 shrink-0">
-<img alt="Dr. Elena Chen" class="w-9 h-9 rounded-full object-cover border border-slate-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnIjWdt-sCloFSNA_PjKznqDsRfOxO7NiXNcXcPEHbwFUpR4MJbTxnj0V-9ERLJi4D3x2Rqu0MjHl_X3373xKH1flWlTQ-qERpPy2IVEmWIzPdpcTvKwung7uZjPTlk0HqJeUgQux17L3atVjgHc0hnSa4wej12vIJ3WLyPsnxuNuJ7br5_WyyOOTF5t_BwzpK2YzuG0C5vlzxIwq1grm-Dgissig7mYtR5-r-QZWYMG_e5ej0TWkk">
-<span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white"></span>
-</div>
-<div class="flex flex-col min-w-0">
-<span class="text-xs font-semibold text-slate-900 truncate leading-tight">Dr. Elena Chen</span>
-<span class="text-[11px] text-slate-500 font-normal truncate mt-0.5">Lead Diagnostician</span>
-</div>
-</div>
-<div class="flex items-center justify-between pt-1 border-t border-slate-200/80">
-<div class="flex items-center gap-1.5">
-<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-<span class="text-[11px] font-medium text-slate-600">Online</span>
-</div>
-<a class="flex items-center gap-1.5 px-2.5 py-1 rounded-md border border-slate-300 text-[11px] font-medium text-slate-600 hover:text-slate-900 hover:bg-white hover:border-slate-400 transition-colors shadow-2xs" data-path="logout" href="{{ url_for('auth.logout') }}" title="Sign out">
-<span class="material-symbols-outlined text-[14px]">logout</span>
-<span class="">Sign out</span>
-</a>
-</div>
-</div>
+  <div class="flex flex-col gap-6">
+    <!-- Brand Logo -->
+    <div class="flex items-center gap-3 px-1 pt-1">
+      <div class="w-10 h-10 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600 shrink-0 shadow-sm">
+        <span class="material-symbols-outlined text-[22px]">layers</span>
+      </div>
+      <div class="flex flex-col min-w-0">
+        <span class="text-[14px] font-bold text-slate-900 tracking-tight leading-tight whitespace-nowrap">AI Predictive</span>
+        <span class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Maintenance</span>
+      </div>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="flex flex-col gap-1.5">
+      <a aria-current="page" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-sky-50 border border-sky-200 text-sky-700 font-semibold text-sm transition-all shadow-sm" href="{{ url_for('main.dashboard') }}">
+        <span class="material-symbols-outlined text-[20px] text-sky-600">grid_view</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" href="{{ url_for('analysis.analysis') }}">
+        <span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-sky-600 transition-colors">precision_manufacturing</span>
+        <span>Machine Analysis</span>
+      </a>
+      <a class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100 hover:border-slate-200 transition-all font-medium text-sm group" href="{{ url_for('analysis.history') }}">
+        <span class="material-symbols-outlined text-[20px] text-slate-400 group-hover:text-sky-600 transition-colors">schedule</span>
+        <span>Analysis History</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Sidebar Status Footer (No login/user requirement) -->
+  <div class="mt-auto p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col gap-1.5">
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="text-xs font-semibold text-slate-800">System Online</span>
+    </div>
+    <span class="text-[11px] text-slate-500">AI Predictive Engine v2.4</span>
+  </div>
 </aside>
+
 <!-- Main Wrapper -->
 <div class="pl-64">
-<!-- Top Navigation Header -->
-<header class="fixed top-0 left-64 right-0 h-16 bg-white/90 backdrop-blur-xl z-40 flex items-center justify-between px-margin border-b border-slate-200 shadow-xs">
-<div class="flex items-center gap-space-md">
-<div class="flex items-center gap-2">
-<div class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
-<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-</svg>
-</div>
-<span class="font-title-sm text-title-sm text-slate-900 font-semibold tracking-tight">Fleet Telemetry</span>
-</div>
-<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-700 font-medium">
-<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>Live Stream
+  <!-- Top Navigation Header -->
+  <header class="fixed top-0 left-64 right-0 h-16 bg-white/90 backdrop-blur-xl z-40 flex items-center justify-between px-margin border-b border-slate-200 shadow-xs">
+    <div class="flex items-center gap-space-md">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+        </div>
+        <span class="font-title-sm text-title-sm text-slate-900 font-semibold tracking-tight">Fleet Telemetry & AI Intelligence</span>
+      </div>
+      <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-xs text-emerald-700 font-medium">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>Live Stream
       </span>
-</div>
-<div class="flex items-center gap-space-md">
-<button aria-label="Notifications" class="relative w-9 h-9 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 transition-colors flex items-center justify-center border border-slate-200">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
-<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-<path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-</svg>
-<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-sky-500"></span>
-</button>
-</div>
-</header>
-<!-- Page Content -->
-<main class="w-full pt-16 px-margin min-h-screen bg-slate-50">
-<div class="flex flex-col w-full">
-<div class="flex flex-col gap-space-xl pb-margin">
-<!-- Header Title & Action Buttons -->
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pt-space-md">
-<div class="flex flex-col gap-1">
-<div class="flex items-center gap-2 text-slate-500 text-label-sm uppercase tracking-wider font-semibold">
-<span class="text-sky-600 font-bold">Operational Telemetry</span>
-<span class="">•</span>
-<span class="">Region: Global Cluster A</span>
-</div>
-<h1 class="text-2xl font-bold text-slate-900 tracking-tight">Fleet Intelligence Dashboard</h1>
-<p class="text-xs text-slate-600 mt-0.5">Pemantauan kondisi multi-sensor secara berkelanjutan, indikator risiko kegagalan, dan telemetri klaster tanpa pengawasan.</p>
-</div>
-<div class="flex items-center gap-space-sm shrink-0">
-<a class="flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-primary hover:bg-sky-700 text-white font-semibold shadow-sm transition-all active:scale-[0.98]" data-path="machine-analysis" href="{{ url_for('analysis.analysis') }}">
-<span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>
-<span class="">Analyze a Machine</span>
-</a>
-</div>
-</div>
-<!-- 4 Crisp KPI Cards -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
-<!-- Total Fleet -->
-<div class="bg-white rounded-xl p-space-md flex flex-col justify-between shadow-xs border border-slate-200 hover:border-slate-300 transition-colors">
-<div class="flex items-center justify-between">
-<span class="text-xs uppercase font-semibold text-slate-500 tracking-wider">Total Monitored Fleet</span>
-<div class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 shrink-0">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
-<rect height="14" rx="2" width="20" x="2" y="3"></rect>
-<line x1="8" x2="16" y1="21" y2="21"></line>
-<line x1="12" x2="12" y1="17" y2="21"></line>
-</svg>
-</div>
-</div>
-<div class="mt-3 flex flex-col gap-0.5">
-<div class="flex items-baseline gap-1.5">
-<span class="text-2xl font-bold text-slate-900 tracking-tight">10,000</span>
-<span class="text-[11px] text-slate-500 font-medium">units</span>
-</div>
-<span class="text-[11px] text-slate-500">100% active streaming telemetrics</span>
-</div>
-</div>
-<!-- Normal Operation -->
-<div class="bg-white rounded-xl p-space-md flex flex-col justify-between shadow-xs border border-slate-200 hover:border-slate-300 transition-colors">
-<div class="flex items-center justify-between">
-<span class="text-xs uppercase font-semibold text-slate-500 tracking-wider">Normal Operation</span>
-<div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
-<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-<polyline points="22 4 12 14.01 9 11.01"></polyline>
-</svg>
-</div>
-</div>
-<div class="mt-3 flex flex-col gap-0.5">
-<div class="flex items-baseline gap-1.5">
-<span class="text-2xl font-bold text-emerald-600 tracking-tight">9,661</span>
-<span class="text-xs text-emerald-600 font-semibold">96.61%</span>
-</div>
-<span class="text-[11px] text-slate-500">Optimal thermal &amp; baseline vibration</span>
-</div>
-</div>
-<!-- Machine Failures -->
-<div class="bg-white rounded-xl p-space-md flex flex-col justify-between shadow-xs border border-slate-200 hover:border-slate-300 transition-colors">
-<div class="flex items-center justify-between">
-<span class="text-xs uppercase font-semibold text-slate-500 tracking-wider">Machine Failures</span>
-<div class="w-8 h-8 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shrink-0">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
-<circle cx="12" cy="12" r="10"></circle>
-<line x1="12" x2="12" y1="8" y2="12"></line>
-<line x1="12" x2="12.01" y1="16" y2="16"></line>
-</svg>
-</div>
-</div>
-<div class="mt-3 flex flex-col gap-0.5">
-<div class="flex items-baseline gap-1.5">
-<span class="text-2xl font-bold text-rose-600 tracking-tight">339</span>
-<span class="text-xs text-rose-600 font-semibold">3.39%</span>
-</div>
-<span class="text-[11px] text-slate-500">Identified anomalies across failure modes</span>
-</div>
-</div>
-<!-- Condition Clusters -->
-<div class="bg-white rounded-xl p-space-md flex flex-col justify-between shadow-xs border border-slate-200 hover:border-slate-300 transition-colors">
-<div class="flex items-center justify-between">
-<span class="text-xs uppercase font-semibold text-slate-500 tracking-wider">Condition Clusters</span>
-<div class="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
-<circle cx="18" cy="5" r="3"></circle>
-<circle cx="6" cy="12" r="3"></circle>
-<circle cx="18" cy="19" r="3"></circle>
-<line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
-<line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
-</svg>
-</div>
-</div>
-<div class="mt-3 flex flex-col gap-0.5">
-<div class="flex items-baseline gap-1.5">
-<span class="text-2xl font-bold text-slate-900 tracking-tight">3 Types</span>
-</div>
-<span class="text-[11px] text-slate-500">Light, Moderate &amp; High Duty cycles</span>
-</div>
-</div>
-</div>
-<!-- Quick Action Interactive Callout -->
-<div class="rounded-xl bg-gradient-to-r from-sky-50 to-indigo-50/50 p-space-md border border-sky-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-space-md shadow-xs">
-<div class="flex items-center gap-space-md">
-<div class="p-2.5 rounded-lg bg-sky-100/80 text-sky-700 shrink-0">
-<span class="material-symbols-outlined text-[22px]">batch_prediction</span>
-</div>
-<div>
-<h3 class="text-base font-semibold text-slate-900">Siap mengevaluasi kondisi mesin tertentu?</h3>
-<p class="text-xs text-slate-600 mt-0.5">Pemindaian waktu nyata secara berkelanjutan terhadap batas toleransi kegagalan mesin</p>
-</div>
-</div>
-<a class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-sky-700 text-white text-xs font-semibold shadow-xs transition-colors shrink-0" data-path="machine-analysis" href="{{ url_for('analysis.analysis') }}">
-<span class="">Mulai Diagnostik Baru</span>
-<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-</a>
-</div>
-<!-- Visualizations Row 1: Donut Chart & 2D Scatter Plot Clusters -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
-<!-- Chart 1: Failure Distribution Donut with Root Cause Breakdown -->
-<div class="lg:col-span-6 bg-white rounded-xl p-space-lg border border-slate-200 flex flex-col justify-between shadow-xs">
-<div class="flex flex-col gap-space-md">
-<div class="flex items-center justify-between">
-<div>
-<h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-<span class="material-symbols-outlined text-sky-600 text-[18px]">pie_chart</span>
-<span class="">Machine Failure Distribution</span>
-</h3>
-<p class="text-xs text-slate-500 mt-0.5">Status operasional dan tanda penyebab utama kegagalan (339 total kegagalan)</p>
-</div>
-<span class="text-[11px] text-emerald-700 px-2 py-0.5 bg-emerald-50 border border-emerald-200 rounded-full font-semibold">96.6% Reliable</span>
-</div>
-<div class="flex flex-col sm:flex-row items-center gap-space-xl p-space-md bg-slate-50/70 rounded-xl border border-slate-200/80">
-<!-- SVG Donut -->
-<div class="relative w-36 h-36 shrink-0 flex items-center justify-center">
-<svg class="w-full h-full transform -rotate-90" viewBox="0 0 140 140">
-<!-- Background circle -->
-<circle class="text-slate-200" cx="70" cy="70" fill="transparent" r="54" stroke="currentColor" stroke-width="14"></circle>
-<!-- Normal Operation (96.61% of circumference 339.29 = 327.8) -->
-<circle cx="70" cy="70" fill="transparent" r="54" stroke="#10b981" stroke-dasharray="339.29" stroke-dashoffset="11.5" stroke-linecap="round" stroke-width="14"></circle>
-<!-- Machine Failures (3.39% of circumference = 11.5) -->
-<circle cx="70" cy="70" fill="transparent" r="54" stroke="#ef4444" stroke-dasharray="339.29" stroke-dashoffset="327.8" stroke-linecap="round" stroke-width="14"></circle>
-</svg>
-<div class="absolute flex flex-col items-center justify-center text-center">
-<span class="text-xl font-bold text-slate-900 leading-none">96.6%</span>
-<span class="text-[10px] text-emerald-600 mt-1 font-semibold">Operational</span>
-</div>
-</div>
-<!-- Legend & Totals -->
-<div class="flex flex-col gap-space-sm w-full">
-<div class="flex items-center justify-between pb-1 border-b border-slate-200">
-<div class="flex items-center gap-2">
-<span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-<span class="text-xs text-slate-700 font-medium">Normal Operation</span>
-</div>
-<span class="text-xs text-slate-900 font-bold">9,661</span>
-</div>
-<div class="flex items-center justify-between pb-1 border-b border-slate-200">
-<div class="flex items-center gap-2">
-<span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
-<span class="text-xs text-slate-700 font-medium">Failures Detected</span>
-</div>
-<span class="text-xs text-rose-600 font-bold">339</span>
-</div>
-<div class="pt-1">
-<span class="text-[10px] text-slate-500 font-semibold block mb-1.5 uppercase tracking-wider">Root-Cause Breakdown</span>
-<div class="flex flex-wrap gap-1.5">
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white text-[11px] text-slate-700 border border-slate-200 font-medium shadow-2xs" title="Heat Dissipation Failure">
-<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>HDF: 115 (34%)
+    </div>
+    <div class="flex items-center gap-space-md">
+      <a href="{{ url_for('analysis.analysis') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 text-xs font-semibold transition-all">
+        <span class="material-symbols-outlined text-[16px]">tune</span>
+        <span>Parameter Simulator</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <main class="w-full pt-16 px-margin min-h-screen bg-slate-50">
+    <div class="flex flex-col w-full">
+      <div class="flex flex-col gap-space-xl pb-margin">
+
+        <!-- Header Title & Action Buttons -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pt-space-md">
+          <div class="flex flex-col gap-1">
+            <div class="flex items-center gap-2 text-slate-500 text-label-sm uppercase tracking-wider font-semibold">
+              <span class="text-sky-600 font-bold">Operational Telemetry</span>
+              <span>•</span>
+              <span>Dataset: AI4I 2020 Predictive Maintenance</span>
+              <span>•</span>
+              <span class="text-emerald-600 font-bold">Model v2.4 Active</span>
+            </div>
+            <h1 class="text-2xl font-bold text-slate-900 tracking-tight font-headline-xl">Fleet Intelligence Dashboard</h1>
+            <p class="text-xs text-slate-600 mt-0.5">Pemantauan kondisi multi-sensor secara terintegrasi dengan model Supervised Random Forest dan Klaster K-Means.</p>
+          </div>
+          <div class="flex items-center gap-space-sm shrink-0">
+            <a class="flex items-center gap-space-xs px-space-md py-2.5 rounded-lg bg-primary hover:bg-sky-700 text-white font-semibold shadow-sm transition-all active:scale-[0.98]" href="{{ url_for('analysis.analysis') }}">
+              <span class="material-symbols-outlined text-[20px]">precision_manufacturing</span>
+              <span>Analyze a Machine</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 Crisp KPI Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
+          <!-- Total Fleet -->
+          <div class="bg-white rounded-xl p-space-md flex flex-col justify-between shadow-xs border border-slate-200 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase font-semibold text-slate-500 tracking-wider">Total Monitored Fleet</span>
+              <div class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
+                  <rect height="14" rx="2" width="20" x="2" y="3"></rect>
+                  <line x1="8" x2="16" y1="21" y2="21"></line>
+                  <line x1="12" x2="12" y1="17" y2="21"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="mt-3 flex flex-col gap-0.5">
+              <div class="flex items-baseline gap-1.5">
+                <span class="text-2xl font-bold text-slate-900 tracking-tight">{{ "{:,}".format(fleet_stats.total) }}</span>
+                <span class="text-[11px] text-slate-500 font-medium">units</span>
+              </div>
+              <span class="text-[11px] text-slate-500">100% active streaming telemetrics</span>
+            </div>
+          </div>
+
+          <!-- Normal Operation -->
+          <div class="bg-white rounded-xl p-space-md flex flex-col justify-between shadow-xs border border-slate-200 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase font-semibold text-slate-500 tracking-wider">Normal Operation</span>
+              <div class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              </div>
+            </div>
+            <div class="mt-3 flex flex-col gap-0.5">
+              <div class="flex items-baseline gap-1.5">
+                <span class="text-2xl font-bold text-emerald-600 tracking-tight">{{ "{:,}".format(fleet_stats.normal) }}</span>
+                <span class="text-xs text-emerald-600 font-semibold">{{ fleet_stats.normal_pct }}%</span>
+              </div>
+              <span class="text-[11px] text-slate-500">Optimal thermal & baseline vibration</span>
+            </div>
+          </div>
+
+          <!-- Machine Failures -->
+          <div class="bg-white rounded-xl p-space-md flex flex-col justify-between shadow-xs border border-slate-200 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase font-semibold text-slate-500 tracking-wider">Machine Failures</span>
+              <div class="w-8 h-8 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="12" x2="12" y1="8" y2="12"></line>
+                  <line x1="12" x2="12.01" y1="16" y2="16"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="mt-3 flex flex-col gap-0.5">
+              <div class="flex items-baseline gap-1.5">
+                <span class="text-2xl font-bold text-rose-600 tracking-tight">{{ "{:,}".format(fleet_stats.failures) }}</span>
+                <span class="text-xs text-rose-600 font-semibold">{{ fleet_stats.failure_pct }}%</span>
+              </div>
+              <span class="text-[11px] text-slate-500">5 distinct failure modes identified</span>
+            </div>
+          </div>
+
+          <!-- Condition Clusters -->
+          <div class="bg-white rounded-xl p-space-md flex flex-col justify-between shadow-xs border border-slate-200 hover:border-slate-300 transition-colors">
+            <div class="flex items-center justify-between">
+              <span class="text-xs uppercase font-semibold text-slate-500 tracking-wider">Condition Clusters</span>
+              <div class="w-8 h-8 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" viewBox="0 0 24 24">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+                  <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+                </svg>
+              </div>
+            </div>
+            <div class="mt-3 flex flex-col gap-0.5">
+              <div class="flex items-baseline gap-1.5">
+                <span class="text-2xl font-bold text-slate-900 tracking-tight">{{ fleet_stats.clusters_count }} Regimes</span>
+              </div>
+              <span class="text-[11px] text-slate-500">High Thermal, Optimal & High RPM Load</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ML Training Results & Model Performance Bento -->
+        <div class="bg-white rounded-xl p-space-lg border border-slate-200 shadow-xs flex flex-col gap-space-lg">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-sky-600 text-[22px]">model_training</span>
+                <h2 class="text-base font-bold text-slate-900">Hasil Training & Evaluasi Model Machine Learning</h2>
+                <span class="px-2.5 py-0.5 rounded-full bg-sky-50 border border-sky-200 text-sky-700 text-xs font-semibold">Trained Artifacts</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Metrik validasi performa model Random Forest (Supervised) dan K-Means (Unsupervised) yang terkalibrasi.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-gutter items-stretch">
+            <!-- Card 1: Random Forest Classifier Metrics (4 cols) -->
+            <div class="lg:col-span-4 p-space-md rounded-xl bg-slate-50/70 border border-slate-200/90 flex flex-col justify-between gap-space-md">
+              <div class="flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+                    <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">Random Forest Classifier</span>
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-sky-100 text-sky-800 text-[10px] font-bold border border-sky-200">{{ ml_metrics.rf.n_estimators }} Trees</span>
+                </div>
+                <div class="flex items-baseline gap-2 mt-1">
+                  <span class="text-3xl font-extrabold text-slate-900 tracking-tight font-headline-xl">{{ ml_metrics.rf.test_accuracy }}%</span>
+                  <span class="text-xs font-semibold text-emerald-600">Test Accuracy</span>
+                </div>
+                <p class="text-[11px] text-slate-500 leading-relaxed">
+                  Generalisasi tinggi pada evaluasi data pengujian dengan area kurva presisi tinggi.
+                </p>
+              </div>
+
+              <!-- Metrics Mini Grid -->
+              <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200">
+                <div class="p-2 rounded-lg bg-white border border-slate-200/80">
+                  <span class="text-[10px] text-slate-500 font-semibold block uppercase">AUC-ROC</span>
+                  <span class="text-sm font-bold text-sky-700 font-mono">{{ ml_metrics.rf.auc_roc }}</span>
+                </div>
+                <div class="p-2 rounded-lg bg-white border border-slate-200/80">
+                  <span class="text-[10px] text-slate-500 font-semibold block uppercase">Precision</span>
+                  <span class="text-sm font-bold text-slate-800 font-mono">{{ ml_metrics.rf.precision }}%</span>
+                </div>
+                <div class="p-2 rounded-lg bg-white border border-slate-200/80">
+                  <span class="text-[10px] text-slate-500 font-semibold block uppercase">Recall</span>
+                  <span class="text-sm font-bold text-slate-800 font-mono">{{ ml_metrics.rf.recall }}%</span>
+                </div>
+                <div class="p-2 rounded-lg bg-white border border-slate-200/80">
+                  <span class="text-[10px] text-slate-500 font-semibold block uppercase">F1-Score</span>
+                  <span class="text-sm font-bold text-slate-800 font-mono">{{ ml_metrics.rf.f1_score }}%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: K-Means Clustering Validation Metrics (4 cols) -->
+            <div class="lg:col-span-4 p-space-md rounded-xl bg-slate-50/70 border border-slate-200/90 flex flex-col justify-between gap-space-md">
+              <div class="flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+                    <span class="text-xs font-bold text-slate-800 uppercase tracking-wider">K-Means Clustering</span>
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 text-[10px] font-bold border border-indigo-200">k = {{ ml_metrics.km.n_clusters }} Clusters</span>
+                </div>
+                <div class="flex items-baseline gap-2 mt-1">
+                  <span class="text-3xl font-extrabold text-indigo-700 tracking-tight font-headline-xl">{{ ml_metrics.km.silhouette_score }}</span>
+                  <span class="text-xs font-semibold text-slate-600">Silhouette Score</span>
+                </div>
+                <p class="text-[11px] text-slate-500 leading-relaxed">
+                  Pemisahan geometri ruang laten yang valid untuk membedakan siklus beban kerja mesin.
+                </p>
+              </div>
+
+              <!-- Cluster Validation Mini Grid -->
+              <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200">
+                <div class="p-2 rounded-lg bg-white border border-slate-200/80">
+                  <span class="text-[10px] text-slate-500 font-semibold block uppercase">Davies-Bouldin</span>
+                  <span class="text-sm font-bold text-indigo-700 font-mono">{{ ml_metrics.km.davies_bouldin }}</span>
+                  <span class="text-[9px] text-slate-400">Rendah = terpisah baik</span>
+                </div>
+                <div class="p-2 rounded-lg bg-white border border-slate-200/80">
+                  <span class="text-[10px] text-slate-500 font-semibold block uppercase">Calinski-Harabasz</span>
+                  <span class="text-sm font-bold text-slate-800 font-mono">{{ "{:,.1f}".format(ml_metrics.km.calinski_harabasz) }}</span>
+                  <span class="text-[9px] text-slate-400">Tinggi = densitas baik</span>
+                </div>
+                <div class="col-span-2 p-2 rounded-lg bg-white border border-slate-200/80 flex items-center justify-between">
+                  <span class="text-[11px] text-slate-600 font-medium">Pipeline Normalisasi:</span>
+                  <span class="text-xs font-mono font-semibold text-emerald-700">StandardScaler (5 Dimensi)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Feature Importances Ranking (4 cols) -->
+            <div class="lg:col-span-4 p-space-md rounded-xl bg-slate-50/70 border border-slate-200/90 flex flex-col justify-between gap-space-sm">
+              <div class="flex items-center justify-between border-b border-slate-200 pb-1.5">
+                <span class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                  <span class="material-symbols-outlined text-[16px] text-sky-600">bar_chart</span>
+                  <span>Feature Importances (RF)</span>
+                </span>
+                <span class="text-[10px] text-slate-500 font-semibold">Bobot Pengaruh</span>
+              </div>
+
+              <div class="flex flex-col gap-2 pt-1">
+                {% for fi in feature_importances %}
+                <div class="flex flex-col gap-0.5">
+                  <div class="flex items-center justify-between text-xs">
+                    <span class="font-medium text-slate-800 truncate" title="{{ fi.description }}">{{ fi.feature }}</span>
+                    <span class="font-mono font-bold text-sky-700">{{ fi.importance }}%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-sky-500 to-indigo-500 rounded-full" style="width: {{ fi.importance }}%;"></div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Action Interactive Callout -->
+        <div class="rounded-xl bg-gradient-to-r from-sky-50 to-indigo-50/50 p-space-md border border-sky-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-space-md shadow-xs">
+          <div class="flex items-center gap-space-md">
+            <div class="p-2.5 rounded-lg bg-sky-100/80 text-sky-700 shrink-0">
+              <span class="material-symbols-outlined text-[22px]">batch_prediction</span>
+            </div>
+            <div>
+              <h3 class="text-base font-semibold text-slate-900">Siap mengevaluasi kondisi mesin tertentu?</h3>
+              <p class="text-xs text-slate-600 mt-0.5">Uji telemetri sensor baru ke model Random Forest dan K-Means untuk evaluasi kesehatan mesin.</p>
+            </div>
+          </div>
+          <a class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary hover:bg-sky-700 text-white text-xs font-semibold shadow-xs transition-colors shrink-0" href="{{ url_for('analysis.analysis') }}">
+            <span>Mulai Diagnostik Baru</span>
+            <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+
+        <!-- Visualizations Row 1: Donut Chart & 2D Scatter Plot Clusters -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+          <!-- Chart 1: Failure Distribution Donut with Root Cause Breakdown -->
+          <div class="lg:col-span-6 bg-white rounded-xl p-space-lg border border-slate-200 flex flex-col justify-between shadow-xs">
+            <div class="flex flex-col gap-space-md">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sky-600 text-[18px]">pie_chart</span>
+                    <span>Distribusi Kegagalan Mesin</span>
+                  </h3>
+                  <p class="text-xs text-slate-500 mt-0.5">Status operasional dan 5 mode penyebab utama kegagalan ({{ fleet_stats.failures }} total kegagalan)</p>
+                </div>
+                <span class="text-[11px] text-emerald-700 px-2 py-0.5 bg-emerald-50 border border-emerald-200 rounded-full font-semibold">{{ fleet_stats.normal_pct }}% Reliable</span>
+              </div>
+
+              <div class="flex flex-col sm:flex-row items-center gap-space-xl p-space-md bg-slate-50/70 rounded-xl border border-slate-200/80">
+                <!-- SVG Donut -->
+                <div class="relative w-36 h-36 shrink-0 flex items-center justify-center">
+                  <svg class="w-full h-full transform -rotate-90" viewBox="0 0 140 140">
+                    <circle class="text-slate-200" cx="70" cy="70" fill="transparent" r="54" stroke="currentColor" stroke-width="14"></circle>
+                    <circle cx="70" cy="70" fill="transparent" r="54" stroke="#10b981" stroke-dasharray="339.29" stroke-dashoffset="11.5" stroke-linecap="round" stroke-width="14"></circle>
+                    <circle cx="70" cy="70" fill="transparent" r="54" stroke="#ef4444" stroke-dasharray="339.29" stroke-dashoffset="327.8" stroke-linecap="round" stroke-width="14"></circle>
+                  </svg>
+                  <div class="absolute flex flex-col items-center justify-center text-center">
+                    <span class="text-xl font-bold text-slate-900 leading-none">{{ fleet_stats.normal_pct }}%</span>
+                    <span class="text-[10px] text-emerald-600 mt-1 font-semibold">Operational</span>
+                  </div>
+                </div>
+
+                <!-- Legend & Totals -->
+                <div class="flex flex-col gap-space-sm w-full">
+                  <div class="flex items-center justify-between pb-1 border-b border-slate-200">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                      <span class="text-xs text-slate-700 font-medium">Normal Operation</span>
+                    </div>
+                    <span class="text-xs text-slate-900 font-bold">{{ "{:,}".format(fleet_stats.normal) }}</span>
+                  </div>
+                  <div class="flex items-center justify-between pb-1 border-b border-slate-200">
+                    <div class="flex items-center gap-2">
+                      <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
+                      <span class="text-xs text-slate-700 font-medium">Failures Detected</span>
+                    </div>
+                    <span class="text-xs text-rose-600 font-bold">{{ fleet_stats.failures }}</span>
+                  </div>
+                  <div class="pt-1">
+                    <span class="text-[10px] text-slate-500 font-semibold block mb-1.5 uppercase tracking-wider">Root-Cause Breakdown</span>
+                    <div class="flex flex-wrap gap-1.5">
+                      {% for fb in failure_breakdown %}
+                      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white text-[11px] text-slate-700 border border-slate-200 font-medium shadow-2xs" title="{{ fb.name }}">
+                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>{{ fb.code }}: {{ fb.count }} ({{ fb.pct }}%)
                       </span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white text-[11px] text-slate-700 border border-slate-200 font-medium shadow-2xs" title="Power Failure">
-<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>PWF: 95 (28%)
-                      </span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white text-[11px] text-slate-700 border border-slate-200 font-medium shadow-2xs" title="Overstrain Failure">
-<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>OSF: 98 (29%)
-                      </span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white text-[11px] text-slate-700 border border-slate-200 font-medium shadow-2xs" title="Tool Wear Failure">
-<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>TWF: 46 (14%)
-                      </span>
-<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-white text-[11px] text-slate-700 border border-slate-200 font-medium shadow-2xs" title="Random Failure">
-<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>RNF: 18 (5%)
-                      </span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Chart 2: Machine Condition Clusters (2D Scatter Plot: Torque vs Tool Wear) -->
-<div class="lg:col-span-6 bg-white rounded-xl p-space-lg border border-slate-200 flex flex-col justify-between shadow-xs">
-<div class="flex flex-col gap-space-md">
-<div class="flex items-center justify-between">
-<div>
-<h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-<span class="material-symbols-outlined text-sky-600 text-[18px]">scatter_plot</span>
-<span class="">Machine Condition Clusters</span>
-</h3>
-<p class="text-xs text-slate-500 mt-0.5">Proyeksi 2D K-Means: Torsi [Nm] vs Keausan Pahat [min] dengan Centroid</p>
-</div>
-<div class="flex items-center gap-2 text-[11px] font-medium">
-<span class="inline-flex items-center gap-1 text-sky-600"><span class="w-2 h-2 rounded-full bg-sky-500"></span>C0 (62%)</span>
-<span class="inline-flex items-center gap-1 text-indigo-600"><span class="w-2 h-2 rounded-full bg-indigo-500"></span>C1 (28%)</span>
-<span class="inline-flex items-center gap-1 text-emerald-600"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>C2 (10%)</span>
-</div>
-</div>
-<!-- Scatter Plot Canvas Area -->
-<div class="bg-slate-50/70 rounded-xl p-space-md border border-slate-200/80 relative">
-<svg class="w-full h-48" viewBox="0 0 460 190">
-<defs>
-<pattern height="38" id="scatterGridLight" patternUnits="userSpaceOnUse" width="46">
-<path d="M 46 0 L 0 0 0 38" fill="none" stroke="#e2e8f0" stroke-width="1"></path>
-</pattern>
-</defs>
-<rect fill="url(#scatterGridLight)" height="152" rx="4" width="420" x="35" y="10"></rect>
-<!-- Y Axis Labels: Tool Wear (min) -->
-<text fill="#64748b" font-size="9" text-anchor="end" x="30" y="18">250m</text>
-<text fill="#64748b" font-size="9" text-anchor="end" x="30" y="56">180m</text>
-<text fill="#64748b" font-size="9" text-anchor="end" x="30" y="94">120m</text>
-<text fill="#64748b" font-size="9" text-anchor="end" x="30" y="132">60m</text>
-<text fill="#64748b" font-size="9" text-anchor="end" x="30" y="162">0m</text>
-<!-- X Axis Labels: Torque (Nm) -->
-<text fill="#64748b" font-size="9" text-anchor="start" x="35" y="176">0 Nm</text>
-<text fill="#64748b" font-size="9" text-anchor="middle" x="140" y="176">25 Nm</text>
-<text fill="#64748b" font-size="9" text-anchor="middle" x="245" y="176">50 Nm</text>
-<text fill="#64748b" font-size="9" text-anchor="middle" x="350" y="176">75 Nm</text>
-<text fill="#64748b" font-size="9" text-anchor="end" x="455" y="176">100 Nm</text>
-<!-- Cluster 0: Normal / Light Load points (Sky blue) -->
-<g fill="#0284c7" opacity="0.75">
-<circle cx="75" cy="130" r="3.5"></circle>
-<circle cx="90" cy="142" r="3.5"></circle>
-<circle cx="110" cy="120" r="3.5"></circle>
-<circle cx="130" cy="135" r="3.5"></circle>
-<circle cx="145" cy="110" r="3.5"></circle>
-<circle cx="160" cy="140" r="3.5"></circle>
-<circle cx="170" cy="125" r="3.5"></circle>
-<circle cx="185" cy="115" r="3.5"></circle>
-<circle cx="200" cy="130" r="3.5"></circle>
-<circle cx="150" cy="150" r="3.5"></circle>
-<circle cx="120" cy="145" r="3.5"></circle>
-<circle cx="180" cy="100" r="3.5"></circle>
-</g>
-<!-- Centroid 0 -->
-<circle cx="145" cy="130" fill="#0369a1" r="6" stroke="#ffffff" stroke-width="2"></circle>
-<!-- Cluster 1: Moderate Wear (Indigo) -->
-<g fill="#6366f1" opacity="0.8">
-<circle cx="180" cy="65" r="3.5"></circle>
-<circle cx="200" cy="55" r="3.5"></circle>
-<circle cx="220" cy="75" r="3.5"></circle>
-<circle cx="235" cy="50" r="3.5"></circle>
-<circle cx="250" cy="68" r="3.5"></circle>
-<circle cx="265" cy="45" r="3.5"></circle>
-<circle cx="280" cy="60" r="3.5"></circle>
-<circle cx="295" cy="70" r="3.5"></circle>
-<circle cx="240" cy="85" r="3.5"></circle>
-<circle cx="270" cy="80" r="3.5"></circle>
-</g>
-<!-- Centroid 1 -->
-<circle cx="245" cy="65" fill="#4338ca" r="6" stroke="#ffffff" stroke-width="2"></circle>
-<!-- Cluster 2: Heavy Load / High Stress (Emerald) -->
-<g fill="#059669" opacity="0.85">
-<circle cx="340" cy="35" r="3.5"></circle>
-<circle cx="355" cy="50" r="3.5"></circle>
-<circle cx="370" cy="28" r="3.5"></circle>
-<circle cx="385" cy="65" r="3.5"></circle>
-<circle cx="400" cy="40" r="3.5"></circle>
-<circle cx="415" cy="80" r="3.5"></circle>
-<circle cx="360" cy="85" r="3.5"></circle>
-<circle cx="390" cy="105" r="3.5"></circle>
-</g>
-<!-- Centroid 2 -->
-<circle cx="380" cy="55" fill="#047857" r="6" stroke="#ffffff" stroke-width="2"></circle>
-</svg>
-<div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-200 text-xs text-slate-600">
-<span class="">Klaster 0: Normal / Beban Ringan (Centroid: 38 Nm, 52 min)</span>
-<span class="">Klaster 2: Beban Berat (Centroid: 78 Nm, 184 min)</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Visualizations Row 2: Telemetry Waveform Trends & Sensor Correlation Heatmap -->
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
-<!-- Chart 3: Fleet Telemetry Trends & Anomaly Waveform (24h) -->
-<div class="lg:col-span-7 bg-white rounded-xl p-space-lg border border-slate-200 flex flex-col justify-between shadow-xs">
-<div class="flex flex-col gap-space-md">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-<div>
-<h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-<span class="material-symbols-outlined text-sky-600 text-[18px]">timeline</span>
-<span class="">Fleet Telemetry Trends &amp; Anomaly Waveform</span>
-</h3>
-<p class="text-xs text-slate-500 mt-0.5">Grafik multi-sensor 24 jam dengan penandaan anomali signifikan</p>
-</div>
-<div class="flex items-center gap-3 text-[11px] font-medium">
-<span class="inline-flex items-center gap-1.5 text-sky-600"><span class="w-3 h-0.5 bg-sky-600"></span>Process Temp (K)</span>
-<span class="inline-flex items-center gap-1.5 text-emerald-600"><span class="w-3 h-0.5 bg-emerald-600"></span>RPM (x10)</span>
-<span class="inline-flex items-center gap-1.5 text-indigo-600"><span class="w-3 h-0.5 bg-indigo-600"></span>Torque (Nm)</span>
-</div>
-</div>
-<!-- SVG Waveform Chart with Anomaly Shading -->
-<div class="bg-slate-50/70 rounded-xl p-space-md border border-slate-200/80 relative overflow-hidden">
-<svg class="w-full h-44" viewBox="0 0 540 160">
-<defs>
-<linearGradient id="anomalyZoneLight" x1="0" x2="0" y1="0" y2="1">
-<stop offset="0%" stop-color="#ef4444" stop-opacity="0.18"></stop>
-<stop offset="100%" stop-color="#ef4444" stop-opacity="0.02"></stop>
-</linearGradient>
-</defs>
-<!-- Horizontal Reference grid lines -->
-<line stroke="#e2e8f0" stroke-dasharray="3,3" x1="30" x2="520" y1="30" y2="30"></line>
-<line stroke="#e2e8f0" stroke-dasharray="3,3" x1="30" x2="520" y1="70" y2="70"></line>
-<line stroke="#e2e8f0" stroke-dasharray="3,3" x1="30" x2="520" y1="110" y2="110"></line>
-<line stroke="#cbd5e1" x1="30" x2="520" y1="140" y2="140"></line>
-<!-- Anomaly Warning Zone Highlight (approx 14:00 - 17:00 interval) -->
-<rect fill="url(#anomalyZoneLight)" height="125" rx="3" width="85" x="330" y="15"></rect>
-<line stroke="#ef4444" stroke-dasharray="4,4" stroke-width="1.5" x1="372" x2="372" y1="15" y2="140"></line>
-<text fill="#dc2626" font-size="9" font-weight="700" text-anchor="middle" x="372" y="25">ANOMALY SPIKE</text>
-<!-- Sensor 1: Process Temp Curve (Sky blue) -->
-<path d="M 30 75 Q 80 72, 120 78 T 210 74 T 300 76 T 350 42 T 390 50 T 450 72 T 520 74" fill="none" stroke="#0284c7" stroke-width="2.5"></path>
-<!-- Sensor 2: Rotational Speed RPM Curve (Emerald green) -->
-<path d="M 30 115 Q 90 118, 140 110 T 230 112 T 320 115 T 365 135 T 410 118 T 470 112 T 520 110" fill="none" stroke="#059669" stroke-width="2.5"></path>
-<!-- Sensor 3: Torque Curve (Indigo) -->
-<path d="M 30 92 Q 70 95, 130 90 T 220 94 T 310 90 T 360 48 T 400 68 T 460 92 T 520 90" fill="none" stroke="#6366f1" stroke-width="2.5"></path>
-<!-- Anomaly Peak Markers -->
-<circle cx="360" cy="48" fill="#ef4444" r="4.5" stroke="#ffffff" stroke-width="2"></circle>
-<circle cx="350" cy="42" fill="#ef4444" r="4.5" stroke="#ffffff" stroke-width="2"></circle>
-<!-- X-axis 24h Time Labels -->
-<text fill="#64748b" font-size="9" text-anchor="start" x="30" y="154">00:00</text>
-<text fill="#64748b" font-size="9" text-anchor="middle" x="130" y="154">06:00</text>
-<text fill="#64748b" font-size="9" text-anchor="middle" x="240" y="154">12:00</text>
-<text fill="#64748b" font-size="9" text-anchor="middle" x="370" y="154">16:00</text>
-<text fill="#64748b" font-size="9" text-anchor="end" x="520" y="154">24:00</text>
-</svg>
-<div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-200 text-xs text-slate-600">
-<span class="inline-flex items-center gap-1.5">
-<span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 2: Machine Condition Clusters (2D Scatter Plot & Physical Centroids) -->
+          <div class="lg:col-span-6 bg-white rounded-xl p-space-lg border border-slate-200 flex flex-col justify-between shadow-xs">
+            <div class="flex flex-col gap-space-md">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sky-600 text-[18px]">scatter_plot</span>
+                    <span>Machine Condition Clusters (K-Means)</span>
+                  </h3>
+                  <p class="text-xs text-slate-500 mt-0.5">Proyeksi 2D Torsi [Nm] vs Keausan Pahat [min] dengan Centroid Fisik Terkalibrasi</p>
+                </div>
+                <div class="flex items-center gap-2 text-[11px] font-medium">
+                  <span class="inline-flex items-center gap-1 text-sky-600"><span class="w-2 h-2 rounded-full bg-sky-500"></span>C0: Suhu Tinggi</span>
+                  <span class="inline-flex items-center gap-1 text-emerald-600"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>C1: Optimal</span>
+                  <span class="inline-flex items-center gap-1 text-indigo-600"><span class="w-2 h-2 rounded-full bg-indigo-500"></span>C2: Putaran Tinggi</span>
+                </div>
+              </div>
+
+              <!-- Scatter Plot Canvas Area -->
+              <div class="bg-slate-50/70 rounded-xl p-space-md border border-slate-200/80 relative">
+                <svg class="w-full h-44" viewBox="0 0 460 180">
+                  <defs>
+                    <pattern height="36" id="scatterGridLight" patternUnits="userSpaceOnUse" width="46">
+                      <path d="M 46 0 L 0 0 0 36" fill="none" stroke="#e2e8f0" stroke-width="1"></path>
+                    </pattern>
+                  </defs>
+                  <rect fill="url(#scatterGridLight)" height="144" rx="4" width="420" x="35" y="10"></rect>
+
+                  <!-- Y Axis Labels: Tool Wear (min) -->
+                  <text fill="#64748b" font-size="9" text-anchor="end" x="30" y="18">250m</text>
+                  <text fill="#64748b" font-size="9" text-anchor="end" x="30" y="54">180m</text>
+                  <text fill="#64748b" font-size="9" text-anchor="end" x="30" y="90">120m</text>
+                  <text fill="#64748b" font-size="9" text-anchor="end" x="30" y="126">60m</text>
+                  <text fill="#64748b" font-size="9" text-anchor="end" x="30" y="154">0m</text>
+
+                  <!-- X Axis Labels: Torque (Nm) -->
+                  <text fill="#64748b" font-size="9" text-anchor="start" x="35" y="168">0 Nm</text>
+                  <text fill="#64748b" font-size="9" text-anchor="middle" x="140" y="168">25 Nm</text>
+                  <text fill="#64748b" font-size="9" text-anchor="middle" x="245" y="168">50 Nm</text>
+                  <text fill="#64748b" font-size="9" text-anchor="middle" x="350" y="168">75 Nm</text>
+                  <text fill="#64748b" font-size="9" text-anchor="end" x="455" y="168">100 Nm</text>
+
+                  <!-- Cluster 0: High Temp (Sky blue) -->
+                  <g fill="#0284c7" opacity="0.75">
+                    <circle cx="75" cy="120" r="3.5"></circle>
+                    <circle cx="90" cy="132" r="3.5"></circle>
+                    <circle cx="110" cy="110" r="3.5"></circle>
+                    <circle cx="130" cy="125" r="3.5"></circle>
+                    <circle cx="145" cy="100" r="3.5"></circle>
+                    <circle cx="160" cy="130" r="3.5"></circle>
+                    <circle cx="170" cy="115" r="3.5"></circle>
+                    <circle cx="185" cy="105" r="3.5"></circle>
+                    <circle cx="200" cy="120" r="3.5"></circle>
+                  </g>
+                  <circle cx="175" cy="110" fill="#0369a1" r="6" stroke="#ffffff" stroke-width="2"></circle>
+
+                  <!-- Cluster 1: Optimal (Emerald) -->
+                  <g fill="#059669" opacity="0.8">
+                    <circle cx="180" cy="65" r="3.5"></circle>
+                    <circle cx="200" cy="55" r="3.5"></circle>
+                    <circle cx="220" cy="75" r="3.5"></circle>
+                    <circle cx="235" cy="50" r="3.5"></circle>
+                    <circle cx="250" cy="68" r="3.5"></circle>
+                    <circle cx="265" cy="45" r="3.5"></circle>
+                    <circle cx="280" cy="60" r="3.5"></circle>
+                  </g>
+                  <circle cx="230" cy="65" fill="#047857" r="6" stroke="#ffffff" stroke-width="2"></circle>
+
+                  <!-- Cluster 2: High RPM, Low Torque (Indigo) -->
+                  <g fill="#6366f1" opacity="0.85">
+                    <circle cx="340" cy="85" r="3.5"></circle>
+                    <circle cx="355" cy="95" r="3.5"></circle>
+                    <circle cx="370" cy="70" r="3.5"></circle>
+                    <circle cx="385" cy="110" r="3.5"></circle>
+                    <circle cx="400" cy="80" r="3.5"></circle>
+                    <circle cx="415" cy="90" r="3.5"></circle>
+                  </g>
+                  <circle cx="370" cy="90" fill="#4338ca" r="6" stroke="#ffffff" stroke-width="2"></circle>
+                </svg>
+
+                <!-- Centroid Physical Readings Pill Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2 pt-2 border-t border-slate-200">
+                  {% for cp in cluster_profiles %}
+                  <div class="p-2 rounded-lg bg-white border border-slate-200/80 flex flex-col gap-0.5">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[11px] font-bold text-slate-800">Klaster {{ cp.id }}</span>
+                      <span class="text-[10px] px-1.5 py-0.2 rounded font-semibold text-{{ cp.color }}-700 bg-{{ cp.color }}-50 border border-{{ cp.color }}-200">{{ cp.tag }}</span>
+                    </div>
+                    <span class="text-[10px] text-slate-500 font-mono">
+                      {{ cp.speed }} rpm • {{ cp.torque }} Nm • {{ cp.wear }}m
+                    </span>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visualizations Row 2: Telemetry Waveform Trends & Sensor Correlation Heatmap -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+          <!-- Chart 3: Fleet Telemetry Trends & Anomaly Waveform (24h) -->
+          <div class="lg:col-span-7 bg-white rounded-xl p-space-lg border border-slate-200 flex flex-col justify-between shadow-xs">
+            <div class="flex flex-col gap-space-md">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sky-600 text-[18px]">timeline</span>
+                    <span>Fleet Telemetry Trends & Anomaly Waveform</span>
+                  </h3>
+                  <p class="text-xs text-slate-500 mt-0.5">Grafik multi-sensor 24 jam dengan penandaan anomali signifikan</p>
+                </div>
+                <div class="flex items-center gap-3 text-[11px] font-medium">
+                  <span class="inline-flex items-center gap-1.5 text-sky-600"><span class="w-3 h-0.5 bg-sky-600"></span>Process Temp (K)</span>
+                  <span class="inline-flex items-center gap-1.5 text-emerald-600"><span class="w-3 h-0.5 bg-emerald-600"></span>RPM (x10)</span>
+                  <span class="inline-flex items-center gap-1.5 text-indigo-600"><span class="w-3 h-0.5 bg-indigo-600"></span>Torque (Nm)</span>
+                </div>
+              </div>
+
+              <!-- SVG Waveform Chart with Anomaly Shading -->
+              <div class="bg-slate-50/70 rounded-xl p-space-md border border-slate-200/80 relative overflow-hidden">
+                <svg class="w-full h-44" viewBox="0 0 540 160">
+                  <defs>
+                    <linearGradient id="anomalyZoneLight" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0%" stop-color="#ef4444" stop-opacity="0.18"></stop>
+                      <stop offset="100%" stop-color="#ef4444" stop-opacity="0.02"></stop>
+                    </linearGradient>
+                  </defs>
+                  <line stroke="#e2e8f0" stroke-dasharray="3,3" x1="30" x2="520" y1="30" y2="30"></line>
+                  <line stroke="#e2e8f0" stroke-dasharray="3,3" x1="30" x2="520" y1="70" y2="70"></line>
+                  <line stroke="#e2e8f0" stroke-dasharray="3,3" x1="30" x2="520" y1="110" y2="110"></line>
+                  <line stroke="#cbd5e1" x1="30" x2="520" y1="140" y2="140"></line>
+
+                  <!-- Anomaly Warning Zone Highlight -->
+                  <rect fill="url(#anomalyZoneLight)" height="125" rx="3" width="85" x="330" y="15"></rect>
+                  <line stroke="#ef4444" stroke-dasharray="4,4" stroke-width="1.5" x1="372" x2="372" y1="15" y2="140"></line>
+                  <text fill="#dc2626" font-size="9" font-weight="700" text-anchor="middle" x="372" y="25">ANOMALY SPIKE</text>
+
+                  <!-- Sensor 1: Process Temp Curve -->
+                  <path d="M 30 75 Q 80 72, 120 78 T 210 74 T 300 76 T 350 42 T 390 50 T 450 72 T 520 74" fill="none" stroke="#0284c7" stroke-width="2.5"></path>
+                  <!-- Sensor 2: Rotational Speed RPM Curve -->
+                  <path d="M 30 115 Q 90 118, 140 110 T 230 112 T 320 115 T 365 135 T 410 118 T 470 112 T 520 110" fill="none" stroke="#059669" stroke-width="2.5"></path>
+                  <!-- Sensor 3: Torque Curve -->
+                  <path d="M 30 92 Q 70 95, 130 90 T 220 94 T 310 90 T 360 48 T 400 68 T 460 92 T 520 90" fill="none" stroke="#6366f1" stroke-width="2.5"></path>
+
+                  <!-- Anomaly Peak Markers -->
+                  <circle cx="360" cy="48" fill="#ef4444" r="4.5" stroke="#ffffff" stroke-width="2"></circle>
+                  <circle cx="350" cy="42" fill="#ef4444" r="4.5" stroke="#ffffff" stroke-width="2"></circle>
+
+                  <!-- X-axis 24h Time Labels -->
+                  <text fill="#64748b" font-size="9" text-anchor="start" x="30" y="154">00:00</text>
+                  <text fill="#64748b" font-size="9" text-anchor="middle" x="130" y="154">06:00</text>
+                  <text fill="#64748b" font-size="9" text-anchor="middle" x="240" y="154">12:00</text>
+                  <text fill="#64748b" font-size="9" text-anchor="middle" x="370" y="154">16:00</text>
+                  <text fill="#64748b" font-size="9" text-anchor="end" x="520" y="154">24:00</text>
+                </svg>
+
+                <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-200 text-xs text-slate-600">
+                  <span class="inline-flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-rose-500"></span>
                     Lonjakan torsi transien terdeteksi pada Klaster 2 pukul 15:42 (melebihi ambang batas 74.2 Nm)
                   </span>
-<span class="text-emerald-600 font-semibold">Rentang normal dipulihkan</span>
-</div>
-</div>
-</div>
-</div>
-<!-- Chart 4: 5x5 Sensor Correlation & Anomaly Heatmap Matrix -->
-<div class="lg:col-span-5 bg-white rounded-xl p-space-lg border border-slate-200 flex flex-col justify-between shadow-xs">
-<div class="flex flex-col gap-space-md">
-<div class="flex items-center justify-between">
-<div>
-<h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-<span class="material-symbols-outlined text-sky-600 text-[18px]">grid_on</span>
-<span class="">Sensor Correlation Matrix</span>
-</h3>
-<p class="text-xs text-slate-500 mt-0.5">Matriks interdependensi 5x5 korelasi Pearson</p>
-</div>
-<div class="flex items-center gap-1.5 text-xs text-slate-500">
-<span class="text-[11px] font-semibold text-blue-700">-0.87</span>
-<div class="w-12 h-1.5 rounded-full bg-gradient-to-r from-blue-600 via-slate-200 to-amber-500"></div>
-<span class="text-[11px] font-semibold text-amber-600">+1.00</span>
-</div>
-</div>
-<!-- 5x5 Heatmap Grid -->
-<div class="bg-slate-50/70 rounded-xl p-space-md border border-slate-200/80">
-<div class="grid grid-cols-6 gap-1 text-center text-xs">
-<!-- Header row -->
-<div></div>
-<div class="text-slate-600 py-0.5 text-[11px] font-semibold">AirT</div>
-<div class="text-slate-600 py-0.5 text-[11px] font-semibold">PrcT</div>
-<div class="text-slate-600 py-0.5 text-[11px] font-semibold">RPM</div>
-<div class="text-slate-600 py-0.5 text-[11px] font-semibold">Trq</div>
-<div class="text-slate-600 py-0.5 text-[11px] font-semibold">Wear</div>
-<!-- Row 1: AirT -->
-<div class="text-slate-600 text-right pr-1 py-1 text-[11px] font-semibold">AirT</div>
-<div class="rounded bg-amber-500 text-white font-bold py-1.5 text-[11px] shadow-2xs">1.00</div>
-<div class="rounded bg-amber-400 text-white font-bold py-1.5 text-[11px] shadow-2xs">0.88</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.02</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">-0.01</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
-<!-- Row 2: PrcT -->
-<div class="text-slate-600 text-right pr-1 py-1 text-[11px] font-semibold">PrcT</div>
-<div class="rounded bg-amber-400 text-white font-bold py-1.5 text-[11px] shadow-2xs">0.88</div>
-<div class="rounded bg-amber-500 text-white font-bold py-1.5 text-[11px] shadow-2xs">1.00</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.02</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">-0.01</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
-<!-- Row 3: RPM -->
-<div class="text-slate-600 text-right pr-1 py-1 text-[11px] font-semibold">RPM</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.02</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.02</div>
-<div class="rounded bg-amber-500 text-white font-bold py-1.5 text-[11px] shadow-2xs">1.00</div>
-<div class="rounded bg-blue-700 text-white font-bold py-1.5 text-[11px] shadow-2xs">-0.87</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.00</div>
-<!-- Row 4: Trq -->
-<div class="text-slate-600 text-right pr-1 py-1 text-[11px] font-semibold">Trq</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">-0.01</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">-0.01</div>
-<div class="rounded bg-blue-700 text-white font-bold py-1.5 text-[11px] shadow-2xs">-0.87</div>
-<div class="rounded bg-amber-500 text-white font-bold py-1.5 text-[11px] shadow-2xs">1.00</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
-<!-- Row 5: Wear -->
-<div class="text-slate-600 text-right pr-1 py-1 text-[11px] font-semibold">Wear</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.00</div>
-<div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
-<div class="rounded bg-amber-500 text-white font-bold py-1.5 text-[11px] shadow-2xs">1.00</div>
-</div>
-<div class="mt-2 pt-2 border-t border-slate-200 text-xs text-slate-600 flex items-center justify-between">
-<span class="">Inversi Kritis: <strong class="text-blue-700 font-semibold">RPM &amp; Torque (-0.87)</strong></span>
-<span class="">PrcT / AirT (+0.88)</span>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Recent Machine Analysis Activity Table -->
-<div class="bg-white rounded-xl p-space-lg border border-slate-200 shadow-xs flex flex-col gap-space-md">
-<div class="flex items-center justify-between">
-<div>
-<h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-<span class="material-symbols-outlined text-sky-600 text-[18px]">list_alt</span>
-<span class="">Recent Machine Diagnostics</span>
-</h3>
-<p class="text-xs text-slate-500 mt-0.5">Pemindaian waktu nyata secara berkelanjutan terhadap batas toleransi kegagalan mesin</p>
-</div>
-<a class="inline-flex items-center gap-1 text-xs text-sky-600 hover:text-sky-700 transition-colors font-semibold" data-path="analysis-history" href="{{ url_for('analysis.history') }}">
-<span class="">Lihat semua log</span>
-<span class="material-symbols-outlined text-[15px]">east</span>
-</a>
-</div>
-<div class="overflow-x-auto">
-<table class="w-full text-left">
-<thead>
-<tr class="text-slate-500 text-xs uppercase tracking-wider border-b border-slate-200 bg-slate-50/60">
-<th class="py-3 px-space-md text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Machine ID</th>
-<th class="py-3 px-space-md text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Type / Duty</th>
-<th class="py-3 px-space-md text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Cluster</th>
-<th class="py-3 px-space-md text-[11px] font-semibold text-slate-600 uppercase tracking-wider">AI Assessment</th>
-<th class="py-3 px-space-md text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Recommended Action</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-slate-100">
-<tr class="hover:bg-slate-50/70 transition-colors">
-<td class="py-3.5 px-space-md">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-sky-600 text-[18px]">memory</span>
-<span class="text-sm text-slate-900 font-semibold">M-4281</span>
-</div>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="px-2.5 py-0.5 rounded bg-slate-100 text-xs text-slate-700 font-medium border border-slate-200">Medium (M)</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="text-xs text-sky-700 font-medium">Cluster 0: Light/Nominal</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Safe
-                    </span>
-</td>
-<td class="py-3.5 px-space-md text-slate-600 text-xs">Lanjutkan siklus tugas operasi standar</td>
-</tr>
-<tr class="hover:bg-slate-50/70 transition-colors">
-<td class="py-3.5 px-space-md">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-rose-600 text-[18px]">warning</span>
-<span class="text-sm text-slate-900 font-semibold">M-9104</span>
-</div>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="px-2.5 py-0.5 rounded bg-slate-100 text-xs text-slate-700 font-medium border border-slate-200">Medium (M)</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="text-xs text-indigo-700 font-medium">Cluster 1: Moderate Wear</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 text-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>Attention
-                    </span>
-</td>
-<td class="py-3.5 px-space-md text-rose-600 text-xs font-medium">Periksa bearing spindle (ambang batas keausan pahat meningkat)</td>
-</tr>
-<tr class="hover:bg-slate-50/70 transition-colors">
-<td class="py-3.5 px-space-md">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-sky-600 text-[18px]">memory</span>
-<span class="text-sm text-slate-900 font-semibold">H-1029</span>
-</div>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="px-2.5 py-0.5 rounded bg-slate-100 text-xs text-slate-700 font-medium border border-slate-200">Heavy (H)</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="text-xs text-emerald-700 font-medium">Cluster 2: Heavy Load</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Safe
-                    </span>
-</td>
-<td class="py-3.5 px-space-md text-slate-600 text-xs">Jadwalkan pemeriksaan pelumasan standar (beban nominal)</td>
-</tr>
-<tr class="hover:bg-slate-50/70 transition-colors">
-<td class="py-3.5 px-space-md">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-sky-600 text-[18px]">memory</span>
-<span class="text-sm text-slate-900 font-semibold">L-5532</span>
-</div>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="px-2.5 py-0.5 rounded bg-slate-100 text-xs text-slate-700 font-medium border border-slate-200">Light (L)</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="text-xs text-sky-700 font-medium">Cluster 0: Light/Nominal</span>
-</td>
-<td class="py-3.5 px-space-md">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold">
-<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Safe
-                    </span>
-</td>
-<td class="py-3.5 px-space-md text-slate-600 text-xs">Kondisi dasar optimal, lanjutkan operasi standar</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</main>
+                  <span class="text-emerald-600 font-semibold">Rentang normal dipulihkan</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 4: 5x5 Sensor Correlation & Anomaly Heatmap Matrix -->
+          <div class="lg:col-span-5 bg-white rounded-xl p-space-lg border border-slate-200 flex flex-col justify-between shadow-xs">
+            <div class="flex flex-col gap-space-md">
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sky-600 text-[18px]">grid_on</span>
+                    <span>Sensor Correlation Matrix (AI4I 2020)</span>
+                  </h3>
+                  <p class="text-xs text-slate-500 mt-0.5">Matriks interdependensi 5x5 koefisien korelasi Pearson</p>
+                </div>
+                <div class="flex items-center gap-1.5 text-xs text-slate-500">
+                  <span class="text-[11px] font-semibold text-blue-700">-0.87</span>
+                  <div class="w-12 h-1.5 rounded-full bg-gradient-to-r from-blue-600 via-slate-200 to-amber-500"></div>
+                  <span class="text-[11px] font-semibold text-amber-600">+1.00</span>
+                </div>
+              </div>
+
+              <!-- 5x5 Heatmap Grid -->
+              <div class="bg-slate-50/70 rounded-xl p-space-md border border-slate-200/80">
+                <div class="grid grid-cols-6 gap-1 text-center text-xs">
+                  <div></div>
+                  <div class="text-slate-600 py-0.5 text-[11px] font-semibold">AirT</div>
+                  <div class="text-slate-600 py-0.5 text-[11px] font-semibold">PrcT</div>
+                  <div class="text-slate-600 py-0.5 text-[11px] font-semibold">RPM</div>
+                  <div class="text-slate-600 py-0.5 text-[11px] font-semibold">Trq</div>
+                  <div class="text-slate-600 py-0.5 text-[11px] font-semibold">Wear</div>
+
+                  <!-- Row 1: AirT -->
+                  <div class="text-slate-600 text-right pr-1 py-1 text-[11px] font-semibold">AirT</div>
+                  <div class="rounded bg-amber-500 text-white font-bold py-1.5 text-[11px] shadow-2xs">1.00</div>
+                  <div class="rounded bg-amber-400 text-white font-bold py-1.5 text-[11px] shadow-2xs">0.88</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.02</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">-0.01</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
+
+                  <!-- Row 2: PrcT -->
+                  <div class="text-slate-600 text-right pr-1 py-1 text-[11px] font-semibold">PrcT</div>
+                  <div class="rounded bg-amber-400 text-white font-bold py-1.5 text-[11px] shadow-2xs">0.88</div>
+                  <div class="rounded bg-amber-500 text-white font-bold py-1.5 text-[11px] shadow-2xs">1.00</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.02</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">-0.01</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
+
+                  <!-- Row 3: RPM -->
+                  <div class="text-slate-600 text-right pr-1 py-1 text-[11px] font-semibold">RPM</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.02</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.02</div>
+                  <div class="rounded bg-amber-500 text-white font-bold py-1.5 text-[11px] shadow-2xs">1.00</div>
+                  <div class="rounded bg-blue-700 text-white font-bold py-1.5 text-[11px] shadow-2xs">-0.87</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.00</div>
+
+                  <!-- Row 4: Trq -->
+                  <div class="text-slate-600 text-right pr-1 py-1 text-[11px] font-semibold">Trq</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">-0.01</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">-0.01</div>
+                  <div class="rounded bg-blue-700 text-white font-bold py-1.5 text-[11px] shadow-2xs">-0.87</div>
+                  <div class="rounded bg-amber-500 text-white font-bold py-1.5 text-[11px] shadow-2xs">1.00</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
+
+                  <!-- Row 5: Wear -->
+                  <div class="text-slate-600 text-right pr-1 py-1 text-[11px] font-semibold">Wear</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.00</div>
+                  <div class="rounded bg-white border border-slate-200 text-slate-600 py-1.5 text-[11px]">0.01</div>
+                  <div class="rounded bg-amber-500 text-white font-bold py-1.5 text-[11px] shadow-2xs">1.00</div>
+                </div>
+
+                <div class="mt-2 pt-2 border-t border-slate-200 text-xs text-slate-600 flex items-center justify-between">
+                  <span>Inversi Kritis: <strong class="text-blue-700 font-semibold">RPM & Torque (-0.87)</strong></span>
+                  <span>Korelasi Termal: <strong class="text-amber-600 font-semibold">PrcT & AirT (+0.88)</strong></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Machine Analysis Activity Table (Integrated with PostgreSQL Database) -->
+        <div class="bg-white rounded-xl p-space-lg border border-slate-200 shadow-xs flex flex-col gap-space-md">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <span class="material-symbols-outlined text-sky-600 text-[18px]">list_alt</span>
+                <span>Recent Machine Diagnostics (Database Real-time)</span>
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">Catatan diagnosa tersimpan di PostgreSQL hasil inferensi Random Forest dan K-Means</p>
+            </div>
+            <a class="inline-flex items-center gap-1 text-xs text-sky-600 hover:text-sky-700 transition-colors font-semibold" href="{{ url_for('analysis.history') }}">
+              <span>Lihat semua log</span>
+              <span class="material-symbols-outlined text-[15px]">east</span>
+            </a>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="text-slate-500 text-xs uppercase tracking-wider border-b border-slate-200 bg-slate-50/60">
+                  <th class="py-3 px-space-md text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Machine ID</th>
+                  <th class="py-3 px-space-md text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Type / Duty</th>
+                  <th class="py-3 px-space-md text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Telemetry Snapshot</th>
+                  <th class="py-3 px-space-md text-[11px] font-semibold text-slate-600 uppercase tracking-wider">Condition Cluster</th>
+                  <th class="py-3 px-space-md text-[11px] font-semibold text-slate-600 uppercase tracking-wider">AI Assessment</th>
+                  <th class="py-3 px-space-md text-[11px] font-semibold text-slate-600 uppercase tracking-wider text-right">Time</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                {% if recent_analyses and recent_analyses|length > 0 %}
+                  {% for item in recent_analyses %}
+                  <tr class="hover:bg-slate-50/70 transition-colors">
+                    <td class="py-3.5 px-space-md">
+                      <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sky-600 text-[18px]">memory</span>
+                        <span class="text-sm text-slate-900 font-semibold font-mono">M-{{ "%04d"|format(item.id) }}</span>
+                      </div>
+                    </td>
+                    <td class="py-3.5 px-space-md">
+                      {% if item.machine_type == 'H' %}
+                        <span class="px-2.5 py-0.5 rounded bg-rose-50 text-xs text-rose-700 font-semibold border border-rose-200">Heavy (H)</span>
+                      {% elif item.machine_type == 'M' %}
+                        <span class="px-2.5 py-0.5 rounded bg-sky-50 text-xs text-sky-700 font-semibold border border-sky-200">Medium (M)</span>
+                      {% else %}
+                        <span class="px-2.5 py-0.5 rounded bg-emerald-50 text-xs text-emerald-700 font-semibold border border-emerald-200">Light (L)</span>
+                      {% endif %}
+                    </td>
+                    <td class="py-3.5 px-space-md">
+                      <div class="flex flex-col text-[11px] font-mono text-slate-600">
+                        <span>{{ item.rotational_speed }} rpm • {{ "%.1f"|format(item.torque) }} Nm</span>
+                        <span class="text-slate-400">Wear: {{ item.tool_wear }}m • Proc: {{ "%.1f"|format(item.process_temp) }}K</span>
+                      </div>
+                    </td>
+                    <td class="py-3.5 px-space-md">
+                      <span class="inline-flex items-center gap-1 text-xs font-medium {% if item.cluster == 0 %}text-sky-700{% elif item.cluster == 1 %}text-emerald-700{% else %}text-indigo-700{% endif %}">
+                        <span class="w-1.5 h-1.5 rounded-full {% if item.cluster == 0 %}bg-sky-500{% elif item.cluster == 1 %}bg-emerald-500{% else %}bg-indigo-500{% endif %}"></span>
+                        Cluster {{ item.cluster }}: {{ item.condition }}
+                      </span>
+                    </td>
+                    <td class="py-3.5 px-space-md">
+                      {% if item.failure_prob >= 50.0 or item.failure_pred in ['Failure Risk', 'Machine Failure Terdeteksi', 'High Risk'] %}
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200 text-xs font-semibold">
+                          <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>Failure Risk ({{ "%.1f"|format(item.failure_prob) }}%)
+                        </span>
+                      {% else %}
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold">
+                          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Safe ({{ "%.1f"|format(item.failure_prob) }}%)
+                        </span>
+                      {% endif %}
+                    </td>
+                    <td class="py-3.5 px-space-md text-right text-xs text-slate-500 font-mono">
+                      {{ item.created_at.strftime('%d %b, %H:%M') if item.created_at else 'Baru saja' }}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td colspan="6" class="py-8 text-center text-slate-500 text-xs">
+                      <div class="flex flex-col items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-slate-400 text-[32px]">dataset</span>
+                        <span>Belum ada riwayat diagnostik mesin yang tersimpan di database.</span>
+                        <a href="{{ url_for('analysis.analysis') }}" class="mt-1 px-3 py-1.5 rounded-lg bg-sky-600 text-white font-semibold text-xs hover:bg-sky-700 transition-colors">
+                          Mulai Analisis Mesin Pertama
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
 </div>
 
-
-</body></html>
+</body>
+</html>

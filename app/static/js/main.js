@@ -77,7 +77,9 @@ function openRecordDetails(record) {
   document.getElementById('modalPred').innerText = record.failure_pred;
   document.getElementById('modalProb').innerText = record.failure_prob + '%';
   document.getElementById('modalCluster').innerText = 'Cluster ' + record.cluster + ' (' + (record.cluster_condition || '') + ')';
-  document.getElementById('modalAction').innerText = record.action + ' (Q: ' + record.q_value + ')';
+  if (document.getElementById('modalAction')) {
+    document.getElementById('modalAction').innerText = record.action || 'Prescriptive Action Logged';
+  }
 
   modal.style.display = 'flex';
 }

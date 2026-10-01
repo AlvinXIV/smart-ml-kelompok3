@@ -22,6 +22,7 @@ services:
     volumes:
       # Volume ini tetap dipertahankan untuk menyimpan dataset csv atau file model ML Anda
       - ./data:/app/data
+      - ./app:/app/app
     environment:
       - FLASK_ENV=production
       - SECRET_KEY=your_secret_key_here

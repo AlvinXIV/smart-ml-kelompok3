@@ -37,7 +37,14 @@ def run_analysis(input_data):
     
     # Eksekusi preprocessor (OneHotEncoding & Scaling) lalu prediksi
     processed_clf_data = preprocessor_clf.transform(df_clf)
-    failure_pred = rf_model.predict(processed_clf_data)[0]
+    failure_pred = int(rf_model.predict(processed_clf_data)[0])
+    
+    # Hitung probabilitas kegagalan riil dari Random Forest
+    if hasattr(rf_model, "predict_proba"):
+        probs = rf_model.predict_proba(processed_clf_data)[0]
+        failure_prob = round(float(probs[1]) * 100, 2)
+    else:
+        failure_prob = 85.0 if failure_pred == 1 else 5.0
     
     # ==========================================
     # B. PREDIKSI K-MEANS (Performa Mesin)
@@ -54,29 +61,32 @@ def run_analysis(input_data):
     
     # Eksekusi scaler lalu tentukan cluster
     scaled_kmeans_data = scaler_kmeans.transform(df_kmeans)
-    cluster_id = kmeans_model.predict(scaled_kmeans_data)[0]
+    cluster_id = int(kmeans_model.predict(scaled_kmeans_data)[0])
     
     # ==========================================
-    # C. FORMATTING HASIL
+    # C. FORMATTING HASIL MACHINE LEARNING
     # ==========================================
-    # Label cluster ini bisa disesuaikan dengan hasil analisis EDA Anda
     cluster_labels = {
-        0: "Performa Optimal",
-        1: "Performa Menengah",
-        2: "Risiko Degradasi Tinggi"
+        0: "Suhu Operasi Tinggi",
+        1: "Kondisi Operasi Optimal",
+        2: "Putaran Tinggi, Torsi Rendah"
     }
     
+    health_score = round(max(0.0, min(100.0, 100.0 - failure_prob)), 1)
+    
     return {
-        "failure_status": "Machine Failure Terdeteksi" if failure_pred == 1 else "Kondisi Normal",
-        "failure_code": int(failure_pred),
-        "cluster_group": int(cluster_id),
-        "cluster_desc": cluster_labels.get(int(cluster_id), "Unknown")
+        "failure_status": "Risiko Kegagalan Terdeteksi" if failure_pred == 1 else "Kondisi Operasi Normal",
+        "failure_code": failure_pred,
+        "failure_prob": failure_prob,
+        "health_score": health_score,
+        "cluster_group": cluster_id,
+        "cluster_desc": cluster_labels.get(cluster_id, "Kondisi Operasi Normal")
     }
 
 def predict_machine(machine_type='L', air_temp=298.1, process_temp=308.6, rotational_speed=1551.0, torque=42.8, tool_wear=120.0):
     """
     Wrapper fungsi predict_machine yang menerima argumen individual
-    dan mengembalikan dict hasil analisis ensemble.
+    dan mengembalikan dict hasil analisis ensemble Random Forest & K-Means.
     """
     input_data = {
         "Type": machine_type,
@@ -88,14 +98,14 @@ def predict_machine(machine_type='L', air_temp=298.1, process_temp=308.6, rotati
     }
     analysis = run_analysis(input_data)
     failure_pred = analysis.get("failure_code", 0)
+    failure_prob = analysis.get("failure_prob", 12.4)
     cluster_id = analysis.get("cluster_group", 1)
     
     return {
-        'failure_prediction': 'FAILURE RISK' if failure_pred == 1 else 'NORMAL',
-        'failure_probability': 78.2 if failure_pred == 1 else 12.4,
+        'failure_prediction': 'FAILURE RISK' if failure_pred == 1 or failure_prob >= 50.0 else 'NORMAL',
+        'failure_probability': failure_prob,
         'cluster': cluster_id,
-        'cluster_condition': analysis.get("cluster_desc", "Normal Condition"),
-        'recommended_action': 'MAINTENANCE' if failure_pred == 1 else ('INSPECT' if cluster_id == 1 else 'CONTINUE'),
-        'q_value': 8.92 if failure_pred == 1 else 6.82,
+        'cluster_condition': analysis.get("cluster_desc", "Kondisi Operasi Normal"),
+        'health_score': analysis.get("health_score", 87.6),
         'details': analysis
     }
